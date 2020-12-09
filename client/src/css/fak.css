@@ -1,0 +1,330 @@
+html,body {
+    height: 100%;
+    overflow:hidden;
+}
+
+img {
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#login-page{
+    overflow:hidden;
+    top:15%;
+}
+#sidenav{
+    width: 230px;
+    text-align: center;
+}
+
+#menu{
+    position: relative;
+    top: 4.5%;
+}
+#profile-pic{
+    border-radius: 50%;
+    width: 95px;
+    height: 95px;
+    position: relative;
+    object-fit: cover;
+    top: 3%;
+    padding-bottom: 2px;
+    cursor: pointer; 
+    z-index: 10;
+}
+
+#profile-icon{
+    position: absolute;
+    left: 42.5%;
+    top: 5.5%;
+    font-size: 40px;
+    opacity: 1;
+}
+
+#profile-pic:hover{
+    opacity: 0.4;
+}
+
+
+#game-pic{
+    border-radius: 50%;
+    position: relative;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+}
+#searching{
+    position: absolute;
+    right: 42%;
+    top: 10%;
+}
+#turninfo{
+    display: grid;
+    padding-top: 10px;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    border-bottom: 1px black solid;
+    height: 26%;
+}
+
+#play-btn{
+    text-align:center;
+    font-size:25px;
+    width: 100%;
+    display: grid;
+}
+#social-btn{
+    text-align:center;
+    font-size:25px;
+    width: 100%;
+    display: grid;
+    margin-top: 7px;
+}
+
+#profile-btn{
+    text-align:center;
+    font-size:25px;
+    width: 100%;
+    display: grid;
+    margin-top: 7px;
+    background-color: transparent;
+    border: none;
+    line-height: inherit;
+    height: inherit;
+    padding: 0 16px;
+    cursor: pointer;
+}
+
+#profile-btn:hover{
+    background-color: #F2F2F2;
+}
+
+#editProfile{
+    position: absolute; 
+    height:30vh;
+    width:30%;
+    background-color: #ffcf001a;
+}
+
+#profile-modal{
+    height:30vh;
+    width:30%;
+    min-width: 570px;
+    top: auto !important;
+}
+#change-name{
+    position: absolute;
+    right: 3%;
+    top: 10%;
+    width: 45%;
+}
+
+#change-pic{
+    border-radius: 50%;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    left: 16%;
+    top: 19%;  
+    cursor: pointer;  
+    z-index: 10;
+}
+
+#upload-icon{
+    position: absolute;
+    left: 22.5%;
+    top: 31%;
+    font-size: 50px;
+    color: black;
+    opacity: 0;
+}
+
+#change-pic:hover{
+    opacity: 0.4;
+}
+
+#change-pic:hover + #upload-icon{
+    opacity: 1;
+}
+
+#profile-submit{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#profile-submit:hover{
+    opacity: 0.6;
+}
+
+#game-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-left:200px;
+}
+
+#chatMessages{
+    height: 65%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#msginput{
+    position: relative;
+    top: 1.5%;
+    width: 97%;
+    height: 6%;
+    left: 1.5%;
+    border: 0.5px black solid;
+    border-radius: 33px;
+}
+
+input[type="text"], textarea, select { 
+    outline: none;
+}
+
+#content{
+    /* background-color: #ffcf001a; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: absolute;
+    width: calc(100% - 230px);
+    right: 0;
+}
+
+#chatarea{
+    border: none;
+    right: -4%;
+    position: relative;
+    top: 22%;
+    height: 75%;
+    resize: none;
+    overflow:hidden;
+}
+
+#bubble{
+    position: relative;
+    top: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+#msgTxt{
+    font-size: 19px;
+    border-radius: 25px;
+    padding: 5px 12px;
+    margin-bottom: 5px;
+}
+
+.sent{
+    align-items: flex-end;
+    right: 2%;
+}
+
+.received{
+    align-items: flex-start;
+    left: 2%;
+}
+
+.sentText{
+    /* border-bottom-right-radius: 0px !important; */
+    /*#00D0EA*/
+    background-color: #10c5dc;
+    border: 1px solid #10c5dc;
+    color: white;
+}
+
+.receivedText{
+    /* border-bottom-left-radius: 0px !important; */
+    background-color: #eee;
+    border: 1px solid #eee;
+    color: black;
+}
+
+.dropdown-item{
+    text-align:center;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Old versions of Firefox */
+		  -ms-user-select: none; /* Internet Explorer/Edge */
+			  user-select: none; /* Non-prefixed version, currently
+									supported by Chrome, Edge, Opera and Firefox */
+}
+
+#omokcanvas{
+    
+}
+
+#chatfield{
+    height: 633px;
+    width: 25%;
+    border: 1px solid black;
+    position: relative;
+    bottom: 0.3%;
+    border-radius: 10px ;
+}
+
+.textmessages{
+    position: relative;
+    bottom: 5%;
+    left: 4%;
+    font-size: 16px;
+}
+
+#gameinfo{
+    border:1px solid black;
+    height: 630px;
+    width:10%;
+    min-width:180px;
+}
+
+center {
+	flex: 1 0 auto;
+	position:relative;
+}
+
+#loginform{
+	position:relative;
+	top: 33%;
+}
+
+#logininfo{
+	width:30%;
+	display: inline-block; 
+	padding: 32px 48px 0px 48px; 
+	border: 1px solid #EEE;
+}
+@media only screen and (max-width: 1550px) {
+    #logininfo{
+		width:40%;
+	}
+	#registerinfo{
+		width:40%;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+    #game-section {
+        height: 93.6%;;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    #chatfield{
+        display:none;
+    }
+  }
