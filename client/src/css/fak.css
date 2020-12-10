@@ -47,6 +47,64 @@ img {
 #profile-pic:hover{
     opacity: 0.4;
 }
+#postInput{
+    width: 30%;
+    min-width: 400px;
+    height: 4.2%;
+    border: 1px solid black;
+    border-radius: 25px;
+    margin-top: 10px;
+}
+
+#postArea{
+    border: none;
+    right: -4%;
+    position: relative;
+    top: 22%;
+    height: 75%;
+    resize: none;
+    overflow:hidden;
+}
+
+.post{
+    height: 13%;
+    border: 1px solid;
+    /* width: 30%; */
+    width: 510px;
+    border-radius: 10px;
+}
+.postUserInfoWrapper{
+    display:flex;
+    gap:10px;
+}
+
+.postProfile-pic{
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.postTextWrapper{
+    margin-top: 10px;
+}
+
+.postIconWrapper{
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+.likeBtn{
+    height: 26px;
+    cursor: pointer;
+}
+
+.commentBtn{
+    height: 26px;
+    cursor: pointer;
+}
 
 
 #game-pic{
@@ -194,12 +252,14 @@ input[type="text"], textarea, select {
 #content{
     /* background-color: #ffcf001a; */
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    flex-direction: column;
     height: 100vh;
     position: absolute;
     width: calc(100% - 230px);
     right: 0;
+    gap: 20px;
 }
 
 #chatarea{

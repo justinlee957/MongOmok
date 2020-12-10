@@ -12,6 +12,15 @@ admin.initializeApp({
 const db = admin.firestore();
 
 users = []
+// test()
+// async function test(){
+//     const onlineUsersRef = db.collection('users');
+//     const snapshot = await onlineUsersRef.where('status', '==', 'online').get()
+//     snapshot.forEach(doc => {
+//         console.log(doc.id, '=>', doc.data());
+//       });
+// }
+
 
 io.on('connection', socket =>{
     console.log('connected')

@@ -12,15 +12,15 @@ function App() {
   var [username, setUsername] = useState();
   var [photoLink, setPhoto] = useState();
   if(user){
-    var docRef = firestore.collection('users');
-    docRef.doc(user.uid).get().then(function(doc){
+    var usersRef = firestore.collection('users');
+    usersRef.doc(user.uid).get().then(function(doc){
       if(doc.exists){
         setUsername(doc.data().name);
         setPhoto(doc.data().photo);
       }else{
         setUsername(user.displayName);
         setPhoto(user.photoURL);
-        docRef.doc(user.uid).set({
+        usersRef.doc(user.uid).set({
           name: user.displayName,
           photo: user.photoURL,
           status: 'online'
@@ -55,7 +55,7 @@ function App() {
     }
 
     const inputName = document.getElementById('changeName-input').value
-    if(inputName != user.displayName && inputName != ''){
+    if(inputName !== user.displayName && inputName !== ''){
       setUsername(inputName);
       firestore.collection('users').doc(user.uid).update({
         name: inputName
