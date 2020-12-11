@@ -50,7 +50,7 @@ export function BoardFuncs(){
           placed[i] = new Array(20);
         }
         for(var j = 0; j < 20; j++){
-          for(var i = 0; i < 20; i++){
+          for(i = 0; i < 20; i++){
             placed[j][i] = 0;
           }
         }
@@ -73,7 +73,7 @@ export function BoardFuncs(){
           }
         }
       
-        for(var i = 0; i < 20; i++){
+        for(i = 0; i < 20; i++){
           if(y > 674){  
             y = 674;
           }else if(y < 26){

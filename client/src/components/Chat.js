@@ -1,6 +1,6 @@
 import '../css/fak.css'
 import logo2 from '../images/icecat.jpg'
-import { firestore, FieldValue, auth } from '../firebase'
+import { firestore, FieldValue } from '../firebase'
 import ChatMessage from './ChatMessage'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useEffect } from 'react'

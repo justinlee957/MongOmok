@@ -3,6 +3,10 @@ html,body {
     overflow:hidden;
 }
 
+.btn-flat{
+    text-Transform: none !important;
+}
+
 img {
     -khtml-user-select: none;
     -o-user-select: none;
@@ -34,6 +38,7 @@ img {
     padding-bottom: 2px;
     cursor: pointer; 
     z-index: 10;
+    margin-top: 10px;
 }
 
 #profile-icon{
@@ -129,36 +134,35 @@ img {
 }
 
 #play-btn{
-    text-align:center;
-    font-size:25px;
+    text-align: center;
+    font-size: 25px;
     width: 100%;
-    display: grid;
+    border-radius: 25px;
+    font-weight: 600;
+    height: 4.5%;
+}
+
+.btn-flat:hover{
+    background-color: #F2F2F2;
 }
 #social-btn{
     text-align:center;
     font-size:25px;
     width: 100%;
-    display: grid;
-    margin-top: 7px;
+    font-weight: 600;
+    height: 4.5%;
+    border-radius: 25px;
 }
 
 #profile-btn{
-    text-align:center;
-    font-size:25px;
+    text-align: center;
+    font-size: 25px;
     width: 100%;
-    display: grid;
-    margin-top: 7px;
-    background-color: transparent;
-    border: none;
-    line-height: inherit;
-    height: inherit;
-    padding: 0 16px;
-    cursor: pointer;
+    border-radius: 25px;
+    font-weight: 600;
+    height: 4.5%;
 }
 
-#profile-btn:hover{
-    background-color: #F2F2F2;
-}
 
 #editProfile{
     position: absolute; 
@@ -171,7 +175,7 @@ img {
     height:30vh;
     width:30%;
     min-width: 570px;
-    top: auto !important;
+    top: 26% !important;
 }
 #change-name{
     position: absolute;
@@ -252,14 +256,73 @@ input[type="text"], textarea, select {
 #content{
     /* background-color: #ffcf001a; */
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     height: 100vh;
     position: absolute;
-    width: calc(100% - 230px);
+    /* width: calc(100% - 230px); */
+    width: 100%;
     right: 0;
-    gap: 20px;
+    gap: 100px;
+}
+
+#sidebar{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    width: 11%;
+    align-items: center;
+    gap: 10px;
+    border-right: 0.5px solid #80808057;
+}
+
+#onlineSidebar{
+    border-left: 0.5px solid #80808057;
+    height: 100%;
+    width: 15%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#usersTitle{
+    margin-top: 10px;
+    margin-left: 9px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.userWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#onlinePic{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.onlineUsername{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+#feed{
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    gap: 10px;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 #chatarea{
