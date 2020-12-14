@@ -33,6 +33,8 @@ function App() {
     const found = await new Promise(resolve =>{
       if(document.querySelector("#image-file").files[0] !== undefined){
         resolve(true);
+      }else{
+        resolve(false);
       }
     })
 
@@ -44,24 +46,37 @@ function App() {
       const task = ref.child(name).put(file);
       task.then(snapshot => {
           snapshot.ref.getDownloadURL().then(url =>{
-              //update user's photo in firestore
+              setPhoto(url)
+              //update user's photo in 'users' collection
               firestore.collection('users').doc(user.uid)
               .update({                    
                   photo: url
               }); 
-              setPhoto(url);
+              //update user's photo in 'posts' collection
+              firestore.collection('posts').where('uid', '==', user.uid).get().then((query) =>{
+                query.docs.forEach(doc => {
+                  doc.ref.update({photo: url})
+                })
+              })
           })
-      });
+      })
     }
 
     const inputName = document.getElementById('changeName-input').value
     if(inputName !== user.displayName && inputName !== ''){
       setUsername(inputName);
-      firestore.collection('users').doc(user.uid).update({
+      //update user's name in 'users' collection
+      firestore.collection('users').doc(user.uid)
+      .update({
         name: inputName
       })
+      //update user's name in 'posts' collection
+      firestore.collection('posts').where('uid', '==', user.uid).get().then((query) =>{
+        query.docs.forEach(doc => {
+          doc.ref.update({name: inputName})
+        })
+      })
     }
-    
   }
 
   return (

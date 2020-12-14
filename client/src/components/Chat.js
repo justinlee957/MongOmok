@@ -32,6 +32,7 @@ function Chat(props){
 
     }, [messagesRef, props.uid]);
 
+
     return(
         <div id = "chatfield">
             <div id = "turninfo">

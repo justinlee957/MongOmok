@@ -36,29 +36,28 @@ img {
     object-fit: cover;
     top: 3%;
     padding-bottom: 2px;
-    cursor: pointer; 
+    cursor: pointer;
     z-index: 10;
     margin-top: 10px;
+    left: 40%;
 }
 
 #profile-icon{
-    position: absolute;
-    left: 42.5%;
-    top: 5.5%;
-    font-size: 40px;
-    opacity: 1;
+    position: relative;
+    left: 18.5%;
+    top: -8.5%;
+    font-size: 40px;    
 }
 
 #profile-pic:hover{
     opacity: 0.4;
 }
 #postInput{
-    width: 30%;
-    min-width: 400px;
     height: 4.2%;
     border: 1px solid black;
     border-radius: 25px;
     margin-top: 10px;
+    width: 510px;
 }
 
 #postArea{
@@ -72,7 +71,8 @@ img {
 }
 
 .post{
-    height: 13%;
+    /* height: 13%; */
+    height: 126px;
     border: 1px solid;
     /* width: 30%; */
     width: 510px;
@@ -133,36 +133,27 @@ img {
     height: 26%;
 }
 
-#play-btn{
-    text-align: center;
+.sidebar-btn{
+    text-align: end;
     font-size: 25px;
     width: 100%;
     border-radius: 25px;
     font-weight: 600;
     height: 4.5%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    bottom: 5%;
+    padding-right: 12%;
 }
 
-.btn-flat:hover{
+.sidebar-btn:hover{
     background-color: #F2F2F2;
 }
-#social-btn{
-    text-align:center;
-    font-size:25px;
-    width: 100%;
-    font-weight: 600;
-    height: 4.5%;
-    border-radius: 25px;
+.sidebar-btn:focus{
+    background-color:#F2F2F2;
 }
-
-#profile-btn{
-    text-align: center;
-    font-size: 25px;
-    width: 100%;
-    border-radius: 25px;
-    font-weight: 600;
-    height: 4.5%;
-}
-
 
 #editProfile{
     position: absolute; 
@@ -272,7 +263,7 @@ input[type="text"], textarea, select {
     flex-direction: column;
     height: 100%;
     justify-content: flex-start;
-    width: 11%;
+    width: 211px;
     align-items: center;
     gap: 10px;
     border-right: 0.5px solid #80808057;

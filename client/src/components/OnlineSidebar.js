@@ -8,6 +8,7 @@ function OnlineSidebar(){
     useEffect(() =>{
         getUsers()
     }, [])
+
     async function getUsers(){
         var usersRef = firestore.collection('users')
         var usersInit = []
