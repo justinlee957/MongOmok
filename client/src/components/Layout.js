@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Board from './Board'
 import Chat from './Chat'
 import OnlineSidebar from './OnlineSidebar'
+import MessageLayout from './MessageLayout'
 import Feed from './Feed'
 import M from 'materialize-css'
 import '../css/fak.css'
@@ -57,9 +58,10 @@ class Layout extends Component{
         if(home){
             content = <Feed {...this.props}/>
         }else if(messages){
-            content = <Chat {...this.props}/>
+            content = <MessageLayout {...this.props}/>
         }else if(play){
             content = <Board/>
+            //content = <Chat {...this.props}/> 
         }
         return(
             <div>

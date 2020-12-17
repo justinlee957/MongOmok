@@ -255,7 +255,6 @@ input[type="text"], textarea, select {
     /* width: calc(100% - 230px); */
     width: 100%;
     right: 0;
-    gap: 100px;
 }
 
 #sidebar{
@@ -272,7 +271,7 @@ input[type="text"], textarea, select {
 #onlineSidebar{
     border-left: 0.5px solid #80808057;
     height: 100%;
-    width: 15%;
+    width: 205px;
     gap: 10px;
     display: flex;
     flex-direction: column;
@@ -289,6 +288,8 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
 }
 
 #onlinePic{
@@ -314,6 +315,8 @@ input[type="text"], textarea, select {
     height: 100%;
     justify-content: flex-start;
     align-items: center;
+    padding-right: 100px;
+    padding-left: 100px;
 }
 
 #chatarea{
@@ -422,6 +425,61 @@ center {
 	padding: 32px 48px 0px 48px; 
 	border: 1px solid #EEE;
 }
+
+#messages{
+    width: 400px;
+    height: 100%;
+    border-right: 1px solid #80808057;
+}
+
+#chatbox{
+    width: 600px;
+}
+
+#msgTextHeader{
+    width: 100%;
+    font-size: 25px;
+    border-bottom: 1px solid #80808057;
+    padding-left: 20px;
+    height: 5%;
+    display: flex;
+    align-items: center;
+}
+
+.msg{
+    height: 80px;
+    width: 100%;
+    border-bottom: 1px solid #80808057;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.msg:hover, .userWrapper:hover{
+    background-color: #F2F2F2;
+}
+.msg:focus, .userWrapper:focus{
+    background-color:#F2F2F2;
+}
+
+.msgProfile-pic{
+    margin-left: 10px;
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.msgUserInfo{
+    padding-left: 7px;
+    height: 55px;
+    padding-top: 6px;
+    display: flex;
+    gap: 10px;
+}
+
+
+
 @media only screen and (max-width: 1550px) {
     #logininfo{
 		width:40%;
