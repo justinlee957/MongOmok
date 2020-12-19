@@ -1,11 +1,10 @@
-import '../css/fak.css'
-import logo2 from '../images/icecat.jpg'
-import { firestore, FieldValue } from '../firebase'
-import ChatMessage from './ChatMessage'
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useEffect } from 'react'
+import logo2 from '../../images/icecat.jpg'
+import { firestore, FieldValue } from '../../firebase'
+import BoardMsg from './BoardMsg'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useEffect } from 'react'   
 
-function Chat(props){
+function BoardChat(props){
     const messagesRef = firestore.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query, { idField: 'id' });
@@ -42,7 +41,7 @@ function Chat(props){
                 <div>Player 2</div>
             </div>
             <div id = "chatMessages">
-                {messages && messages.map(msg => <ChatMessage uid = {msg.uid} key = {msg.id} message = {msg.text}/>)}
+                {messages && messages.map(msg => <BoardMsg uid = {msg.uid} key = {msg.id} message = {msg.text}/>)}
             </div>
             <div id="msginput">
                 <textarea id='chatarea' className="browser-default" type="text" autoComplete="off"></textarea>
@@ -54,4 +53,4 @@ function Chat(props){
 
 
 
-export default Chat
+export default BoardChat

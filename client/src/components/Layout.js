@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import Board from './Board'
-import Chat from './Chat'
+import Board from './Board/Board'
 import OnlineSidebar from './OnlineSidebar'
-import MessageLayout from './MessageLayout'
+import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed'
 import M from 'materialize-css'
 import '../css/fak.css'
 //import io from 'socket.io-client'
-
 
 class Layout extends Component{
     constructor(props){
@@ -58,9 +56,9 @@ class Layout extends Component{
         if(home){
             content = <Feed {...this.props}/>
         }else if(messages){
-            content = <MessageLayout {...this.props}/>
+            content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
-            content = <Board/>
+            content = <Board {...this.props}/>
             //content = <Chat {...this.props}/> 
         }
         return(
@@ -89,7 +87,7 @@ class Layout extends Component{
                         <button className = "sidebar-btn">Profile</button>
                     </div>
                     {content}
-                    <OnlineSidebar/>
+                    <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>
                 </div>  
             </div>
         )

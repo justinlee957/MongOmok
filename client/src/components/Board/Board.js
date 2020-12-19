@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import {BoardFuncs} from '../BoardFunctions';
+import React, { Component } from 'react'
+import {BoardFuncs} from './BoardFunctions'
+import BoardChat from './BoardChat'
 
 export class Board extends Component{
     componentDidMount(){
@@ -8,8 +9,9 @@ export class Board extends Component{
     
     render(){
         return(
-            <div>
+            <div id = 'gameWrapper'>
                 <canvas id = "omokcanvas" width = "700" height="700" />
+                <BoardChat {...this.props}/> 
             </div>
         )
     }

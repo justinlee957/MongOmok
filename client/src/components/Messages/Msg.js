@@ -1,8 +1,7 @@
-import '../css/fak.css'
-import { auth } from '../firebase'
+import { auth } from '../../firebase'
 
-function ChatMessage(props){
-    const text = props.message
+function Msg(props){
+    const text = props.text
     const msgClass = props.uid === auth.currentUser.uid ? 'sent' : 'received';
     return(
         <div id = "bubble" className = {msgClass}>
@@ -10,4 +9,4 @@ function ChatMessage(props){
         </div>
     )
 }
-export default ChatMessage
+export default Msg

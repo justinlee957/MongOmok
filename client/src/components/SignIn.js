@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { auth, googleAuthProvider } from '../firebase'
 
-export class SignIn extends Component{
+class SignIn extends Component{
     signInWithGoogle = () => {
         const provider = googleAuthProvider;
         auth.signInWithPopup(provider);

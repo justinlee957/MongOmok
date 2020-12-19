@@ -1,14 +1,8 @@
 import '../css/fak.css'
 import Post from './Post'
 import { firestore, FieldValue } from '../firebase'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function Feed(props){
-    const postsRef = firestore.collection('posts')
-    const query = postsRef.orderBy('createdAt', 'desc').limit(25)
-    //array of post objects
-    const [posts] = useCollectionData(query, { idField: 'id' })
-
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
@@ -21,6 +15,7 @@ function Feed(props){
     }
 
     async function post(msg){
+        const postsRef = firestore.collection('posts')
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const current = new Date()
         const today = months[current.getMonth()] + ' ' + current.getDate()
@@ -41,7 +36,7 @@ function Feed(props){
             <div id = "postInput">
                 <textarea id='postArea' onKeyDown = {sendPost} className="browser-default" type="text" autoComplete="off"></textarea>
             </div>
-            {posts && posts.map(post => <Post key = {post.id} name = {post.name} photo = {post.photo} text = {post.text} time = {post.time}/>)}
+            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} photo = {post.photo} text = {post.text} time = {post.time}/>)}
         </div>
     )
 }

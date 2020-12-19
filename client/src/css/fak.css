@@ -39,14 +39,14 @@ img {
     cursor: pointer;
     z-index: 10;
     margin-top: 10px;
-    left: 40%;
+    margin-right: 15px;
 }
 
 #profile-icon{
     position: relative;
-    left: 18.5%;
-    top: -8.5%;
-    font-size: 40px;    
+    right: 19.5%;
+    bottom: 8.5%;
+    font-size: 40px;
 }
 
 #profile-pic:hover{
@@ -263,7 +263,7 @@ input[type="text"], textarea, select {
     height: 100%;
     justify-content: flex-start;
     width: 211px;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
     border-right: 0.5px solid #80808057;
 }
@@ -319,14 +319,14 @@ input[type="text"], textarea, select {
     padding-left: 100px;
 }
 
-#chatarea{
+#chatInputArea{
     border: none;
-    right: -4%;
+    left: 3%;
     position: relative;
     top: 22%;
     height: 75%;
     resize: none;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 #bubble{
@@ -382,17 +382,23 @@ input[type="text"], textarea, select {
 									supported by Chrome, Edge, Opera and Firefox */
 }
 
+#gameWrapper{
+    display: flex;
+}
+
 #omokcanvas{
     
 }
 
 #chatfield{
     height: 633px;
-    width: 25%;
+    width: 400px;
     border: 1px solid black;
     position: relative;
     bottom: 0.3%;
-    border-radius: 10px ;
+    border-radius: 10px;
+    margin-right: 14px;
+    top: 33px;
 }
 
 .textmessages{
@@ -434,14 +440,30 @@ center {
 
 #chatbox{
     width: 600px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#msgArea{
+    height: 165%;
+}
+
+.chatBox-Pic{
+    margin-right: 10px;
+    height: 47px;
+    width: 47px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 4.5px;
 }
 
 #msgTextHeader{
     width: 100%;
     font-size: 25px;
     border-bottom: 1px solid #80808057;
-    padding-left: 20px;
-    height: 5%;
+    padding-left: 15px;
+    height: 50px;
     display: flex;
     align-items: center;
 }
@@ -476,6 +498,23 @@ center {
     padding-top: 6px;
     display: flex;
     gap: 10px;
+}
+
+.msgInput{
+    position: relative;
+    width: 95%;
+    height: 80%;
+    border: 1px #808080 solid;
+    border-radius: 15px;
+    left: 2.5%;
+    top: 3%;
+}
+
+.msgInputWrapper{
+    position: relative;
+    padding-top: 7.5px;
+    border-top: 1px solid #80808057;
+    height: 60px;
 }
 
 
