@@ -3,6 +3,7 @@ import Board from './Board/Board'
 import OnlineSidebar from './OnlineSidebar'
 import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed'
+import Profile from './Profile'
 import M from 'materialize-css'
 import '../css/fak.css'
 //import io from 'socket.io-client'
@@ -13,7 +14,8 @@ class Layout extends Component{
         this.homeClick = this.homeClick.bind(this)
         this.messagesClick = this.messagesClick.bind(this)
         this.playClick = this.playClick.bind(this)
-        this.state = {home: true, messages: false, play: false}
+        this.profileClick = this.profileClick.bind(this)
+        this.state = {home: true, messages: false, play: false, profile: false}
     }
 
     homeClick(){
@@ -24,10 +26,19 @@ class Layout extends Component{
         this.setState({play: true})
         this.setState({home: false})
         this.setState({messages: false})
+        this.setState({profile: false})
     }
 
     messagesClick(){
         this.setState({messages: true})
+        this.setState({home: false})
+        this.setState({play: false})
+        this.setState({profile: false})
+    }
+
+    profileClick(){
+        this.setState({profile: true})
+        this.setState({messages: false})
         this.setState({home: false})
         this.setState({play: false})
     }
@@ -52,6 +63,7 @@ class Layout extends Component{
         const home = this.state.home
         const messages = this.state.messages
         const play = this.state.play
+        const profile = this.state.profile
         let content
         if(home){
             content = <Feed {...this.props}/>
@@ -60,7 +72,10 @@ class Layout extends Component{
         }else if(play){
             content = <Board {...this.props}/>
             //content = <Chat {...this.props}/> 
+        }else if(profile){
+            content = <Profile {...this.props}/>
         }
+
         return(
             <div>
                 <div id="profile-modal" className="modal">
@@ -84,7 +99,7 @@ class Layout extends Component{
                         <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
                         <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
                         <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
-                        <button className = "sidebar-btn">Profile</button>
+                        <button onClick = {this.profileClick} className = "sidebar-btn">Profile</button>
                     </div>
                     {content}
                     <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>

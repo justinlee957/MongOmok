@@ -1,7 +1,10 @@
 html,body {
     height: 100%;
-    overflow:hidden;
 }
+
+/* #feed::-webkit-scrollbar{
+    display: none;
+} */
 
 .btn-flat{
     text-Transform: none !important;
@@ -52,31 +55,58 @@ img {
 #profile-pic:hover{
     opacity: 0.4;
 }
+
+#uploadPic{
+    margin-left: 10px;
+    height: 28px;
+    cursor: pointer;
+    margin-top: 3px;
+}
 #postInput{
-    height: 4.2%;
-    border: 1px solid black;
-    border-radius: 25px;
-    margin-top: 10px;
-    width: 510px;
+    border-top: 1px solid #80808057;
+    border-bottom: 1px solid #80808057;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #postArea{
     border: none;
     right: -4%;
     position: relative;
-    top: 22%;
+    top: 10%;
     height: 75%;
     resize: none;
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.post{
-    /* height: 13%; */
-    height: 126px;
-    border: 1px solid;
-    /* width: 30%; */
-    width: 510px;
+#uploadedPic{
+    height: 205px;
+    width: 353px;
+    margin-bottom: 15px;
     border-radius: 10px;
+    object-fit: cover;
+}
+
+#removeImageBtn{
+    position: relative;
+    right: 58%;
+    bottom: 83.5%;
+    height: 30px;
+    cursor: pointer;
+}
+
+#postArea,
+#postArea::-webkit-input-placeholder {
+    font-size: 19px;
+}
+
+
+.post{
+    border-bottom: 1px solid #80808057;
+    width: 600px;
 }
 .postUserInfoWrapper{
     display:flex;
@@ -86,28 +116,39 @@ img {
 .postProfile-pic{
     margin-left: 10px;
     margin-top: 10px;
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
     object-fit: cover;
 }
 
+.postPic{
+    margin-top: 5px;
+    width: 490px;
+    height: 290px;
+    object-fit: cover;
+    border-radius: 10px;
+    position: relative;
+    left: 9%;
+}
+
 .postTextWrapper{
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .postIconWrapper{
     display: flex;
     gap: 10px;
     justify-content: space-around;
+    margin-bottom: 5px;
 }
 .likeBtn{
-    height: 26px;
+    height: 22px;
     cursor: pointer;
 }
 
 .commentBtn{
-    height: 26px;
+    height: 22px;
     cursor: pointer;
 }
 
@@ -240,6 +281,17 @@ img {
     border-radius: 33px;
 }
 
+#boardChatArea{
+    border: none;
+    left: 5%;
+    position: relative;
+    top: 20%;
+    height: 75%;
+    resize: none;
+    overflow: hidden;
+    width: 91%;
+}
+
 input[type="text"], textarea, select { 
     outline: none;
 }
@@ -252,9 +304,10 @@ input[type="text"], textarea, select {
     flex-direction: row;
     height: 100vh;
     position: absolute;
-    /* width: calc(100% - 230px); */
     width: 100%;
     right: 0;
+    overflow: auto;
+    gap: 20px;
 }
 
 #sidebar{
@@ -265,16 +318,20 @@ input[type="text"], textarea, select {
     width: 211px;
     align-items: flex-end;
     gap: 10px;
-    border-right: 0.5px solid #80808057;
+    position: sticky;
+    align-self: flex-start;
+    top: 0;
 }
 
 #onlineSidebar{
-    border-left: 0.5px solid #80808057;
     height: 100%;
     width: 205px;
     gap: 10px;
     display: flex;
     flex-direction: column;
+    position: sticky;
+    align-self: flex-start;
+    top: 0;
 }
 
 #usersTitle{
@@ -315,8 +372,16 @@ input[type="text"], textarea, select {
     height: 100%;
     justify-content: flex-start;
     align-items: center;
-    padding-right: 100px;
-    padding-left: 100px;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
+}
+
+#homeHeader{
+    width: 100%;
+    font-size: 22px;
+    padding-top: 7px;
+    padding-left: 10px;
+    font-weight: 550;
 }
 
 #chatInputArea{
@@ -327,6 +392,30 @@ input[type="text"], textarea, select {
     height: 75%;
     resize: none;
     overflow: hidden;
+}
+
+#postImageWrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: flex-end;
+}
+
+#postBtn{
+    border-radius: 25px;
+    border: 1px pink;
+    background-color: #e891a0;
+    cursor: pointer;
+    box-shadow: none;
+    width: 60px;
+    height: 43px;
+    position: relative;
+    top: 3.2%;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 25px;
+    padding-bottom: 3px;
 }
 
 #bubble{
@@ -436,6 +525,7 @@ center {
     width: 400px;
     height: 100%;
     border-right: 1px solid #80808057;
+    border-left: 1px solid #80808057;
 }
 
 #chatbox{
@@ -443,6 +533,7 @@ center {
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #80808057;
 }
 
 #msgArea{
@@ -517,7 +608,27 @@ center {
     height: 60px;
 }
 
+#profile{
+    width: 650px;
+    height: 100%;
+}
 
+#profileHeader{
+    border-bottom: 1px solid #80808057;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profilePagePic{
+    margin-right: 10px;
+    height: 142px;
+    width: 142px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 4.5px;
+    margin-top: 10px;
+}
 
 @media only screen and (max-width: 1550px) {
     #logininfo{

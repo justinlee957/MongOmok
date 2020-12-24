@@ -18,7 +18,7 @@ function BoardChat(props){
             })
         }
 
-        var msgid = document.getElementById('chatarea')
+        var msgid = document.getElementById('boardChatArea')
         msgid.addEventListener('keydown', function(e){
             if(e.key === "Enter"){
                 e.preventDefault();
@@ -44,7 +44,7 @@ function BoardChat(props){
                 {messages && messages.map(msg => <BoardMsg uid = {msg.uid} key = {msg.id} message = {msg.text}/>)}
             </div>
             <div id="msginput">
-                <textarea id='chatarea' className="browser-default" type="text" autoComplete="off"></textarea>
+                <textarea id='boardChatArea' className="browser-default" type="text" autoComplete="off"></textarea>
             </div>
         </div>
     )
