@@ -1,37 +1,56 @@
 import Post from './Post'
-import { firestore, FieldValue } from '../firebase'
-import sunset from '../images/sunset.jpg'
+import { firestore, FieldValue, storage } from '../firebase'
 import picture from '../images/picture1.png'
 import cancel from '../images/cancel.png'
 import { useState } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
+
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
-            const msg = e.target.value
-            if(msg !== ''){
-                post(msg)
-            }
-            e.target.value = ''
+            post()
         }
     }
 
-    async function post(msg){
+    async function post(){
+        const msg = document.getElementById('postArea').value
+        if(msg === ''){
+            return
+        }
+        document.getElementById('postArea').value = ''
+
         const postsRef = firestore.collection('posts')
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const current = new Date()
         const today = months[current.getMonth()] + ' ' + current.getDate()
         const data = {
             uid: props.uid,
-            name: props.name,
-            photo: props.photo,
             text: msg,
             createdAt: FieldValue.serverTimestamp(),
             time: today
         }
-        await postsRef.add(data)
+        const res = await postsRef.add(data)
+
+        const image = new Promise(resolve => {
+            if(document.querySelector("#postImage").files[0] !== undefined){
+                resolve()
+            }
+        })
+
+        image.then(()=>{
+            const file = document.querySelector("#postImage").files[0]
+            const ref = storage.ref()
+            const task = ref.child(res.id).put(file)
+            task.then(() => {
+                firestore.collection('posts').doc(res.id)
+                .update({                    
+                    photo: 'yes'
+                }) 
+            })
+            removeImage()
+        })
     }   
 
     function showUploadedImage(){
@@ -45,12 +64,13 @@ function Feed(props){
             setPostImage(<div id = 'postImageWrapper'>
                             <img id = "uploadedPic" src = {reader.result}alt = "uploadPic"/>
                             <img id = "removeImageBtn" src = {cancel} onClick = {removeImage} alt = 'removeImage'/>
-                            <button id = 'postBtn'>Post</button>
+                            <button id = 'postBtn' onClick = {post}>Post</button>
                         </div>)
         }, false)
     }
 
     function removeImage(){
+        document.getElementById('postImage').value = "";
         setPostImage()
     }
     
@@ -69,8 +89,8 @@ function Feed(props){
                 </div>
                 {postImage}
             </div>
-            <Post name = {props.name} profilePhoto = {props.photo} text = {'gawd damn'} time = 'Dec 22' photo = {sunset}/>
-            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.photo} text = {post.text} time = {post.time}/>)}
+            {/* <Post name = {props.name} profilePhoto = {props.photo} text = {'gawd damn'} time = 'Dec 22' photo = {sunset}/> */}
+            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined}/>)}
         </div>
     )
 }

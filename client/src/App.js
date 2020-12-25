@@ -9,10 +9,11 @@ import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function App() {
-  const [user] = useAuthState(auth);
-  var [username, setUsername] = useState();
-  var [photoLink, setPhoto] = useState();
-  var [privateChats, setChats] = useState();
+  const [user] = useAuthState(auth)
+  var [username, setUsername] = useState()
+  var [photoLink, setPhoto] = useState()
+  var [privateChats, setChats] = useState()
+  var [posts, setPosts] = useState()
   var chatsQuery, postsQuery
 
   if(user){
@@ -21,13 +22,26 @@ function App() {
     chatsQuery = chatsRef.where('users', 'array-contains-any', [user.uid]).limit(25)
     postsQuery = postsRef.orderBy('createdAt', 'desc').limit(25)
   }
+
   //listen for any updates in these queries and update accordingly
   const [chats] = useCollectionData(chatsQuery, { idField: 'id' })
-  const [posts] = useCollectionData(postsQuery, { idField: 'id' })
+  const [initalPosts] = useCollectionData(postsQuery, { idField: 'id' })
 
-  if(chats !== undefined && chats.length > 0){
-    setChatsData(user)
+  async function setPostsData(){
+    var usersRef = firestore.collection('users')
+    for(var i = 0; i < initalPosts.length; i++){
+      var user = await usersRef.doc(initalPosts[i].uid).get()  
+      initalPosts[i].name = user.data().name
+      initalPosts[i].profilePic = user.data().photo
+
+      if(initalPosts[i].photo !== undefined){
+        var url = await storage.ref().child(initalPosts[i].id).getDownloadURL()
+        initalPosts[i].photo = url
+      }
+    }
+    setPosts(initalPosts)
   }
+
   //set the messages data with the other user's name and photo
   async function setChatsData(thisUser){
     var usersRef = firestore.collection('users')
@@ -65,18 +79,23 @@ function App() {
         }
       })
     } 
+    if(chats !== undefined && chats.length > 0){
+      setChatsData(user)
+    }
+  
+    if(initalPosts !== undefined && initalPosts.length > 0){
+      setPostsData()
+    }
   })  
 
   async function updateProfile(){
-    const found = await new Promise(resolve =>{
+    const image = new Promise(resolve => {
       if(document.querySelector("#image-file").files[0] !== undefined){
-        resolve(true);
-      }else{
-        resolve(false);
+        resolve();
       }
     })
 
-    if(found){
+    image.then(() => {
       const file = document.querySelector("#image-file").files[0];
       const ref = storage.ref();
       const name = user.uid;
@@ -90,15 +109,9 @@ function App() {
               .update({                    
                   photo: url
               }); 
-              //update user's photo in 'posts' collection
-              firestore.collection('posts').where('uid', '==', user.uid).get().then((query) =>{
-                query.docs.forEach(doc => {
-                  doc.ref.update({photo: url})
-                })
-              })
           })
       })
-    }
+    })
 
     const inputName = document.getElementById('changeName-input').value
     if(inputName !== user.displayName && inputName !== ''){
@@ -107,12 +120,6 @@ function App() {
       firestore.collection('users').doc(user.uid)
       .update({
         name: inputName
-      })
-      //update user's name in 'posts' collection
-      firestore.collection('posts').where('uid', '==', user.uid).get().then((query) =>{
-        query.docs.forEach(doc => {
-          doc.ref.update({name: inputName})
-        })
       })
     }
   }

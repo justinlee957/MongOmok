@@ -83,8 +83,8 @@ img {
 }
 
 #uploadedPic{
-    height: 205px;
-    width: 353px;
+    height: 220px;
+    width: 400px;
     margin-bottom: 15px;
     border-radius: 10px;
     object-fit: cover;
@@ -92,8 +92,8 @@ img {
 
 #removeImageBtn{
     position: relative;
-    right: 58%;
-    bottom: 83.5%;
+    right: 66%;
+    bottom: 84.5%;
     height: 30px;
     cursor: pointer;
 }
@@ -416,6 +416,7 @@ input[type="text"], textarea, select {
     font-size: 20px;
     margin-bottom: 25px;
     padding-bottom: 3px;
+    left: 1.5%;
 }
 
 #bubble{
