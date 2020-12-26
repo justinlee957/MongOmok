@@ -89,8 +89,7 @@ function Feed(props){
                 </div>
                 {postImage}
             </div>
-            {/* <Post name = {props.name} profilePhoto = {props.photo} text = {'gawd damn'} time = 'Dec 22' photo = {sunset}/> */}
-            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined}/>)}
+            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>)}
         </div>
     )
 }

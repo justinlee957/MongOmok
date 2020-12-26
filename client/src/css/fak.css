@@ -107,14 +107,18 @@ img {
 .post{
     border-bottom: 1px solid #80808057;
     width: 600px;
+    position: relative;
 }
 .postUserInfoWrapper{
-    display:flex;
-    gap:10px;
+    display: flex;
+    grid-gap: 10px;
+    gap: 10px;
+    justify-content: space-between;
 }
 
 .postProfile-pic{
     margin-left: 10px;
+    margin-right: 10px;
     margin-top: 10px;
     height: 60px;
     width: 60px;
@@ -134,6 +138,33 @@ img {
 
 .postTextWrapper{
     margin-top: 15px;
+}
+
+.postOptionsBtn{
+    font-size: 25px;
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.postOptions{
+    width: 100px;
+    position: absolute;
+    right: 3%;
+    top: 23px;
+    z-index: 10;
+    border-radius: 5px;
+    border: 1px solid #80808057;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.deletePostBtn{
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 30px;
 }
 
 .postIconWrapper{
@@ -189,10 +220,10 @@ img {
     padding-right: 12%;
 }
 
-.sidebar-btn:hover{
+.sidebar-btn:hover, .deletePostBtn:hover{
     background-color: #F2F2F2;
 }
-.sidebar-btn:focus{
+.sidebar-btn:focus, .deletePostBtn:focus{
     background-color:#F2F2F2;
 }
 
