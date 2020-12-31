@@ -47,7 +47,7 @@ img {
 
 #profile-icon{
     position: relative;
-    right: 19.5%;
+    right: 21.5%;
     bottom: 8.5%;
     font-size: 40px;
 }
@@ -150,7 +150,7 @@ img {
     width: 100px;
     position: absolute;
     right: 3%;
-    top: 23px;
+    top: 21px;
     z-index: 10;
     border-radius: 5px;
     border: 1px solid #80808057;
@@ -208,7 +208,6 @@ img {
 .sidebar-btn{
     text-align: end;
     font-size: 25px;
-    width: 100%;
     border-radius: 25px;
     font-weight: 600;
     height: 4.5%;
@@ -218,6 +217,7 @@ img {
     position: relative;
     bottom: 5%;
     padding-right: 12%;
+    padding-left: 12%;
 }
 
 .sidebar-btn:hover, .deletePostBtn:hover{
@@ -328,7 +328,6 @@ input[type="text"], textarea, select {
 }
 
 #content{
-    /* background-color: #ffcf001a; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -338,7 +337,6 @@ input[type="text"], textarea, select {
     width: 100%;
     right: 0;
     overflow: auto;
-    gap: 20px;
 }
 
 #sidebar{
@@ -352,17 +350,18 @@ input[type="text"], textarea, select {
     position: sticky;
     align-self: flex-start;
     top: 0;
+    padding-right: 20px;
 }
 
 #onlineSidebar{
     height: 100%;
     width: 205px;
-    gap: 10px;
     display: flex;
     flex-direction: column;
     position: sticky;
     align-self: flex-start;
     top: 0;
+    padding-left: 20px;
 }
 
 #usersTitle{
@@ -373,11 +372,40 @@ input[type="text"], textarea, select {
 }
 
 .userWrapper{
+    position: relative;
+}
+
+.userInfoWrapper{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    grid-gap: 10px;
     gap: 10px;
     cursor: pointer;
-    border-radius: 0 25px 25px 0;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+}
+
+.userOptions{
+    background-color: white;
+    width: 134px;
+    z-index: 10;
+    position: absolute;
+    right: 97%;
+    top: -10%;
+    border-radius: 10px;
+    box-shadow: 2px 4px 25px -9px rgba(0,0,0,0.75);
+}
+
+.userOptionsBtn{
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 35px;
+    width: 100%;
+    font-size: 20px;
 }
 
 #onlinePic{
@@ -502,9 +530,75 @@ input[type="text"], textarea, select {
 			  user-select: none; /* Non-prefixed version, currently
 									supported by Chrome, Edge, Opera and Firefox */
 }
+#playWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    border-right: 1px solid #80808057;
+    border-left: 1px solid #80808057;
+    min-width: 35%;
+}
+
+#playContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+#playHeader{
+    font-size: 25px;
+    border-bottom: 1px solid #80808057;
+    width: 100%;
+    padding: 5px 0 5px 10px;
+    font-weight: 600;
+}
+
+#challengeBox{
+    border: 1px solid #80808057;
+    border-radius: 10px;
+}
+
+#challengeBoxWrapper{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+}
+
+#challengeHeader{
+    font-size: 25px;
+    border-bottom: 1px solid #80808057;
+    width: 100%;
+    text-align: center;
+}
+
+.challengeWrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+    padding-left: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.challengeOptionBtn{
+    background-color: lightblue;
+    border: none;
+    width: 39px;
+    border-radius: 10px;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.challengeOptionIcon{
+    height: 20px;
+}
 
 #gameWrapper{
     display: flex;
+    position: relative;
 }
 
 #omokcanvas{
@@ -518,7 +612,7 @@ input[type="text"], textarea, select {
     position: relative;
     bottom: 0.3%;
     border-radius: 10px;
-    margin-right: 14px;
+    margin-right: 25px;
     top: 33px;
 }
 
@@ -589,6 +683,7 @@ center {
     height: 50px;
     display: flex;
     align-items: center;
+    font-weight: 600;
 }
 
 .msg{
@@ -600,10 +695,10 @@ center {
     cursor: pointer;
 }
 
-.msg:hover, .userWrapper:hover{
+.msg:hover, .userWrapper:hover, .userOptionsBtn:hover, .challengeOptionBtn:hover{
     background-color: #F2F2F2;
 }
-.msg:focus, .userWrapper:focus{
+.msg:focus, .userWrapper:focus, .userOptionsBtn:focus, .challengeOptionBtn:focus{
     background-color:#F2F2F2;
 }
 
@@ -668,7 +763,7 @@ center {
 	}
 	#registerinfo{
 		width:40%;
-	}
+    }
 }
 
 @media only screen and (max-width: 700px) {

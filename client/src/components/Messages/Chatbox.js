@@ -7,6 +7,8 @@ function Chatbox(props){
     const query = messagesRef.orderBy('createdAt').limit(25)
     const [messages] = useCollectionData(query, { idField: 'id'})
 
+    console.log(messages)
+
     function sendMsg(e){
         if(e.key === 'Enter'){
             e.preventDefault();

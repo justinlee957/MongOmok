@@ -27,43 +27,11 @@ function App() {
   const [chats] = useCollectionData(chatsQuery, { idField: 'id' })
   const [initalPosts] = useCollectionData(postsQuery, { idField: 'id' })
 
-  async function setPostsData(){
-    var usersRef = firestore.collection('users')
-    for(var i = 0; i < initalPosts.length; i++){
-      var user = await usersRef.doc(initalPosts[i].uid).get()  
-      initalPosts[i].name = user.data().name
-      initalPosts[i].profilePic = user.data().photo
-
-      if(initalPosts[i].photo !== undefined){
-        var url = await storage.ref().child(initalPosts[i].id).getDownloadURL()
-        initalPosts[i].photo = url
-      }
-    }
-    setPosts(initalPosts)
-  }
-
-  //set the messages data with the other user's name and photo
-  async function setChatsData(thisUser){
-    var usersRef = firestore.collection('users')
-    for(var i = 0; i < chats.length; i++){
-      var otherUid
-      if(chats[i].users[0] === thisUser.uid){
-        otherUid = chats[i].users[1]
-      }else{
-        otherUid = chats[i].users[0]
-      }
-      var user = await usersRef.doc(otherUid).get()  
-      chats[i].name = user.data().name
-      chats[i].photo = user.data().photo
-      chats[i].otherUid = otherUid
-    }
-    setChats(chats)
-  }
-
+  //set username and photo
   useEffect(()=>{
     if(user){
       //set the name and photo of current user
-      var usersRef = firestore.collection('users');
+      var usersRef = firestore.collection('users')
       usersRef.doc(user.uid).get().then(function(doc){
         if(doc.exists){
           setUsername(doc.data().name);
@@ -79,14 +47,52 @@ function App() {
         }
       })
     } 
+
+  }, [user]) 
+
+  //set the messages data with the other user's name and photo
+  useEffect(() => {
+    async function setChatsData(thisUser){
+      var usersRef = firestore.collection('users')
+      for(var i = 0; i < chats.length; i++){
+        var otherUid
+        if(chats[i].users[0] === thisUser.uid){
+          otherUid = chats[i].users[1]
+        }else{
+          otherUid = chats[i].users[0]
+        }
+        var user = await usersRef.doc(otherUid).get()  
+        chats[i].name = user.data().name
+        chats[i].photo = user.data().photo
+        chats[i].otherUid = otherUid
+      }
+      setChats(chats)
+    }
     if(chats !== undefined && chats.length > 0){
       setChatsData(user)
     }
+  }, [chats, user])
   
+  //set the post data from user uid
+  useEffect(() => {
+    async function setPostsData(){
+      var usersRef = firestore.collection('users')
+      for(var i = 0; i < initalPosts.length; i++){
+        var user = await usersRef.doc(initalPosts[i].uid).get()  
+        initalPosts[i].name = user.data().name
+        initalPosts[i].profilePic = user.data().photo
+  
+        if(initalPosts[i].photo !== undefined){
+          var url = await storage.ref().child(initalPosts[i].id).getDownloadURL()
+          initalPosts[i].photo = url
+        }
+      }
+      setPosts(initalPosts)
+    }
     if(initalPosts !== undefined && initalPosts.length > 0){
       setPostsData()
     }
-  })  
+  }, [initalPosts])
 
   async function updateProfile(){
     const image = new Promise(resolve => {

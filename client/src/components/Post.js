@@ -5,16 +5,13 @@ import { useState } from 'react'
 import { firestore, storage, auth } from '../firebase'
 
 function Post(props){
-    var photo, optionsBtn
+    var optionsBtn
     var [options, setOptions] = useState()
 
     if(props.uid === auth.currentUser.uid){
         optionsBtn = <div className = 'postOptionsBtn noselect' onClick = {showOptions}>&#10247;</div>
     }
 
-    if(props.photo){
-        photo = <img className = "postPic" src={props.photo} alt = "post pic"/> 
-    }
     function showOptions(){
         if(options === undefined){
             setOptions(<div className = 'postOptions'>
@@ -27,7 +24,7 @@ function Post(props){
 
     async function deletePost(){
         await firestore.collection('posts').doc(props.docId).delete()
-        if(photo){
+        if(props.photo){
             await storage.ref().child(props.docId).delete();
         }
     }
@@ -48,7 +45,7 @@ function Post(props){
                 {optionsBtn}
             </div>  
             {options}
-            {photo}
+            {props.photo && <img className = "postPic" src={props.photo} alt = "post pic"/> }
             <div className = "postIconWrapper">
                 <img className = "commentBtn" src={comment} alt = "commentIcon"/> 
                 <img className = "likeBtn" src={heart} alt = "heartIcon"/> 

@@ -47,10 +47,15 @@ function OnlineSidebar(props){
             })
     }
 
+    function challenge(otherUid){
+        firestore.collection('users').doc(otherUid)
+            .collection('challenges').doc(props.uid).set({played: 'no', name: props.name})
+    }
+
     return(
         <div id = "onlineSidebar">
             <div id = "usersTitle">Users</div>
-             {users && users.map(user => <User key = {user.id} {...user} showChat = {showChat}/>)} 
+             {users && users.map(user => <User key = {user.id} {...user} showChat = {showChat} challenge = {challenge}/>)} 
         </div>
     )
 }

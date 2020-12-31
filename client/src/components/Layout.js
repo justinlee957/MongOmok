@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import Board from './Board/Board'
+import Play from './Play/Play'
 import OnlineSidebar from './OnlineSidebar'
 import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed'
 import Profile from './Profile'
 import M from 'materialize-css'
 import '../css/fak.css'
-//import io from 'socket.io-client'
+import openSocket from 'socket.io-client'
 
 class Layout extends Component{
     constructor(props){
@@ -16,6 +16,7 @@ class Layout extends Component{
         this.playClick = this.playClick.bind(this)
         this.profileClick = this.profileClick.bind(this)
         this.state = {home: true, messages: false, play: false, profile: false}
+        this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
     }
 
     homeClick(){
@@ -23,24 +24,15 @@ class Layout extends Component{
     }
 
     playClick(){
-        this.setState({play: true})
-        this.setState({home: false})
-        this.setState({messages: false})
-        this.setState({profile: false})
+        this.setState({play: true, home: false, messages: false, profile: false})
     }
 
     messagesClick(){
-        this.setState({messages: true})
-        this.setState({home: false})
-        this.setState({play: false})
-        this.setState({profile: false})
+        this.setState({messages: true, home: false, play: false, profile: false})
     }
 
     profileClick(){
-        this.setState({profile: true})
-        this.setState({messages: false})
-        this.setState({home: false})
-        this.setState({play: false})
+        this.setState({profile: true, messages: false, home: false, play: false})
     }
 
     componentDidMount(){
@@ -56,7 +48,7 @@ class Layout extends Component{
             reader.readAsDataURL(file);
         }
       })
-      //const socket = io({query: `uid=${props.uid}`});
+      
     }
 
     render(){
@@ -70,8 +62,7 @@ class Layout extends Component{
         }else if(messages){
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
-            content = <Board {...this.props}/>
-            //content = <Chat {...this.props}/> 
+            content = <Play {...this.props} socket = {this.socket}/>
         }else if(profile){
             content = <Profile {...this.props}/>
         }

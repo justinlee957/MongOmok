@@ -2,7 +2,7 @@ import Post from './Post'
 import { firestore, FieldValue, storage } from '../firebase'
 import picture from '../images/picture1.png'
 import cancel from '../images/cancel.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
@@ -73,6 +73,10 @@ function Feed(props){
         document.getElementById('postImage').value = "";
         setPostImage()
     }
+
+    useEffect(()=>{
+        document.getElementById('onlineSidebar').style.display = 'block'
+    })
     
     return(
         <div id = "feed">

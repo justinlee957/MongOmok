@@ -1,12 +1,17 @@
 import Chat from './Chat'
 import Chatbox from './Chatbox'
 import ReactDOM from 'react-dom'
+import { useEffect } from 'react'
 
 function MessageLayout(props){
     function displayChatBox(data){
         const element = <Chatbox {...data}/>
         ReactDOM.render(element, document.getElementById('chatbox')) 
     }
+
+    useEffect(()=>{
+        document.getElementById('onlineSidebar').style.display = 'block'
+    })
     return(
         <>
             <div id = 'messages'>
