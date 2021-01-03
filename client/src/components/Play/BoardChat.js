@@ -34,17 +34,13 @@ function BoardChat(props){
 
     return(
         <div id = "chatfield">
-            <div id = "turninfo">
-                <img id = "game-pic" src={props.photo} alt = "profile pic"/>
-                <img id = "game-pic" src={logo2} alt = "profile pic"/>
-                <div>{props.name}</div>
-                <div>Player 2</div>
-            </div>
             <div id = "chatMessages">
                 {messages && messages.map(msg => <BoardMsg uid = {msg.uid} key = {msg.id} message = {msg.text}/>)}
             </div>
-            <div id="msginput">
-                <textarea id='boardChatArea' className="browser-default" type="text" autoComplete="off"></textarea>
+            <div id = "boardMsgWrapper">
+                <div id="msgInput">
+                    <textarea id='boardChatArea' className="browser-default" type="text" autoComplete="off"></textarea>
+                </div>
             </div>
         </div>
     )

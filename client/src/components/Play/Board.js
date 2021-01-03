@@ -10,8 +10,8 @@ function Board(props){
 
     return(
         <div id = 'gameWrapper'>
-            <canvas id = "omokcanvas" width = "700" height="700" />
-            <BoardChat {...props}/> 
+            <canvas id = "omokcanvas" width = "700" height="700" /> 
+            <BoardChat {...props}/>
         </div> 
     )
     

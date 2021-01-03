@@ -1,3 +1,4 @@
+
 export function BoardFuncs(){
     var canvas = document.getElementById('omokcanvas');
     var context = canvas.getContext("2d");
@@ -20,12 +21,14 @@ export function BoardFuncs(){
         context.stroke();
         imageData = context.getImageData(0,0,canvas.width,canvas.height);
     }
-    drawBoard();
+
     var imageData;
     var xcoord = [];
     var ycoord = [];
     var placed = new Array(20);
-    omokarrays();
+    drawBoard()
+    omokarrays()
+
     canvas.addEventListener('click', function(e) {
         getCursorPosition(canvas, e);
     })
@@ -54,7 +57,7 @@ export function BoardFuncs(){
             placed[j][i] = 0;
           }
         }
-      }
+    }
     function plotclosestpoint(x,y){
         for(var i = 0; i < 20; i++){
           if(x > 674){
@@ -99,5 +102,6 @@ export function BoardFuncs(){
         context.stroke();
       
         placed[(y-26)/35][(x-26)/35] = 1;
-      }
+    }
+
 }

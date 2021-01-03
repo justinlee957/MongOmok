@@ -48,7 +48,7 @@ function App() {
       })
     } 
 
-  }, [user]) 
+  }, [user, username, photoLink]) 
 
   //set the messages data with the other user's name and photo
   useEffect(() => {
@@ -92,7 +92,7 @@ function App() {
     if(initalPosts !== undefined && initalPosts.length > 0){
       setPostsData()
     }
-  }, [initalPosts])
+  }, [initalPosts, username, photoLink])
 
   async function updateProfile(){
     const image = new Promise(resolve => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Play from './Play/Play'
+import Board from './Play/Board'
 import OnlineSidebar from './OnlineSidebar'
 import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed'
@@ -16,11 +17,12 @@ class Layout extends Component{
         this.playClick = this.playClick.bind(this)
         this.profileClick = this.profileClick.bind(this)
         this.state = {home: true, messages: false, play: false, profile: false}
-        this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
     }
 
     homeClick(){
         this.setState({home: true})
+        document.getElementById('content').scrollTop = 0;
+
     }
 
     playClick(){
@@ -36,7 +38,7 @@ class Layout extends Component{
     }
 
     componentDidMount(){
-      M.AutoInit();
+      M.AutoInit()
       document.getElementById('image-file').addEventListener('change', function(){
         const reader = new FileReader();
         const file = document.querySelector('#image-file').files[0];
@@ -48,7 +50,10 @@ class Layout extends Component{
             reader.readAsDataURL(file);
         }
       })
-      
+      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      this.socket.on('openPlayAndStartGame', () =>{
+          this.playClick()
+      })
     }
 
     render(){
@@ -62,7 +67,8 @@ class Layout extends Component{
         }else if(messages){
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
-            content = <Play {...this.props} socket = {this.socket}/>
+            content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket}/>
+            //content = <Board {...this.props}/>
         }else if(profile){
             content = <Profile {...this.props}/>
         }

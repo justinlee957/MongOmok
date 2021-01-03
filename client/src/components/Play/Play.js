@@ -1,30 +1,38 @@
 import ChallengeBox from './ChallengeBox'
 import { useState, useEffect } from 'react'
 import Board from './Board'
+import BoardChat from './BoardChat'
 
 function Play(props){
     var [challenges, setChallenges] = useState(true)
     var [board, setBoard] = useState(false)
+    var [headerStyle, setHeader] = useState({width: '100%'})
 
     function accept(otherUid){
-        props.socket.emit('test', otherUid)
-        setBoard(true)
-        setChallenges(false)
-        document.getElementById('onlineSidebar').style.display = 'none'
+        props.socket.emit('acceptGame', otherUid)
     }
 
     useEffect(()=>{
+        let isMounted = true
         props.socket.on('startGame', () => {
-            setBoard(true)
-            setChallenges(false)
+            if(isMounted){
+                setBoard(true)
+                setChallenges(false)
+                document.getElementById('onlineSidebar').style.display = 'none'
+                setHeader({width: 'calc(100% - 400px)'})
+            }
         })
+        return () => { isMounted = false }
     })
 
     return(
         <div id = 'playWrapper'>
-            <div id = 'playHeader'>Play</div>
+            <div id = 'playHeaderWrapper'>
+                <div id = 'playHeader' style = {headerStyle}>Play</div>
+                {board && <div id = 'playOpponentHeader'>User</div>}
+            </div>
             <div id = 'playContent'>
-                {challenges && challenges.length > 0 && <ChallengeBox {...props} accept = {accept}/>}
+                {challenges && <ChallengeBox {...props} accept = {accept}/>}
                 {board && <Board {...props}/>}
             </div>
         </div>

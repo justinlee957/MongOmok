@@ -1,10 +1,7 @@
 html,body {
     height: 100%;
+    scroll-behavior: smooth;
 }
-
-/* #feed::-webkit-scrollbar{
-    display: none;
-} */
 
 .btn-flat{
     text-Transform: none !important;
@@ -295,21 +292,28 @@ img {
 }
 
 #chatMessages{
-    height: 65%;
+    height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
 }
 
-#msginput{
-    position: relative;
-    top: 1.5%;
-    width: 97%;
-    height: 6%;
-    left: 1.5%;
+#msgInput{
+    height: 35px;
     border: 0.5px black solid;
     border-radius: 33px;
+    position: relative;
+    top: 7px;
+    width: 97%;
+}
+
+#boardMsgWrapper{
+    border-top: 1px solid #80808057;
+    position: relative;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 #boardChatArea{
@@ -544,15 +548,31 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    height: calc(100% - 46px);
+}
+
+#playHeaderWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 #playHeader{
     font-size: 25px;
     border-bottom: 1px solid #80808057;
-    width: 100%;
     padding: 5px 0 5px 10px;
     font-weight: 600;
+    height: 46px;
+}
+
+#playOpponentHeader{
+    font-size: 25px;
+    border-bottom: 1px solid #80808057;
+    border-left: 1px solid #80808057;
+    padding: 5px 0 5px 10px;
+    font-weight: 600;
+    height: 46px;
+    width: 400px;
 }
 
 #challengeBox{
@@ -598,21 +618,19 @@ input[type="text"], textarea, select {
 
 #gameWrapper{
     display: flex;
-    position: relative;
+    align-items: center;
+    height: 100%;
 }
 
 #omokcanvas{
-    
+    height: 700px;
 }
 
 #chatfield{
-    height: 633px;
+    height: 100%;
     width: 400px;
-    border: 1px solid black;
-    position: relative;
-    bottom: 0.3%;
-    border-radius: 10px;
-    margin-right: 25px;
+    border-bottom: 1px solid #80808057;
+    border-left: 1px solid #80808057;
     top: 33px;
 }
 
