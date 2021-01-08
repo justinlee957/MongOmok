@@ -74,15 +74,22 @@ function Feed(props){
         setPostImage()
     }
 
+    function homeClick(){
+        document.getElementById('content').scrollTop = 0
+    }
+
     useEffect(()=>{
         document.getElementById('onlineSidebar').style.display = 'block'
     })
     
     return(
+        <div style = {{height: '100%'}}>
+        <div id = "homeHeader">
+            <p style = {{cursor: 'pointer', width: '60px'}}onClick = {homeClick}>Home</p>
+        </div>
         <div id = "feed">
-            <div id = "homeHeader">Home</div>
             <div id = "postInput">
-                <div style = {{display: 'flex', alignItems: 'center', width: '100%'}}>
+                <div style = {{display: 'flex', alignItems: 'center', width: '100%', height: '43px'}}>
                     <form>
                         <label>
                             <img id = "uploadPic" src={picture} alt = "uploadPic"/> 
@@ -90,10 +97,11 @@ function Feed(props){
                         </label>
                     </form>
                     <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} className="browser-default" type="text" autoComplete="off"></textarea>
-                </div>
+                </div>  
                 {postImage}
             </div>
             {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>)}
+        </div>
         </div>
     )
 }

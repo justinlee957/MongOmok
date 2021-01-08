@@ -47,8 +47,8 @@ function Post(props){
             {options}
             {props.photo && <img className = "postPic" src={props.photo} alt = "post pic"/> }
             <div className = "postIconWrapper">
-                <img className = "commentBtn" src={comment} alt = "commentIcon"/> 
                 <img className = "likeBtn" src={heart} alt = "heartIcon"/> 
+                <img className = "commentBtn" src={comment} alt = "commentIcon"/> 
             </div>
         </div>
     )

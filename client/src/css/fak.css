@@ -60,7 +60,6 @@ img {
     margin-top: 3px;
 }
 #postInput{
-    border-top: 1px solid #80808057;
     border-bottom: 1px solid #80808057;
     width: 600px;
     display: flex;
@@ -77,6 +76,7 @@ img {
     height: 75%;
     resize: none;
     overflow: hidden;
+    line-height: 26px;
 }
 
 #uploadedPic{
@@ -299,9 +299,9 @@ img {
     flex-direction: column;
 }
 
-#msgInput{
+#boardMsgInput{
     height: 35px;
-    border: 0.5px black solid;
+    border: 1px #808080 solid;
     border-radius: 33px;
     position: relative;
     top: 7px;
@@ -430,9 +430,6 @@ input[type="text"], textarea, select {
 #feed{
     display: flex;
     flex-direction: column;
-    grid-gap: 10px;
-    gap: 10px;
-    height: 100%;
     justify-content: flex-start;
     align-items: center;
     border-right: 0.5px solid #80808057;
@@ -442,9 +439,17 @@ input[type="text"], textarea, select {
 #homeHeader{
     width: 100%;
     font-size: 22px;
-    padding-top: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 10px;
     font-weight: 550;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 5;
+    border-bottom: 0.5px solid #80808057;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
 }
 
 #chatInputArea{
@@ -565,6 +570,17 @@ input[type="text"], textarea, select {
     height: 46px;
 }
 
+#opponentPhoto{
+    float: left;
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    margin-left: 5px;
+    margin-top: 2px;
+    margin-right: 5px;
+    object-fit: cover;
+}
+
 #playOpponentHeader{
     font-size: 25px;
     border-bottom: 1px solid #80808057;
@@ -626,7 +642,7 @@ input[type="text"], textarea, select {
     height: 700px;
 }
 
-#chatfield{
+#boardChatField{
     height: 100%;
     width: 400px;
     border-bottom: 1px solid #80808057;
@@ -646,6 +662,38 @@ input[type="text"], textarea, select {
     height: 630px;
     width:10%;
     min-width:180px;
+}
+
+#gameResultWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#gameResult{
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+#rematchBtn{
+    border-radius: 25px;
+    border: 1px pink;
+    background-color: #e891a0;
+    cursor: pointer;
+    box-shadow: none;
+    width: 95px;
+    height: 40px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+
+#rematchBtn:hover, #postBtn:hover{
+    background-color: #f5afbb
 }
 
 center {

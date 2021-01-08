@@ -7,6 +7,7 @@ import { firestore, auth, storage } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { GameProvider } from './GameProvider'
 
 function App() {
   const [user] = useAuthState(auth)
@@ -134,7 +135,9 @@ function App() {
       <header>
         <SignOut/>
       </header>
-      {user ? <Layout posts = {posts} messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
+      <GameProvider>
+        {user ? <Layout posts = {posts} messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
+      </GameProvider>
     </div>
   );
 }

@@ -1,13 +1,12 @@
-import logo2 from '../../images/icecat.jpg'
 import { firestore, FieldValue } from '../../firebase'
 import BoardMsg from './BoardMsg'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useEffect } from 'react'   
 
 function BoardChat(props){
-    const messagesRef = firestore.collection('messages');
+    const messagesRef = firestore.collection('games').doc(props.gameData.docID).collection('msgs')
     const query = messagesRef.orderBy('createdAt').limit(25);
-    const [messages] = useCollectionData(query, { idField: 'id' });
+    const [messages] = useCollectionData(query, { idField: 'id' })
 
     useEffect(() => {
         async function sendMessage(msg){
@@ -29,16 +28,16 @@ function BoardChat(props){
             }
         })
 
-    }, [messagesRef, props.uid]);
+    }, [messagesRef, props.uid])
 
 
     return(
-        <div id = "chatfield">
+        <div id = "boardChatField">
             <div id = "chatMessages">
                 {messages && messages.map(msg => <BoardMsg uid = {msg.uid} key = {msg.id} message = {msg.text}/>)}
             </div>
             <div id = "boardMsgWrapper">
-                <div id="msgInput">
+                <div id="boardMsgInput">
                     <textarea id='boardChatArea' className="browser-default" type="text" autoComplete="off"></textarea>
                 </div>
             </div>

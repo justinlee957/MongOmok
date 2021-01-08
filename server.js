@@ -38,17 +38,26 @@ io.on('connection', socket =>{
         db.collection('users').doc(otherUid).get().then(doc => {
             var inGame = doc.data().inGame
             console.log(otherUid, inGame)
-            if(users.has(otherUid) /*&& (inGame === "no" || inGame === undefined)*/){
-                socket.emit('startGame')
+            if(true/*users.has(otherUid) && (inGame === "no" || inGame === undefined)*/){
+                //socket.emit('startGame', otherUid)
                 //work on layout emit
-                console.log(otherUid, users.get(otherUid))
-                io.to(users.get(otherUid)).emit('openPlayAndStartGame')
                 db.collection('users').doc(uid).update({inGame: 'yes'})
                 db.collection('users').doc(otherUid).update({inGame: 'yes'})
+                // db.collection('games').add({users}).then(doc =>{
+                //     socket.emit('startGame', {otherUid, docid: doc.id})
+                // })
+                db.collection('games').doc('HgsUL62Zvo2AJjHzklce').get().then(doc => {
+                    socket.emit('startGame', {otherUid, docID: doc.id, color: 'red', turn: 'first'})
+                    io.to(users.get(otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second' })
+                })
             }
         })
         //db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()
             
+    })
+
+    socket.on('wonGame', (otherUid) =>{
+        io.to(users.get(otherUid)).emit('lostGame')
     })
 
     socket.on('disconnect', () => {
