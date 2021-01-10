@@ -8,6 +8,7 @@ export function useGameContext(){
 
 export function GameProvider({children}){
     var [placed, setPlaced] = useState(Array.from({length: 10},()=> Array.from({length: 10}, () => 0)))
+    var [requestedRematch, setRequestedRematch] = useState()
     var xcoord = []
     var ycoord = []
     omokarrays()
@@ -30,7 +31,7 @@ export function GameProvider({children}){
     }
 
     return(
-        <GameContext.Provider value = {[placed, setPlaced, xcoord, ycoord]}>
+        <GameContext.Provider value = {[placed, setPlaced, xcoord, ycoord, requestedRematch, setRequestedRematch]}>
             {children}
         </GameContext.Provider>
     )

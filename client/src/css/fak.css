@@ -692,7 +692,21 @@ input[type="text"], textarea, select {
     padding-bottom: 3px;
 }
 
-#rematchBtn:hover, #postBtn:hover{
+#leaveBtn{
+    border-radius: 25px;
+    border: 1px pink;
+    background-color: #e891a0;
+    cursor: pointer;
+    box-shadow: none;
+    width: 73px;
+    height: 40px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding-bottom: 3px;
+}
+
+#rematchBtn:hover, #postBtn:hover, #leaveBtn:hover{
     background-color: #f5afbb
 }
 

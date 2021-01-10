@@ -5,18 +5,15 @@ import { useGameContext } from '../../GameProvider'
 import GameLogic from './GameLogic'
 
 function Board(props){
-
+  var [gameInfo, setGameInfo] = useState()
+  var [isNewGame, setIsNewGame] = useState(false)
   var canvasRef = useRef()
-  var [winner, setWinner] = useState()
-  const [placed, setPlaced, xcoord, ycoord] = useGameContext()
-  console.log(placed)
-  var turn
+  const [placed, setPlaced, xcoord, ycoord, requestedRematch, setRequestedRematch] = useGameContext()
 
-  function setTurn(result){
-    turn = result
-  }
-
+  var [turn, setTurn] = useState()
+  
   function handleClick(e){
+    console.log('clicked', turn)
     if(turn){
       const rect = canvasRef.current.getBoundingClientRect()
       var x = e.clientX - rect.left
@@ -27,68 +24,69 @@ function Board(props){
     }
   }
 
-  async function plotclosestpoint(x,y){
-      if(x > 656){
-        x = 656
-      }else if(x < 26){
-        x = 26
-      }else{
-        for(var i = 0; i < 20; i++){
-          if(xcoord[i] <= x && xcoord[i+1] >= x ){
-            var x1 = xcoord[i];
-            var x2 = xcoord[i+1];
-            if(x2-x > x-x1){
-                x = x1;
-            }else{
-                x = x2;
-            }
-            break;
-          }
-        }
-      }
-      if(y > 656){  
-        y = 656
-      }else if(y < 26){
-        y = 26
-      }else{
-        for(i = 0; i < 20; i++){
-          if(ycoord[i] <= y && ycoord[i+1] >= y ){
-            var y1 = xcoord[i]
-            var y2 = xcoord[i+1]
-          if(y2-y > y-y1){
-              y = y1
+  function plotclosestpoint(x,y){
+    if(x > 656){
+      x = 656
+    }else if(x < 26){
+      x = 26
+    }else{
+      for(var i = 0; i < 20; i++){
+        if(xcoord[i] <= x && xcoord[i+1] >= x ){
+          var x1 = xcoord[i];
+          var x2 = xcoord[i+1];
+          if(x2-x > x-x1){
+              x = x1;
           }else{
-              y = y2
+              x = x2;
           }
-            break
-          }
+          break;
         }
       }
-      
-      if(placed[(y-26)/35][(x-26)/35] !== 0){
-          return
+    }
+    if(y > 656){  
+      y = 656
+    }else if(y < 26){
+      y = 26
+    }else{
+      for(i = 0; i < 20; i++){
+        if(ycoord[i] <= y && ycoord[i+1] >= y ){
+          var y1 = xcoord[i]
+          var y2 = xcoord[i+1]
+        if(y2-y > y-y1){
+            y = y1
+        }else{
+            y = y2
+        }
+          break
+        }
       }
-      drawPiece(x, y, props.gameData.color)
-  
-      // console.log(x, y)
-      // console.log((x-26)/35, (y-26)/35)
+    }
+    
+    if(placed[(y-26)/35][(x-26)/35] !== 0){
+        return
+    }
+    drawPiece(x, y, props.gameData.color)
+    setTurn(false)
+    // console.log(x, y)
+    // console.log((x-26)/35, (y-26)/35)
+    firestore.collection('games').doc(props.gameData.docID).collection('moves').add({
+      x,
+      y,
+      color: props.gameData.color,
+      createdAt: FieldValue.serverTimestamp(),
+      uid: props.uid
+    }).then(() => {
       placed[(y-26)/35][(x-26)/35] = 1
-      setPlaced(placed)
-      await firestore.collection('games').doc(props.gameData.docID).collection('moves').add({
-        x,
-        y,
-        color: props.gameData.color,
-        createdAt: FieldValue.serverTimestamp(),
-        uid: props.uid
-      }) 
+      setPlaced(placed) 
+      
       var win = checkwin()
       if(win){
         console.log('won')
         props.socket.emit('wonGame', props.gameData.otherUid)
-        setWinner(props.name)
-        setTurn(false)
+        setGameInfo(props.name + ' wins!')
         //firestore.collection('games').doc(props.gameData.docID).update({winner: props.uid})
       }
+    })
   }
 
   function drawPiece(x, y, color){
@@ -100,38 +98,71 @@ function Board(props){
     context.fill()
   }
 
+  function reInitBoard(){
+    var context = canvasRef.current.getContext('2d')
+    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+    drawBoard()
+  }
+
+  function drawBoard(){
+    var context = canvasRef.current.getContext('2d')
+    // Box width
+    var bw = 630;
+    // Box height
+    var bh = 630;
+    // Padding
+    var p = 34;
+    context.beginPath()
+    for (var x = 0; x <= bw; x += 35) {
+        context.moveTo(0.5 + x + p, p);
+        context.lineTo(0.5 + x + p, bh + p);
+    }
+    for (var y = 0; y <= bh; y += 35) {
+        context.moveTo(p, 0.5 + y + p);
+        context.lineTo(bw + p, 0.5 + y + p);
+    }
+    context.strokeStyle = "black";
+    context.stroke();
+  }
+
+
   useEffect(()=>{
-      var context = canvasRef.current.getContext('2d')
       drawBoard()
-      function drawBoard(){
-          // Box width
-          var bw = 630;
-          // Box height
-          var bh = 630;
-          // Padding
-          var p = 34;
-          for (var x = 0; x <= bw; x += 35) {
-              context.moveTo(0.5 + x + p, p);
-              context.lineTo(0.5 + x + p, bh + p);
-          }
-          for (var y = 0; y <= bh; y += 35) {
-              context.moveTo(p, 0.5 + y + p);
-              context.lineTo(bw + p, 0.5 + y + p);
-          }
-          context.strokeStyle = "black";
-          context.stroke();
-      }
       console.log('drawing board')
-      firestore.collection('games').doc(props.gameData.docID).collection('moves').get().then(query=>{
+      var movesRef = firestore.collection('games').doc(props.gameData.docID).collection('moves')
+
+      //on board render, draw out every move so far
+      movesRef.get().then(query=>{
           query.forEach(doc => {
             drawPiece(doc.data().x, doc.data().y, doc.data().color)
           })
       })
       props.socket.on('lostGame', () =>{
         console.log('lost')
-        setWinner(props.opponentName)
+        setGameInfo(props.opponentName + ' wins!')
         setTurn(false)
       })
+      props.socket.on('rematchRequested', () => {
+        setGameInfo(props.opponentName + ' wants to rematch!')
+        setRequestedRematch(true)
+        setIsNewGame(true)
+      })
+
+      props.socket.on('startRematch', () => {
+        //reinit game
+        let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
+        setPlaced(newArray)
+        setGameInfo(undefined)
+        reInitBoard()
+        setIsNewGame(true)
+        setTurn(true)
+        movesRef.get().then(query => {
+          query.docs.forEach(doc => {
+            movesRef.doc(doc.id).delete()
+          })
+        })
+      })
+
   }, [props.opponentName, props.socket])
 
   function checkwin(){
@@ -216,15 +247,35 @@ function Board(props){
     
       return 0;
   }
+
+  function requestRematch(){
+    if(requestedRematch){
+      props.socket.emit('acceptRematch', props.gameData.otherUid)
+      //reinit game
+      let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
+      setPlaced(newArray)
+      setTurn(false)
+      setGameInfo(undefined)
+      reInitBoard()
+    }else{
+      props.socket.emit('requestRematch', props.gameData.otherUid)
+      setGameInfo('Rematch Requested')
+      document.getElementById('rematchBtn').style.display = 'none'
+    }
+  }
+
   return(
       <div id = 'gameWrapper'>
         <div>
-          <div id = 'gameResultWrapper'> 
-            <p id = 'gameResult'>{winner + ' wins!'}</p>
-            <button id = 'rematchBtn'>rematch</button>
-          </div>
+          {gameInfo &&
+            <div id = 'gameResultWrapper'> 
+              <p id = 'gameResult'>{gameInfo}</p>
+              <button id = 'rematchBtn' onClick = {requestRematch}>rematch</button>
+              <button id = 'leaveBtn' onClick = {props.leaveMatch}>leave</button>
+            </div>
+          }
           <canvas ref = {canvasRef} onClick = {handleClick} id = "omokcanvas" width = "700" height="700" />
-          <GameLogic {...props} drawPiece = {drawPiece} setTurn = {setTurn}/> 
+          <GameLogic {...props} drawPiece = {drawPiece} setTurn = {setTurn} isNewGame = {isNewGame} setIsNewGame = {setIsNewGame}/> 
         </div>
           <BoardChat {...props}/>
       </div> 

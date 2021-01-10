@@ -34,7 +34,7 @@ io.on('connection', socket =>{
         users.set(uid, socket.id);
     }
 
-    socket.on('acceptGame', (otherUid) =>{
+    socket.on('acceptGame', otherUid =>{
         db.collection('users').doc(otherUid).get().then(doc => {
             var inGame = doc.data().inGame
             console.log(otherUid, inGame)
@@ -52,12 +52,19 @@ io.on('connection', socket =>{
                 })
             }
         })
-        //db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()
-            
+        //db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()     
     })
 
-    socket.on('wonGame', (otherUid) =>{
+    socket.on('wonGame', otherUid =>{
         io.to(users.get(otherUid)).emit('lostGame')
+    })
+
+    socket.on('requestRematch', otherUid => {
+        io.to(users.get(otherUid)).emit('rematchRequested')
+    })
+
+    socket.on('acceptRematch', otherUid =>{
+        io.to(users.get(otherUid)).emit('startRematch')
     })
 
     socket.on('disconnect', () => {

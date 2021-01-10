@@ -16,6 +16,7 @@ class Layout extends Component{
         this.messagesClick = this.messagesClick.bind(this)
         this.playClick = this.playClick.bind(this)
         this.profileClick = this.profileClick.bind(this)
+        this.leaveMatch= this.leaveMatch.bind(this)
         this.state = {home: true, messages: false, play: false, profile: false, gameData: undefined}
     }
 
@@ -34,6 +35,10 @@ class Layout extends Component{
 
     profileClick(){
         this.setState({profile: true, messages: false, home: false, play: false})
+    }
+
+    leaveMatch(){
+        this.setState({gameData: undefined, play: true})
     }
 
     componentDidMount(){
@@ -71,7 +76,7 @@ class Layout extends Component{
         }else if(messages){
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
-            content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData}/>
+            content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
             //content = <Board {...this.props}/>
         }else if(profile){
             content = <Profile {...this.props}/>
