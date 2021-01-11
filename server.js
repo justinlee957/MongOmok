@@ -77,9 +77,4 @@ io.on('connection', socket =>{
     })
 })
 
-
-
-const port = 5000;
-http.listen(port, () =>{
-    console.log('server started on port 5000')
-})
+http.listen(process.env.PORT || 5000)
