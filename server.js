@@ -1,4 +1,8 @@
-const app = require('express')
+var express = require('express')
+var app = express()
+var path = require('path')
+var cors = require("cors")
+app.use(cors())
 const http = require('http').createServer(app)
 const io = require('socket.io')(http, {
     cors: {
@@ -15,15 +19,13 @@ admin.initializeApp({
 });
 const db = admin.firestore()
 
+app.use(express.static(path.join(__dirname, 'client/build')))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'))
+})
+
 var users = new Map()
-// test()
-// async function test(){
-//     const onlineUsersRef = db.collection('users');
-//     const snapshot = await onlineUsersRef.where('status', '==', 'online').get()
-//     snapshot.forEach(doc => {
-//         console.log(doc.id, '=>', doc.data());
-//       });
-// }
 
 
 io.on('connection', socket =>{
