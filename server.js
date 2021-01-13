@@ -30,6 +30,7 @@ var users = new Map()
 
 io.on('connection', socket =>{
     var uid = socket.handshake.query['uid']
+    var opponentUid
     console.log(uid, 'connected')
 
     if(uid && !users.has(uid)){
@@ -39,40 +40,59 @@ io.on('connection', socket =>{
     socket.on('acceptGame', otherUid =>{
         db.collection('users').doc(otherUid).get().then(doc => {
             var inGame = doc.data().inGame
+            var players = [uid, otherUid]
             console.log(otherUid, inGame)
-            if(true/*users.has(otherUid) && (inGame === "no" || inGame === undefined)*/){
-                //socket.emit('startGame', otherUid)
-                //work on layout emit
+            if(users.has(otherUid) && (inGame === "no" || inGame === undefined)){
+                opponentUid = otherUid
                 db.collection('users').doc(uid).update({inGame: 'yes'})
                 db.collection('users').doc(otherUid).update({inGame: 'yes'})
-                // db.collection('games').add({users}).then(doc =>{
-                //     socket.emit('startGame', {otherUid, docid: doc.id})
-                // })
-                db.collection('games').doc('HgsUL62Zvo2AJjHzklce').get().then(doc => {
+                db.collection('games').add({players}).then(doc =>{
                     socket.emit('startGame', {otherUid, docID: doc.id, color: 'red', turn: 'first'})
-                    io.to(users.get(otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second' })
+                    io.to(users.get(otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second' })  
+                    db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()           
                 })
             }
         })
-        //db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()     
     })
 
     socket.on('wonGame', otherUid =>{
-        io.to(users.get(otherUid)).emit('lostGame')
+        if(users.has(otherUid)){
+            io.to(users.get(otherUid)).emit('lostGame')
+        }else{
+            socket.emit('opponentDc')
+        }
     })
 
     socket.on('requestRematch', otherUid => {
-        io.to(users.get(otherUid)).emit('rematchRequested')
+        if(users.has(otherUid)){
+            io.to(users.get(otherUid)).emit('rematchRequested')
+        }else{
+            socket.emit('opponentDc')
+        }
     })
 
     socket.on('acceptRematch', otherUid =>{
-        io.to(users.get(otherUid)).emit('startRematch')
+        if(users.has(otherUid)){
+            io.to(users.get(otherUid)).emit('startRematch')
+        }else{
+            socket.emit('opponentDc')
+        }
+    })
+
+    socket.on('leftMatch', otherUid => {
+        if(users.has(otherUid)){
+            io.to(users.get(otherUid)).emit('opponentDc')
+        }
     })
 
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
+        db.collection('users').doc(uid).update({inGame: 'no'})
         if(users.has(uid)){
             users.delete(uid)
+            if(opponentUid && users.has(opponentUid)){
+                io.to(users.get(otherUid)).emit('opponentDc')
+            }
         }
     })
 })

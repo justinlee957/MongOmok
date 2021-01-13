@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
-
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
@@ -84,8 +83,8 @@ function Feed(props){
     
     return(
         <div style = {{height: '100%'}}>
-        <div id = "homeHeader">
-            <p style = {{cursor: 'pointer', width: '60px'}}onClick = {homeClick}>Home</p>
+        <div id = "homeHeader" >
+            <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
         </div>
         <div id = "feed">
             <div id = "postInput">
@@ -96,7 +95,7 @@ function Feed(props){
                             <input id = "postImage" onChange={showUploadedImage} type="file" style = {{display:"none"}}/>
                         </label>
                     </form>
-                    <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} className="browser-default" type="text" autoComplete="off"></textarea>
+                    <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} type="text" autoComplete="off"></textarea>
                 </div>  
                 {postImage}
             </div>

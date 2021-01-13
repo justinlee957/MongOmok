@@ -7,10 +7,10 @@ import GameLogic from './GameLogic'
 function Board(props){
   var [gameInfo, setGameInfo] = useState()
   var [isNewGame, setIsNewGame] = useState(false)
+  var [turn, setTurn] = useState()
+  var [opponentLeft, setOpponentLeft] = useState(false)
   var canvasRef = useRef()
   const [placed, setPlaced, xcoord, ycoord, requestedRematch, setRequestedRematch] = useGameContext()
-
-  var [turn, setTurn] = useState()
   
   function handleClick(e){
     console.log('clicked', turn)
@@ -156,11 +156,17 @@ function Board(props){
         reInitBoard()
         setIsNewGame(true)
         setTurn(true)
+        //remove every document from moves collection
         movesRef.get().then(query => {
           query.docs.forEach(doc => {
             movesRef.doc(doc.id).delete()
           })
         })
+      })
+
+      props.socket.on('opponentDc', () => {
+        setGameInfo(props.opponentName + ' left')
+        setOpponentLeft(true)
       })
 
   }, [props.opponentName, props.socket])
@@ -270,7 +276,7 @@ function Board(props){
           {gameInfo &&
             <div id = 'gameResultWrapper'> 
               <p id = 'gameResult'>{gameInfo}</p>
-              <button id = 'rematchBtn' onClick = {requestRematch}>rematch</button>
+              {!opponentLeft && <button id = 'rematchBtn' onClick = {requestRematch}>rematch</button>}
               <button id = 'leaveBtn' onClick = {props.leaveMatch}>leave</button>
             </div>
           }

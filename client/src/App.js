@@ -1,8 +1,6 @@
 import Layout from './components/Layout'
 import SignIn from './components/SignIn'
 import './css/App.css'
-import 'materialize-css/dist/css/materialize.min.css'
-
 import { firestore, auth, storage } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
@@ -69,7 +67,7 @@ function App() {
       }
       setChats(chats)
     }
-    if(chats !== undefined && chats.length > 0){
+    if(user && chats && chats.length > 0){
       setChatsData(user)
     }
   }, [chats, user])
@@ -90,10 +88,10 @@ function App() {
       }
       setPosts(initalPosts)
     }
-    if(initalPosts !== undefined && initalPosts.length > 0){
+    if(user && initalPosts && initalPosts.length > 0){
       setPostsData()
     }
-  }, [initalPosts, username, photoLink])
+  }, [initalPosts, username, photoLink, user])
 
   async function updateProfile(){
     const image = new Promise(resolve => {
