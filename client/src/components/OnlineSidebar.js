@@ -1,26 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import User from './User'
 import { firestore, FieldValue } from '../firebase'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function OnlineSidebar(props){
-    var [users, setUsers] = useState()
-
-    useEffect(() =>{
-        getUsers()
-    }, [])
-
-    async function getUsers(){
-        var usersRef = firestore.collection('users')
-        var usersInit = []
-        const snapshot = await usersRef.get()
-        var i = 0
-        snapshot.forEach(doc => {
-            var user = {...doc.data(), id: i, uid: doc.id}
-            usersInit.push(user)
-            i++
-        });
-        setUsers(usersInit)
-    }
+    //var [users, setUsers] = useState()
+    var usersQuery =  firestore.collection('users')
+    var [users] = useCollectionData(usersQuery, { idField: 'id' })
+    console.log(users)
 
     async function showChat(otherUser){
         if(otherUser.uid === props.uid){
@@ -55,7 +42,7 @@ function OnlineSidebar(props){
     return(
         <div id = "onlineSidebar">
             <div id = "usersTitle">Users</div>
-             {users && users.map(user => <User key = {user.id} {...user} showChat = {showChat} challenge = {challenge}/>)} 
+             {users && users.map(user => <User key = {user.id} uid = {user.id} photo = {user.photo} name = {user.name} status = {user.status} showChat = {showChat} challenge = {challenge}/>)} 
         </div>
     )
 }

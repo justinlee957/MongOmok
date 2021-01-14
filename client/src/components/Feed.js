@@ -79,11 +79,11 @@ function Feed(props){
 
     useEffect(()=>{
         document.getElementById('onlineSidebar').style.display = 'block'
-    })
+    }, [])
     
     return(
         <div style = {{height: '100%'}}>
-        <div id = "homeHeader" >
+        <div id = "homeHeader" style = {{position: props.position}}>
             <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
         </div>
         <div id = "feed">

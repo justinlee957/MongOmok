@@ -5,6 +5,7 @@ function User(props){
     var [isHovering, setHovering] = useState(false)
     
     var photo = props.photo ? props.photo : dog
+    var status = props.status === 'online' ? 'onlineDot' : null
 
     function handleMouseHover(){
         if(props.uid !== auth.currentUser.uid){
@@ -13,6 +14,7 @@ function User(props){
     }
 
     return(
+        <>
         <div className = "userInfoWrapper" onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
             <img id = "onlinePic" src={photo} alt = "profile pic"/>
             <div className = "onlineUsername">{props.name}</div>
@@ -22,6 +24,8 @@ function User(props){
                     <button className = "userOptionsBtn" onClick = {() => props.challenge(props.uid)}>Challenge</button>
                 </div>}
         </div>
+        <div className = {status}></div>
+        </>
     )
 }
 

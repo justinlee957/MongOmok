@@ -32,6 +32,7 @@ io.on('connection', socket =>{
     var uid = socket.handshake.query['uid']
     var opponentUid
     console.log(uid, 'connected')
+    db.collection('users').doc(uid).update({status: 'online'})
 
     if(uid && !users.has(uid)){
         users.set(uid, socket.id);
@@ -87,7 +88,7 @@ io.on('connection', socket =>{
 
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
-        db.collection('users').doc(uid).update({inGame: 'no'})
+        db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})
         if(users.has(uid)){
             users.delete(uid)
             if(opponentUid && users.has(opponentUid)){

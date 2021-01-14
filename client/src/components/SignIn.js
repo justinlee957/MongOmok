@@ -58,7 +58,7 @@ function Register(props){
   var [username, setUsername] = useState()
 
   function tryRegister(){
-    if(EmailValidator.validate(email)){
+    if(EmailValidator.validate(email) && password && password.length > 3){
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
           firestore.collection('users').doc(auth.currentUser.uid).set({

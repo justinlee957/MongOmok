@@ -20,10 +20,8 @@ function App() {
   if(user){
     //console.log(user)
     //auth.currentUser.delete()
-    var postsRef = firestore.collection('posts')
-    var chatsRef = firestore.collection('chats')
-    chatsQuery = chatsRef.where('users', 'array-contains-any', [user.uid]).limit(25)
-    postsQuery = postsRef.orderBy('createdAt', 'desc').limit(25)
+    postsQuery = firestore.collection('posts').orderBy('createdAt', 'desc').limit(25)
+    chatsQuery = firestore.collection('chats').where('users', 'array-contains-any', [user.uid]).limit(25)
   }
 
   //listen for any updates in these queries and update accordingly
@@ -136,9 +134,6 @@ function App() {
   }
   return (
     <div className="App">
-      <header>
-        <SignOut/>
-      </header>
       <GameProvider>
         {user ? <Layout posts = {posts} messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
       </GameProvider>
@@ -146,17 +141,6 @@ function App() {
   );
 }
 
-function SignOut() {
-  const mystyle = {
-    position: "absolute",
-    left: "0",
-    zIndex: "1000",
-    bottom: "2%",
-    marginLeft: "7px",
-  };
-  return auth.currentUser && (
-    <button style = {mystyle} className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-  )
-}
+
 
 export default App;

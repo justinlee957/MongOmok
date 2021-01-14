@@ -6,6 +6,7 @@ import Feed from './Feed'
 import Modal from 'react-modal'
 import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
+import SignOut from './SignOut'
 Modal.setAppElement('#root')
 
 const customStyles = {
@@ -58,7 +59,7 @@ class Layout extends Component{
     }
 
     openModal(){
-        this.setState({modalIsOpen: true, position: 'none'})
+        this.setState({modalIsOpen: true, position: 'inherit'})
     }
 
     closeModal(){
@@ -80,8 +81,8 @@ class Layout extends Component{
     componentDidMount(){
       let isMounted = true
       //used for heroku
-      this.socket = openSocket({query: `uid=${this.props.uid}`})
-      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //this.socket = openSocket({query: `uid=${this.props.uid}`})
+      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.setState({gameData: data})
@@ -97,12 +98,11 @@ class Layout extends Component{
         const play = this.state.play
         let content
         if(home){
-            content = <Feed {...this.props} position = {this.state.position}/>
+            content = <Feed posts = {this.props.posts} position = {this.state.position}/>
         }else if(messages){
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
-            //content = <Board {...this.props}/>
         }
 
         return(
@@ -129,6 +129,7 @@ class Layout extends Component{
                         <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
                         <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
                         <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
+                        <SignOut/>
                     </div>
                     {content}
                     <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>

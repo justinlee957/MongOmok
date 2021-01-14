@@ -399,6 +399,25 @@ input[type="text"], textarea, select {
     padding-right: 20px;
 }
 
+#signOutBtn{
+    position: relative;
+    top: 55%;
+    right: 5%;
+    border-radius: 25px;
+    border: 1px white;
+    background-color: white;
+    cursor: pointer;
+    width: 98px;
+    height: 43px;
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+#signOutBtn:hover{
+    background-color: #f3ecec;
+}
+
 #onlineSidebar{
     height: 100%;
     width: 205px;
@@ -442,6 +461,27 @@ input[type="text"], textarea, select {
     top: -10%;
     border-radius: 10px;
     box-shadow: 2px 4px 25px -9px rgba(0,0,0,0.75);
+}
+
+.onlineDot{
+    /* height: 13px;
+    width: 13px;
+    background-color: rgb(67, 181, 129);
+    border-radius: 50%;
+    position: absolute;
+    border: 1px solid #a7adb5;
+    right: 74%;
+    bottom: 8%; */
+    height: 13px;
+    width: 13px;
+    background-color: rgb(67, 181, 129);
+    border-radius: 50%;
+    border: 1px solid #a7adb5;
+    margin-top: -14px;
+    position: relative;
+    top: -3px;
+    left: 38px;
+    z-index: 10;
 }
 
 .userOptionsBtn{

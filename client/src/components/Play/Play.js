@@ -20,8 +20,8 @@ function Play(props){
                     <ChallengeBox {...props} accept = {accept}/>
                     {playerData && 
                         <div id = 'playerDataBox'>
-                            <p style = {{paddingTop: '5px'}}>win: {playerData.wins}</p>
-                            <p>lose: {playerData.losses}</p>
+                            <p style = {{paddingTop: '5px'}}>win: {playerData.win}</p>
+                            <p>lose: {playerData.loss}</p>
                         </div>}
                   </div>
     }
@@ -36,7 +36,7 @@ function Play(props){
             })
         }
         firestore.collection('users').doc(props.uid).get().then(doc => {
-            var data = {wins: doc.data().wins, losses: doc.data().losses}
+            var data = {win: doc.data().win, loss: doc.data().loss}
             setPlayerData(data)
         })
     }, [props.gameData])
