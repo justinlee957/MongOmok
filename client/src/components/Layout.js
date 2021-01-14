@@ -3,9 +3,7 @@ import Play from './Play/Play'
 import OnlineSidebar from './OnlineSidebar'
 import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed'
-import Profile from './Profile'
 import Modal from 'react-modal'
-import '../css/fak.css'
 import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
 Modal.setAppElement('#root')
@@ -31,12 +29,11 @@ class Layout extends Component{
         this.homeClick = this.homeClick.bind(this)
         this.messagesClick = this.messagesClick.bind(this)
         this.playClick = this.playClick.bind(this)
-        this.profileClick = this.profileClick.bind(this)
         this.leaveMatch= this.leaveMatch.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
         this.inputChange = this.inputChange.bind(this)
-        this.state = {home: true, messages: false, play: false, profile: false, gameData: undefined, modalIsOpen: false, position: 'sticky'}
+        this.state = {home: true, messages: false, play: false, gameData: undefined, modalIsOpen: false, position: 'sticky'}
     }
 
     homeClick(){
@@ -45,16 +42,13 @@ class Layout extends Component{
     }
 
     playClick(){
-        this.setState({play: true, home: false, messages: false, profile: false})
+        this.setState({play: true, home: false, messages: false})
     }
 
     messagesClick(){
-        this.setState({messages: true, home: false, play: false, profile: false})
+        this.setState({messages: true, home: false, play: false})
     }
 
-    profileClick(){
-        this.setState({profile: true, messages: false, home: false, play: false})
-    }
 
     leaveMatch(){
         firestore.collection('users').doc(this.props.uid).update({inGame: 'no'})
@@ -85,8 +79,9 @@ class Layout extends Component{
 
     componentDidMount(){
       let isMounted = true
-      //this.socket = openSocket({query: `uid=${this.props.uid}`})
-      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //used for heroku
+      this.socket = openSocket({query: `uid=${this.props.uid}`})
+      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.setState({gameData: data})
@@ -100,7 +95,6 @@ class Layout extends Component{
         const home = this.state.home
         const messages = this.state.messages
         const play = this.state.play
-        const profile = this.state.profile
         let content
         if(home){
             content = <Feed {...this.props} position = {this.state.position}/>
@@ -109,8 +103,6 @@ class Layout extends Component{
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
             //content = <Board {...this.props}/>
-        }else if(profile){
-            content = <Profile {...this.props}/>
         }
 
         return(
@@ -136,7 +128,7 @@ class Layout extends Component{
                         <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
                         <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
                         <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
-                        <button onClick = {this.profileClick} className = "sidebar-btn">Profile</button>
+                        <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
                     </div>
                     {content}
                     <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>

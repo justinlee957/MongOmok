@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { firestore, auth } from '../firebase'
-
+import { auth } from '../firebase'
+import dog from '../images/defaultPic.png'
 function User(props){
     var [isHovering, setHovering] = useState(false)
+    
+    var photo = props.photo ? props.photo : dog
 
     function handleMouseHover(){
         if(props.uid !== auth.currentUser.uid){
@@ -12,7 +14,7 @@ function User(props){
 
     return(
         <div className = "userInfoWrapper" onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
-            <img id = "onlinePic" src={props.photo} alt = "profile pic"/>
+            <img id = "onlinePic" src={photo} alt = "profile pic"/>
             <div className = "onlineUsername">{props.name}</div>
                 {isHovering && 
                 <div className = "userOptions">

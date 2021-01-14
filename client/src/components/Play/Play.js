@@ -5,7 +5,7 @@ import { firestore } from '../../firebase'
 
 function Play(props){
     var [gameData, setGameData] = useState()
-
+    var [playerData, setPlayerData] = useState()
     var headerStyle = {width: '100%'}
     var content
 
@@ -16,7 +16,14 @@ function Play(props){
         headerStyle = {width: 'calc(100% - 400px)'}
     //show challenges
     }else{
-        content = <ChallengeBox {...props} accept = {accept}/>
+        content = <div id = 'challengeBoxWrapper'>
+                    <ChallengeBox {...props} accept = {accept}/>
+                    {playerData && 
+                        <div id = 'playerDataBox'>
+                            <p style = {{paddingTop: '5px'}}>win: {playerData.wins}</p>
+                            <p>lose: {playerData.losses}</p>
+                        </div>}
+                  </div>
     }
 
     useEffect(()=>{
@@ -28,6 +35,10 @@ function Play(props){
                 })
             })
         }
+        firestore.collection('users').doc(props.uid).get().then(doc => {
+            var data = {wins: doc.data().wins, losses: doc.data().losses}
+            setPlayerData(data)
+        })
     }, [props.gameData])
 
     function accept(otherUid){

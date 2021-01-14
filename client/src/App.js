@@ -1,11 +1,13 @@
 import Layout from './components/Layout'
 import SignIn from './components/SignIn'
 import './css/App.css'
+import './css/fak.css'
 import { firestore, auth, storage } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { GameProvider } from './GameProvider'
+import dog from './images/defaultPic.png'
 
 function App() {
   const [user] = useAuthState(auth)
@@ -16,6 +18,8 @@ function App() {
   var chatsQuery, postsQuery
 
   if(user){
+    //console.log(user)
+    //auth.currentUser.delete()
     var postsRef = firestore.collection('posts')
     var chatsRef = firestore.collection('chats')
     chatsQuery = chatsRef.where('users', 'array-contains-any', [user.uid]).limit(25)
@@ -33,15 +37,17 @@ function App() {
       var usersRef = firestore.collection('users')
       usersRef.doc(user.uid).get().then(function(doc){
         if(doc.exists){
-          setUsername(doc.data().name);
-          setPhoto(doc.data().photo);
+          setUsername(doc.data().name)
+          doc.data().photo ? setPhoto(doc.data().photo) : setPhoto(dog)
         }else{
-          setUsername(user.displayName);
-          setPhoto(user.photoURL);
+          setUsername(user.displayName)
+          setPhoto(user.photoURL)
           usersRef.doc(user.uid).set({
             name: user.displayName,
             photo: user.photoURL,
-            status: 'online'
+            status: 'online',
+            win: 0,
+            loss: 0
           })
         }
       })

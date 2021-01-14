@@ -2,7 +2,6 @@ import accept from '../../images/accept.png'
 import deny from '../../images/deny.png'
 import { firestore } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { useEffect } from 'react'
 
 
 function ChallengeBox(props){
@@ -10,12 +9,11 @@ function ChallengeBox(props){
     const [challenge, loading, error] = useCollectionData(challengeRef, { idField: 'id'})
 
     return(
-        <div id = 'challengeBoxWrapper'>
             <div id = "challengeBox">
                 <div id = 'challengeHeader'>Challenges</div>
-                {challenge && challenge.length > 0 && challenge.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept}/>)}
+                {challenge && challenge.length > 0 ? challenge.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept}/>)
+                : <p style = {{fontSize: '20px', padding: '5px'}}>None :(</p>}
             </div>
-        </div>
     )
 }
 

@@ -587,7 +587,7 @@ input[type="text"], textarea, select {
     height: 100%;
     border-right: 1px solid #80808057;
     border-left: 1px solid #80808057;
-    min-width: 35%;
+    min-width: 25%;
 }
 
 #playContent{
@@ -631,16 +631,26 @@ input[type="text"], textarea, select {
     height: 46px;
     width: 400px;
 }
+#playerDataBox{
+    width: 105px;
+    border: 1px solid #80808057;
+    border-radius: 10px;
+    font-size: 23px;
+}
 
 #challengeBox{
     border: 1px solid #80808057;
     border-radius: 10px;
+    width: 135px;
 }
 
 #challengeBoxWrapper{
     display: flex;
     width: 100%;
     padding: 10px;
+    flex-direction: row;
+    gap: 10px;
+    text-align: center;
 }
 
 #challengeHeader{
@@ -788,13 +798,19 @@ center {
 #loginHeader{
     font-weight: 600;
     font-size: 30px;
-    color: #91b2e8;   
+    color: #315084;   
     padding-bottom: 15px;
 }
 
 #emailInputInfo{
     position: relative;
     right: 21%;
+    font-size: 15px;
+}
+
+#usernameInputInfo{
+    position: relative;
+    right: 18%;
     font-size: 15px;
 }
 
@@ -812,6 +828,7 @@ center {
     border: 1px solid black;
     padding-left: 10px;
     font-size: 17px;
+    outline: none;
 }
 
 input[type="email"], input[type="password"], textarea, select { 
