@@ -1,8 +1,8 @@
-import '../css/fak.css'
-import heart from '../images/heart1.png'
-import comment from '../images/comment1.png'
+import '../../css/fak.css'
+import heart from '../../images/heart1.png'
+import comment from '../../images/comment1.png'
 import { useState } from 'react'
-import { firestore, storage, auth } from '../firebase'
+import { firestore, storage, auth } from '../../firebase'
 
 function Post(props){
     var optionsBtn

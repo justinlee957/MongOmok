@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import Play from './Play/Play'
-import OnlineSidebar from './OnlineSidebar'
+import OnlineSidebar from './RightSidebar/OnlineSidebar'
 import MessageLayout from './Messages/MessageLayout'
-import Feed from './Feed'
+import Feed from './Feed/Feed'
 import Modal from 'react-modal'
 import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
-import SignOut from './SignOut'
+import SignOut from './SignIn/SignOut'
 Modal.setAppElement('#root')
 
 const customStyles = {
@@ -81,8 +81,8 @@ class Layout extends Component{
     componentDidMount(){
       let isMounted = true
       //used for heroku
-      this.socket = openSocket({query: `uid=${this.props.uid}`})
-      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //this.socket = openSocket({query: `uid=${this.props.uid}`})
+      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.setState({gameData: data})

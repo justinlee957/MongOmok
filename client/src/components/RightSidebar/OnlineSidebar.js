@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react'
 import User from './User'
-import { firestore, FieldValue } from '../firebase'
+import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function OnlineSidebar(props){

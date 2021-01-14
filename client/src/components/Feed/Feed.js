@@ -1,7 +1,7 @@
 import Post from './Post'
-import { firestore, FieldValue, storage } from '../firebase'
-import picture from '../images/picture1.png'
-import cancel from '../images/cancel.png'
+import { firestore, FieldValue, storage } from '../../firebase'
+import picture from '../../images/picture1.png'
+import cancel from '../../images/cancel.png'
 import { useState, useEffect } from 'react'
 
 function Feed(props){

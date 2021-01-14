@@ -50,9 +50,9 @@ io.on('connection', socket =>{
                 db.collection('games').add({players}).then(doc =>{
                     socket.emit('startGame', {otherUid, docID: doc.id, color: 'red', turn: 'first'})
                     io.to(users.get(otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second' })  
-                    db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()           
                 })
             }
+            db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()
         })
     })
 

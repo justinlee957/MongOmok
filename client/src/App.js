@@ -1,5 +1,5 @@
 import Layout from './components/Layout'
-import SignIn from './components/SignIn'
+import SignIn from './components/SignIn/SignIn'
 import './css/App.css'
 import './css/fak.css'
 import { firestore, auth, storage } from './firebase'
@@ -122,7 +122,7 @@ function App() {
       })
     })
 
-    const inputName = document.getElementById('changeName-input').value
+    const inputName = document.getElementById('changeNameInput').value
     if(inputName !== user.displayName && inputName !== ''){
       setUsername(inputName);
       //update user's name in 'users' collection

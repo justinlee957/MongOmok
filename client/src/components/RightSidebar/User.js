@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { auth } from '../firebase'
-import dog from '../images/defaultPic.png'
+import { auth } from '../../firebase'
+import dog from '../../images/defaultPic.png'
 function User(props){
     var [isHovering, setHovering] = useState(false)
     
