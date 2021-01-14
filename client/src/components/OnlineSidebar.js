@@ -4,10 +4,8 @@ import { firestore, FieldValue } from '../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function OnlineSidebar(props){
-    //var [users, setUsers] = useState()
     var usersQuery =  firestore.collection('users')
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
-    console.log(users)
 
     async function showChat(otherUser){
         if(otherUser.uid === props.uid){
