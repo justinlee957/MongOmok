@@ -10,12 +10,13 @@ import { useCollectionData } from 'react-firebase-hooks/firestore'
 function Post(props){
     var [options, setOptions] = useState()
     var [numLikes, setNumLikes] = useState()
+    var [numComments, setNumComments] = useState()
     var [liked, setLiked] = useState(heart)
     var [displayComment, setDisplayComment] = useState(false)
 
     var postsQuery = firestore.collection('posts').doc(props.docId)
     var [likes] = useCollectionData(postsQuery.collection('likes'), { idField: 'id' })
-    var [initalComments] = useCollectionData(postsQuery.collection('comments').orderBy('createdAt', 'asc'), { idField: 'id' })
+    var [initalComments] = useCollectionData(postsQuery.collection('comments').orderBy('createdAt', 'asc').limit(10), { idField: 'id' })
     var [comments, setComments] = useState()
 
     var optionsBtn
@@ -92,6 +93,7 @@ function Post(props){
 
     useEffect(() => {
         if(initalComments && initalComments.length > 0){
+            setNumComments(initalComments.length)
             var itemsProcessed = 0
             initalComments.forEach( (item, i, self) => {
                 firestore.collection('users').doc(item.uid).get().then(doc => {
@@ -125,16 +127,20 @@ function Post(props){
             {options}
             {props.photo && <img className = "postPic" src={props.photo} alt = "post pic"/> }
             <div className = "postIconWrapper">
-                <div className = "likeWrapper">
+                <div className = "likeAndCommentWrapper">
                     <img className = "likeBtn" onClick = {likePost} src={liked} alt = "heartIcon"/> 
-                    <p className = 'numLikes'>{numLikes}</p>
+                    <p className = 'numLikesAndPosts'>{numLikes}</p>
                 </div>
-                <img className = "commentBtn" onClick = {() => setDisplayComment(!displayComment)} src={comment} alt = "commentIcon"/> 
+                <div className = 'likeAndCommentWrapper'>
+                    <img className = "commentBtn" onClick = {() => setDisplayComment(!displayComment)} src={comment} alt = "commentIcon"/> 
+                    <p className = 'numLikesAndPosts'>{numComments}</p>
+                </div>
             </div>
         </div>
         {displayComment &&
             <div className = 'postComments'>
                 {comments && comments.map(comment => <Comment key = {comment.id} {...comment}/>)}
+                {numComments && <div className = 'commentInputLine'></div>}
                 <input className = 'postCommentInput' onKeyDown = {sendComment} placeholder = "Write a comment!" type="text" name="name" autoComplete = "off"/>
             </div>
         }

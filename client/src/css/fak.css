@@ -206,13 +206,20 @@ img {
 .postCommentInput{
     border: none;
     border: 1px solid #80808057;
-    margin-top: 5px;
+    /* background-color: rgba(0, 0, 0, 0.05); */
+    margin-top: 10px;
     padding-left: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border-radius: 25px;
     width: 481px;
     height: 30px;
     font-size: 16px;
+}
+
+.commentInputLine{
+    padding-top: 10px;
+    width: 100%;
+    border-bottom: 1px solid #80808057;
 }
 
 .deletePostBtn{
@@ -230,15 +237,16 @@ img {
     margin-bottom: 5px;
 }
 
-.likeWrapper{
+.likeAndCommentWrapper{
     display: flex;
+    width: 22px;
 }
 
-.numLikes{
+.numLikesAndPosts{
     color: rgb(91, 112, 131);
     font-size: 15px;
     position: relative;
-    left: 15%;
+    left: 20%;
 }
 .likeBtn{
     height: 22px;
