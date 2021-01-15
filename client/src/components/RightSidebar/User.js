@@ -6,6 +6,7 @@ function User(props){
     
     var photo = props.photo ? props.photo : dog
     var status = props.status === 'online' ? 'onlineDot' : null
+    var userWrapper = props.uid === auth.currentUser.uid ? 'myUserWrapper' : 'userInfoWrapper'
 
     function handleMouseHover(){
         if(props.uid !== auth.currentUser.uid){
@@ -15,7 +16,7 @@ function User(props){
 
     return(
         <>
-        <div className = "userInfoWrapper" onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
+        <div className = {userWrapper} onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
             <img id = "onlinePic" src={photo} alt = "profile pic"/>
             <div className = "onlineUsername">{props.name}</div>
                 {isHovering && 

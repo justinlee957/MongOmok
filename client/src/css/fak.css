@@ -168,6 +168,53 @@ img {
     flex-direction: column;
 }
 
+.postComments{
+    width: 100%;
+    border-bottom: 1px solid #80808057;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.commentWrapper{
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.commentTextWrapper{
+    border-radius: 25px;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.05);
+    position: relative;
+    bottom: 2px;
+}
+
+.commentName{
+    font-weight: 600;
+}
+
+.postCommentPhoto{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.postCommentInput{
+    border: none;
+    border: 1px solid #80808057;
+    margin-top: 5px;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    border-radius: 25px;
+    width: 481px;
+    height: 30px;
+    font-size: 16px;
+}
+
 .deletePostBtn{
     background-color: white;
     border: none;
@@ -181,6 +228,17 @@ img {
     gap: 10px;
     justify-content: space-around;
     margin-bottom: 5px;
+}
+
+.likeWrapper{
+    display: flex;
+}
+
+.numLikes{
+    color: rgb(91, 112, 131);
+    font-size: 15px;
+    position: relative;
+    left: 15%;
 }
 .likeBtn{
     height: 22px;
@@ -229,7 +287,7 @@ img {
     padding-left: 12%;
 }
 
-.sidebar-btn:hover, .deletePostBtn:hover{
+.sidebar-btn:hover, .deletePostBtn:hover, .userInfoWrapper:hover{
     background-color: #F2F2F2;
 }
 .sidebar-btn:focus, .deletePostBtn:focus{
@@ -427,6 +485,7 @@ input[type="text"], textarea, select {
     align-self: flex-start;
     top: 0;
     padding-left: 20px;
+    padding-top: 4px;
 }
 
 #usersTitle{
@@ -444,7 +503,6 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: row;
     align-items: center;
-    grid-gap: 10px;
     gap: 10px;
     cursor: pointer;
     border-radius: 10px;
@@ -452,15 +510,27 @@ input[type="text"], textarea, select {
     position: relative;
 }
 
+.myUserWrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    height: 50px;
+    position: relative;
+    cursor: default;
+}
+
 .userOptions{
     background-color: white;
     width: 134px;
-    z-index: 10;
+    z-index: 9999;
     position: absolute;
     right: 97%;
-    top: -10%;
+    top: -20%;
     border-radius: 10px;
     box-shadow: 2px 4px 25px -9px rgba(0,0,0,0.75);
+    z-index: 10;
 }
 
 .onlineDot{
@@ -526,10 +596,10 @@ input[type="text"], textarea, select {
     font-weight: 550;
     top: 0;
     background-color: white;
-    z-index: 5;
     border-bottom: 0.5px solid #80808057;
     border-right: 0.5px solid #80808057;
     border-left: 0.5px solid #80808057;
+    z-index: 1;
 }
 
 #chatInputArea{

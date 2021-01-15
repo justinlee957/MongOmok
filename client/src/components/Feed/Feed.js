@@ -28,7 +28,8 @@ function Feed(props){
             uid: props.uid,
             text: msg,
             createdAt: FieldValue.serverTimestamp(),
-            time: today
+            time: today,
+            likes: 0
         }
         const res = await postsRef.add(data)
 

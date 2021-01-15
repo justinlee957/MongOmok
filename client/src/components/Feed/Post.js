@@ -1,13 +1,24 @@
 import '../../css/fak.css'
 import heart from '../../images/heart1.png'
+import filledHeart from '../../images/filledHeart1.png'
 import comment from '../../images/comment1.png'
-import { useState } from 'react'
-import { firestore, storage, auth } from '../../firebase'
+import Comment from './Comment'
+import { useState, useEffect } from 'react'
+import { firestore, storage, auth, FieldValue } from '../../firebase'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function Post(props){
-    var optionsBtn
     var [options, setOptions] = useState()
+    var [numLikes, setNumLikes] = useState()
+    var [liked, setLiked] = useState(heart)
+    var [displayComment, setDisplayComment] = useState(false)
 
+    var postsQuery = firestore.collection('posts').doc(props.docId)
+    var [likes] = useCollectionData(postsQuery.collection('likes'), { idField: 'id' })
+    var [initalComments] = useCollectionData(postsQuery.collection('comments').orderBy('createdAt', 'asc'), { idField: 'id' })
+    var [comments, setComments] = useState()
+
+    var optionsBtn
     if(props.uid === auth.currentUser.uid){
         optionsBtn = <div className = 'postOptionsBtn noselect' onClick = {showOptions}>&#10247;</div>
     }
@@ -29,7 +40,74 @@ function Post(props){
         }
     }
 
+    function likePost(){
+        postsQuery.collection('likes').doc(auth.currentUser.uid).get().then(doc => {
+            if(!doc.exists){
+                postsQuery.collection('likes').doc(auth.currentUser.uid).set({liked: 'yes'})
+                postsQuery.get().then(doc => {
+                    setNumLikes(doc.data().likes + 1)
+                    postsQuery.update({likes: doc.data().likes+1})
+                })
+            }else{
+                postsQuery.collection('likes').doc(auth.currentUser.uid).delete()
+                postsQuery.get().then(doc => {
+                    if(doc.data().likes > 1){
+                        setNumLikes(doc.data().likes - 1)
+                    }else{
+                        setNumLikes()
+                    }
+                    postsQuery.update({likes: doc.data().likes -1})
+                })
+                setLiked(heart)
+            }
+        })
+    }
+
+    function sendComment(e){
+        if(e.key === 'Enter' && e.target.value !== ''){
+            e.preventDefault()
+            postsQuery.collection('comments').add({
+                text: e.target.value,
+                uid: auth.currentUser.uid,
+                createdAt: FieldValue.serverTimestamp(),
+            }).then(() => {
+                e.target.value = ''
+            })
+        }
+    }
+
+
+    useEffect(() => {
+        if(likes && likes.length > 0){
+            setNumLikes(likes.length)
+        }
+        if(liked !== filledHeart){
+            firestore.collection('posts').doc(props.docId).collection('likes').doc(auth.currentUser.uid).get().then(doc => {
+                if(doc.exists){
+                    setLiked(filledHeart)
+                }
+            })
+        }
+    }, [likes, liked, props.docId])
+
+    useEffect(() => {
+        if(initalComments && initalComments.length > 0){
+            var itemsProcessed = 0
+            initalComments.forEach( (item, i, self) => {
+                firestore.collection('users').doc(item.uid).get().then(doc => {
+                    itemsProcessed++
+                    self[i].name = doc.data().name
+                    self[i].photo = doc.data().photo
+                    if(itemsProcessed === self.length){
+                        setComments(initalComments)
+                    }
+                })
+            })
+        }
+    }, [initalComments])
+
     return(
+        <>
         <div className = "post">
             <div className = "postUserInfoWrapper">
                 <div style = {{display: 'flex', flexDirection: 'row'}}>
@@ -47,10 +125,20 @@ function Post(props){
             {options}
             {props.photo && <img className = "postPic" src={props.photo} alt = "post pic"/> }
             <div className = "postIconWrapper">
-                <img className = "likeBtn" src={heart} alt = "heartIcon"/> 
-                <img className = "commentBtn" src={comment} alt = "commentIcon"/> 
+                <div className = "likeWrapper">
+                    <img className = "likeBtn" onClick = {likePost} src={liked} alt = "heartIcon"/> 
+                    <p className = 'numLikes'>{numLikes}</p>
+                </div>
+                <img className = "commentBtn" onClick = {() => setDisplayComment(!displayComment)} src={comment} alt = "commentIcon"/> 
             </div>
         </div>
+        {displayComment &&
+            <div className = 'postComments'>
+                {comments && comments.map(comment => <Comment key = {comment.id} {...comment}/>)}
+                <input className = 'postCommentInput' onKeyDown = {sendComment} placeholder = "Write a comment!" type="text" name="name" autoComplete = "off"/>
+            </div>
+        }
+        </>
     )
 }
 
