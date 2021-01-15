@@ -2,6 +2,7 @@ var express = require('express')
 var app = express()
 var path = require('path')
 var cors = require("cors")
+app.set('port', (process.env.PORT || 5000))
 app.use(cors())
 const http = require('http').createServer(app)
 const io = require('socket.io')(http, {
@@ -97,4 +98,6 @@ io.on('connection', socket =>{
     })
 })
 
-http.listen(process.env.PORT || 5000)
+http.listen(app.get('port'), () => {
+    console.log('server running on ' + app.get('port'))
+})
