@@ -86,7 +86,7 @@ function Register(props){
         <p id = 'passwordInputInfo'>Password</p>
         <input className = 'loginInput' onInput={e => setPassword(e.target.value)} type="password"/>
         <button className = 'loginBtn' onClick = {tryRegister} style = {{top: '7%'}}>Register</button>
-        <p onClick = {()=> props.setContent(<SignIn/>)} style = {{position: 'relative', top: '18%', cursor: 'pointer'}}>Log In</p>
+        <p onClick = {()=> props.setContent(<SignIn/>)} style = {{position: 'relative', top: '14%', cursor: 'pointer'}}>Log In</p>
       </div>
     </div>
   )

@@ -169,7 +169,7 @@ function Board(props){
         setOpponentLeft(true)
       })
 
-  }, [props.opponentName, props.socket])
+  }, [props.opponentName, props.socket, props.gameData.docID, setPlaced, setRequestedRematch])
 
   function checkwin(){
       var numConsecHorizontal = 0;

@@ -39,7 +39,7 @@ function Play(props){
             var data = {win: doc.data().win, loss: doc.data().loss}
             setPlayerData(data)
         })
-    }, [props.gameData])
+    }, [props.gameData, props.uid])
 
     function accept(otherUid){
         props.socket.emit('acceptGame', otherUid)

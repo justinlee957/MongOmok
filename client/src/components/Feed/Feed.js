@@ -2,10 +2,11 @@ import Post from './Post'
 import { firestore, FieldValue, storage } from '../../firebase'
 import picture from '../../images/picture1.png'
 import cancel from '../../images/cancel.png'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
+
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
@@ -80,29 +81,37 @@ function Feed(props){
     }
 
     useEffect(()=>{
+        console.log('useEffect')
         document.getElementById('onlineSidebar').style.display = 'block'
     }, [])
     
     return(
         <div style = {{height: '100%'}}>
-        <div id = "homeHeader" style = {{position: props.position}}>
-            <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
-        </div>
-        <div id = "feed">
-            <div id = "postInput">
-                <div style = {{display: 'flex', alignItems: 'center', width: '100%', height: '43px'}}>
-                    <form>
-                        <label>
-                            <img id = "uploadPic" src={picture} alt = "uploadPic"/> 
-                            <input id = "postImage" onChange={showUploadedImage} type="file" style = {{display:"none"}}/>
-                        </label>
-                    </form>
-                    <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} type="text" autoComplete="off"></textarea>
-                </div>  
-                {postImage}
+            <div id = "homeHeader" style = {{position: props.position}}>
+                <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
             </div>
-            {props.posts && props.posts.map(post => <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>)}
-        </div>
+            <div id = "feed">
+                <div id = "postInput">
+                    <div style = {{display: 'flex', alignItems: 'center', width: '100%', height: '43px'}}>
+                        <form>
+                            <label>
+                                <img id = "uploadPic" src={picture} alt = "uploadPic"/> 
+                                <input id = "postImage" onChange={showUploadedImage} type="file" style = {{display:"none"}}/>
+                            </label>
+                        </form>
+                        <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} type="text" autoComplete="off"></textarea>
+                    </div>  
+                    {postImage}
+                </div>
+                {/* {!loaded.current && <div id = "loader"></div>} */}
+                {props.posts && props.posts.map( (post, index, self) => {
+                    //figure out how to hide loader when map is finished loading
+                    // if(index === self.length-1){
+                    //     console.log('setTrue')
+                    // }
+                    return <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>
+                })}
+            </div>
         </div>
     )
 }

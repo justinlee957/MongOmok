@@ -81,8 +81,8 @@ class Layout extends Component{
     componentDidMount(){
       let isMounted = true
       //used for heroku
-      this.socket = openSocket({query: `uid=${this.props.uid}`})
-      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //this.socket = openSocket({query: `uid=${this.props.uid}`})
+      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.setState({gameData: data})
