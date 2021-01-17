@@ -14,8 +14,9 @@ function App() {
   var [username, setUsername] = useState()
   var [photoLink, setPhoto] = useState()
   var [privateChats, setChats] = useState()
-  var [posts, setPosts] = useState()
+  var [posts, setPosts] = useState(false)
   var chatsQuery, postsQuery
+
 
   if(user){
     //console.log(user)
@@ -24,11 +25,11 @@ function App() {
     chatsQuery = firestore.collection('chats').where('users', 'array-contains-any', [user.uid]).limit(25)
   }
 
-  //listen for any updates in these queries and update accordingly
+  //listens for any updates in these queries and updates in useEffects
   const [chats] = useCollectionData(chatsQuery, { idField: 'id' })
   const [initalPosts] = useCollectionData(postsQuery, { idField: 'id' })
 
-  //set username and photo
+  //sets username and photo
   useEffect(()=>{
     if(user){
       //set the name and photo of current user
@@ -53,7 +54,7 @@ function App() {
 
   }, [user, username, photoLink]) 
 
-  //set the messages data with the other user's name and photo
+  //sets the messages data with the other user's name and photo
   useEffect(() => {
     async function setChatsData(thisUser){
       var usersRef = firestore.collection('users')
@@ -76,7 +77,7 @@ function App() {
     }
   }, [chats, user])
   
-  //set the post data from user uid
+  //sets the post data from user uid
   useEffect(() => {
     async function setPostsData(){
       var usersRef = firestore.collection('users')
@@ -85,7 +86,7 @@ function App() {
         initalPosts[i].name = user.data().name
         initalPosts[i].profilePic = user.data().photo
   
-        if(initalPosts[i].photo !== undefined){
+        if(initalPosts[i].photo){
           var url = await storage.ref().child(initalPosts[i].id).getDownloadURL()
           initalPosts[i].photo = url
         }

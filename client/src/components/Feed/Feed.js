@@ -58,14 +58,15 @@ function Feed(props){
     function showUploadedImage(){
         const reader = new FileReader()
         const file = document.querySelector('#postImage').files[0]
-        if(file){
+        //if file is image
+        if(file && file['type'].split('/')[0] === 'image'){
             reader.readAsDataURL(file)
         }
         reader.addEventListener("load", function () {
             // convert image file to base64 string
             setPostImage(<div id = 'postImageWrapper'>
-                            <img id = "uploadedPic" src = {reader.result}alt = "uploadPic"/>
                             <img id = "removeImageBtn" src = {cancel} onClick = {removeImage} alt = 'removeImage'/>
+                            <img id = "uploadedPic" src = {reader.result}alt = "uploadPic"/>
                             <button id = 'postBtn' onClick = {post}>Post</button>
                         </div>)
         }, false)
@@ -79,14 +80,9 @@ function Feed(props){
     function homeClick(){
         document.getElementById('content').scrollTop = 0
     }
-
-    useEffect(()=>{
-        console.log('useEffect')
-        document.getElementById('onlineSidebar').style.display = 'block'
-    }, [])
     
     return(
-        <div style = {{height: '100%'}}>
+        <div id = "feedWrapper">
             <div id = "homeHeader" style = {{position: props.position}}>
                 <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
             </div>
@@ -103,12 +99,7 @@ function Feed(props){
                     </div>  
                     {postImage}
                 </div>
-                {/* {!loaded.current && <div id = "loader"></div>} */}
-                {props.posts && props.posts.map( (post, index, self) => {
-                    //figure out how to hide loader when map is finished loading
-                    // if(index === self.length-1){
-                    //     console.log('setTrue')
-                    // }
+                {!props.posts ? <div id = "loader"></div> : props.posts.map( (post, index, self) => {
                     return <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>
                 })}
             </div>

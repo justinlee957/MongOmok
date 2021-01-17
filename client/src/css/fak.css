@@ -72,7 +72,7 @@ img {
 }
 #postInput{
     border-bottom: 1px solid #80808057;
-    width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -88,23 +88,21 @@ img {
     resize: none;
     overflow: hidden;
     line-height: 26px;
-    width: 535px;
+    width: calc(100% - 70px);
 }
 
 #uploadedPic{
-    height: 220px;
-    width: 400px;
+    max-width: 71%;
+    max-height: 420px;
     margin-bottom: 15px;
     border-radius: 10px;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 
 #removeImageBtn{
-    position: relative;
-    right: 74%;
-    bottom: 84.5%;
     height: 30px;
     cursor: pointer;
+    margin-right: 1%;
 }
 
 #postArea,
@@ -115,14 +113,18 @@ img {
 
 .post{
     border-bottom: 1px solid #80808057;
-    width: 600px;
+    width: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .postUserInfoWrapper{
     display: flex;
     grid-gap: 10px;
     gap: 10px;
     justify-content: space-between;
+    width: 100%;
 }
 
 .postProfile-pic{
@@ -136,13 +138,10 @@ img {
 }
 
 .postPic{
-    margin-top: 5px;
-    width: 490px;
-    height: 290px;
-    object-fit: cover;
+    margin-top: 10px;
+    max-width: 90%;
+    object-fit: scale-down;
     border-radius: 10px;
-    position: relative;
-    left: 9%;
 }
 
 .postTextWrapper{
@@ -235,6 +234,8 @@ img {
     gap: 10px;
     justify-content: space-around;
     margin-bottom: 5px;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .likeAndCommentWrapper{
@@ -602,6 +603,11 @@ input[type="text"], textarea, select {
     100% { transform: rotate(360deg); }
 }
 
+#feedWrapper{
+    height: 100%;
+    width: 600px;
+}
+
 #feed{
     display: flex;
     flex-direction: column;
@@ -639,8 +645,8 @@ input[type="text"], textarea, select {
     display: flex;
     justify-content: center;
     width: 100%;
-    align-items: flex-end;
-    height: 235px;
+    align-items: flex-start;
+    position: relative;
 }
 
 #postBtn{
@@ -656,9 +662,10 @@ input[type="text"], textarea, select {
     color: white;
     font-weight: 600;
     font-size: 20px;
-    margin-bottom: 25px;
     padding-bottom: 3px;
     left: 1.5%;
+    align-self: flex-end;
+    margin-bottom: 15px;
 }
 
 #bubble{
@@ -1097,23 +1104,15 @@ input[type="email"], input[type="password"], textarea, select {
     margin-top: 10px;
 }
 
-@media only screen and (max-width: 1550px) {
-    #logininfo{
-		width:40%;
-	}
-	#registerinfo{
-		width:40%;
+@media (max-width:700px){
+    /* #sidebar{
+        display: none;
     }
-}
+    #onlineSidebar{
+        display: none;
+    } */
+    #feedWrapper{
+        width: 100%;
+    }
 
-@media only screen and (max-width: 700px) {
-    #game-section {
-        height: 93.6%;;
-    }
 }
-
-@media only screen and (max-width: 950px) {
-    #chatfield{
-        display:none;
-    }
-  }

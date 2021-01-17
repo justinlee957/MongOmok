@@ -7,6 +7,8 @@ import Modal from 'react-modal'
 import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
 import SignOut from './SignIn/SignOut'
+import MediaQuery from 'react-responsive'
+
 Modal.setAppElement('#root')
 
 const customStyles = {
@@ -122,17 +124,21 @@ class Layout extends Component{
                     <button id = "profile-submit"  onClick={this.props.updateProfile}>Apply</button>
                 </Modal>
                 <div id = "content">
-                    <div id = "sidebar">
-                        <img id = "profile-pic" onClick={this.openModal} src={this.props.photo} alt = "profile pic"/>                   
-                        <i id = "profile-icon" className = "material-icons">person</i>
-                        <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
-                        <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
-                        <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
-                        <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
-                        <SignOut/>
-                    </div>
+                    <MediaQuery minDeviceWidth={700}>
+                        <div id = "sidebar">
+                            <img id = "profile-pic" onClick={this.openModal} src={this.props.photo} alt = "profile pic"/>                   
+                            <i id = "profile-icon" className = "material-icons">person</i>
+                            <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
+                            <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
+                            <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
+                            <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
+                            <SignOut/>
+                        </div>
+                    </MediaQuery>
                     {content}
-                    <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>
+                    <MediaQuery minDeviceWidth={1000}>
+                        <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>
+                    </MediaQuery>
                 </div>  
             </div>
         )
