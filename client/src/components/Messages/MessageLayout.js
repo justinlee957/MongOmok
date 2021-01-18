@@ -1,26 +1,40 @@
 import Chat from './Chat'
 import Chatbox from './Chatbox'
 import ReactDOM from 'react-dom'
-import { useEffect } from 'react'
+import { useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 function MessageLayout(props){
+    var [msgClicked, setMsgClicked] = useState(false)
+    const isDesktopOrLaptop = useMediaQuery({
+        query: '(min-device-width: 700px)'
+    })
+    const isTabletOrMobileDevice = useMediaQuery({
+        query: '(max-device-width: 700px)'
+    })
+
     function displayChatBox(data){
-        const element = <Chatbox {...data}/>
-        ReactDOM.render(element, document.getElementById('chatbox')) 
+        const element = <Chatbox {...data} backClick = {backClick}/>
+        if(isTabletOrMobileDevice){
+            setMsgClicked(element)
+        }else{
+            ReactDOM.render(element, document.getElementById('chatbox')) 
+        }
     }
 
-    useEffect(()=>{
-        document.getElementById('onlineSidebar').style.display = 'block'
-    })
+    function backClick(){
+        setMsgClicked()
+    }
+
     return(
         <>
-            <div id = 'messages'>
+            {!msgClicked && <div id = 'messages'>
                 <div id = 'msgTextHeader'>Messages</div>
                 {props.messages && props.messages.map(msg => <Chat key = {msg.id} uid = {props.uid} {...msg} displayChatBox = {displayChatBox}/>)}
-            </div>
+            </div>}
+            {isDesktopOrLaptop && <div id = 'chatbox'></div>}
 
-            <div id = 'chatbox'>
-            </div>
+            {msgClicked}
         </>
     )
 }

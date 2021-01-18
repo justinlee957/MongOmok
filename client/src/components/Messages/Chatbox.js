@@ -1,13 +1,17 @@
 import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Msg from './Msg'
+import { useMediaQuery } from 'react-responsive'
+import back from '../../images/back.png'
 
 function Chatbox(props){
     const messagesRef = firestore.collection('chats').doc(props.id).collection('messages')
     const query = messagesRef.orderBy('createdAt').limit(25)
     const [messages] = useCollectionData(query, { idField: 'id'})
 
-    console.log(messages)
+    const isTabletOrMobileDevice = useMediaQuery({
+        query: '(max-device-width: 700px)'
+    })
 
     function sendMsg(e){
         if(e.key === 'Enter'){
@@ -29,8 +33,9 @@ function Chatbox(props){
     }
 
     return(
-        <>
+        <div id = 'chatbox'>
             <div id = 'msgTextHeader' style = {{ paddingTop: '5px'}}>
+                {isTabletOrMobileDevice && <img onClick = {props.backClick} id = "backMsgBtn" src={back} alt = "backMsgBtn"/> }
                 <img className = "chatBox-Pic" src={props.photo} alt = "profile pic"/> 
                 {props.name}
             </div>
@@ -42,7 +47,7 @@ function Chatbox(props){
                     <textarea id='chatInputArea' onKeyDown = { sendMsg } className="browser-default" type="text" autoComplete="off"></textarea>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

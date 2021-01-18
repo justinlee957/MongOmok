@@ -8,6 +8,10 @@ import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
 import SignOut from './SignIn/SignOut'
 import MediaQuery from 'react-responsive'
+import homeIcon from '../images/home.png'
+import playIcon from '../images/play.png'
+import envelopeIcon from '../images/envelope.png'
+import userIcon from '../images/user.png'
 
 Modal.setAppElement('#root')
 
@@ -36,7 +40,8 @@ class Layout extends Component{
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
         this.inputChange = this.inputChange.bind(this)
-        this.state = {home: true, messages: false, play: false, gameData: undefined, modalIsOpen: false, position: 'sticky'}
+        this.usersClick = this.usersClick.bind(this)
+        this.state = {home: true, users: false, messages: false, play: false, gameData: undefined, modalIsOpen: false, position: 'sticky'}
     }
 
     homeClick(){
@@ -66,6 +71,10 @@ class Layout extends Component{
 
     closeModal(){
         this.setState({modalIsOpen: false, position: 'sticky'})
+    }
+
+    usersClick(){
+        this.setState({users: true, play: false, home: false, messages: false})
     }
 
     inputChange(){
@@ -98,6 +107,7 @@ class Layout extends Component{
         const home = this.state.home
         const messages = this.state.messages
         const play = this.state.play
+        const users = this.state.users
         let content
         if(home){
             content = <Feed posts = {this.props.posts} position = {this.state.position}/>
@@ -105,6 +115,10 @@ class Layout extends Component{
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
+        }else if(users){
+            content = <MediaQuery maxDeviceWidth = {700} onChange={this.homeClick}>
+                        <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
+                    </MediaQuery>
         }
 
         return(
@@ -137,9 +151,17 @@ class Layout extends Component{
                     </MediaQuery>
                     {content}
                     <MediaQuery minDeviceWidth={1000}>
-                        <OnlineSidebar {...this.props} displayMsgs = {this.messagesClick}/>
+                    <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
                     </MediaQuery>
-                </div>  
+                </div>
+                <MediaQuery maxDeviceWidth = {700}>
+                    <div id = 'bottomSidebar'>
+                        <img onClick = {this.homeClick} className = "bottomSidebarBtn" src={homeIcon} alt = "homeIcon"/>
+                        <img onClick = {this.playClick} className = "bottomSidebarBtn" src={playIcon} alt = "playIcon"/>
+                        <img onClick = {this.messagesClick} className = "bottomSidebarBtn" src={envelopeIcon} alt = "envelopeIcon"/>
+                        <img onClick = {this.usersClick} className = "bottomSidebarBtn" src={userIcon} alt = "userIcon"/>
+                    </div>
+                </MediaQuery>  
             </div>
         )
     }
