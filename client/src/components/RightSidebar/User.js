@@ -13,21 +13,28 @@ function User(props){
     var userWrapper = props.uid === auth.currentUser.uid ? 'myUserWrapper' : 'userInfoWrapper'
 
     function handleMouseHover(){
-        if(props.uid !== auth.currentUser.uid && isDesktopOrLaptop){
+        if(isDesktopOrLaptop){
             setHovering(!isHovering)
         }
     }
+
+    function handleChallengeClick(){
+        setHovering(false)
+        props.challenge(props.uid)
+    }
+
 
     return(
         <>
         <div className = {userWrapper} onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
             <img id = "onlinePic" src={photo} alt = "profile pic"/>
             <div className = "onlineUsername">{props.name}</div>
-                {isHovering && 
-                <div className = "userOptions">
-                    <button className = "userOptionsBtn" onClick = {() => props.showChat(props)}>Message</button>
-                    <button className = "userOptionsBtn" onClick = {() => props.challenge(props.uid)}>Challenge</button>
-                </div>}
+
+            {isHovering && 
+            <div className = "userOptions">
+                <button className = "userOptionsBtn" onClick = {() => props.showChat(props)}>Message</button>
+                <button className = "userOptionsBtn" onClick = {handleChallengeClick}>Challenge</button>
+            </div>}
         </div>
         <div className = {status}></div>
         </>

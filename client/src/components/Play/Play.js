@@ -23,6 +23,7 @@ function Play(props){
                             <p style = {{paddingTop: '5px'}}>win: {playerData.win}</p>
                             <p>lose: {playerData.loss}</p>
                         </div>}
+                    <div id = 'challengeHelper'>Challenge players on the right!</div>
                   </div>
     }
 

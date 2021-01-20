@@ -2,16 +2,34 @@ import accept from '../../images/accept.png'
 import deny from '../../images/deny.png'
 import { firestore } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useEffect, useState} from 'react'
 
 
 function ChallengeBox(props){
     const challengeRef = firestore.collection('users').doc(props.uid).collection('challenges')
-    const [challenge, loading, error] = useCollectionData(challengeRef, { idField: 'id'})
+    const [initalChallenges, loading, error] = useCollectionData(challengeRef, { idField: 'id'})
+    var [challenges, setChallenges] = useState()
+
+    useEffect(() => {
+        if(initalChallenges && initalChallenges.length > 0){
+            var itemsProcessed = 0
+            initalChallenges.forEach( (item, i, self) => {
+                firestore.collection('users').doc(item.id).get().then(doc => {
+                    self[i].name = doc.data().name
+                    ++itemsProcessed
+                    if(itemsProcessed === self.length){
+                        setChallenges(initalChallenges)
+                    }
+                })
+            })
+        }
+
+    }, [initalChallenges])
 
     return(
             <div id = "challengeBox">
                 <div id = 'challengeHeader'>Challenges</div>
-                {challenge && challenge.length > 0 ? challenge.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept}/>)
+                {challenges && challenges.length > 0 ? challenges.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept}/>)
                 : <p style = {{fontSize: '20px', padding: '5px'}}>None :(</p>}
             </div>
     )

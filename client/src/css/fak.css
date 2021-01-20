@@ -530,11 +530,13 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: row;
     align-items: center;
+    grid-gap: 10px;
     gap: 10px;
     cursor: pointer;
-    height: 53px;
+    min-height: 53px;
     position: relative;
 }
+
 
 .myUserWrapper{
     display: flex;
@@ -643,10 +645,11 @@ input[type="text"], textarea, select {
     border: none;
     left: 3%;
     position: relative;
-    top: 22%;
+    top: 12%;
     height: 75%;
     resize: none;
     overflow: hidden;
+    font-size: 17px;
 }
 
 #postImageWrapper{
@@ -735,7 +738,7 @@ input[type="text"], textarea, select {
     height: 100%;
     border-right: 1px solid #80808057;
     border-left: 1px solid #80808057;
-    min-width: 25%;
+    min-width: 20%;
 }
 
 #playContent{
@@ -782,25 +785,36 @@ input[type="text"], textarea, select {
     width: 400px;
 }
 #playerDataBox{
-    width: 105px;
+    height: 80px;
     border: 1px solid #80808057;
     border-radius: 10px;
     font-size: 23px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #challengeBox{
     border: 1px solid #80808057;
     border-radius: 10px;
-    width: 135px;
+    align-self: start;
 }
 
 #challengeBoxWrapper{
-    display: flex;
+    display: grid;
     width: 100%;
     padding: 10px;
-    flex-direction: row;
-    gap: 10px;
+    grid-template-columns: 1fr 100px 124px;
+    grid-gap: 10px;
     text-align: center;
+}
+
+#challengeHelper{
+    border: 1px solid #80808057;
+    border-radius: 10px;
+    width: 124px;
+    height: 112px;
+    font-size: 22px;
+    padding: 10px;
 }
 
 #challengeHeader{
@@ -813,11 +827,11 @@ input[type="text"], textarea, select {
 .challengeWrapper{
     display: flex;
     flex-direction: row;
-    gap: 5px;
-    width: 100%;
-    padding-left: 13px;
+    grid-gap: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 10px;
+    justify-content: flex-end;
 }
 
 .challengeOptionBtn{
@@ -1168,5 +1182,17 @@ input[type="email"], input[type="password"], textarea, select {
     #onlinePic{
         width: 50px;
         height: 50px;
+    }
+    #challengeHelper{
+        display: none;
+    }
+    #challengeBoxWrapper{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 360px){
+    #challengeBoxWrapper{
+        grid-template-columns: 1fr;
     }
 }

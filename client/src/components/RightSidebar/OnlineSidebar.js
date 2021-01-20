@@ -30,8 +30,7 @@ function OnlineSidebar(props){
     }
 
     function challenge(otherUid){
-        firestore.collection('users').doc(otherUid)
-            .collection('challenges').doc(props.uid).set({played: 'no', name: props.name})
+        usersQuery.doc(otherUid).collection('challenges').doc(props.uid).set({played: 'no', name: props.name})
     }
 
     return(
