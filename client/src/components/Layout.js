@@ -110,7 +110,7 @@ class Layout extends Component{
         const users = this.state.users
         let content
         if(home){
-            content = <Feed posts = {this.props.posts} position = {this.state.position}/>
+            content = <Feed posts = {this.props.posts} position = {this.state.position} uid = {props.uid}/>
         }else if(messages){
             content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
         }else if(play){

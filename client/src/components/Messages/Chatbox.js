@@ -3,8 +3,10 @@ import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Msg from './Msg'
 import { useMediaQuery } from 'react-responsive'
 import back from '../../images/back.png'
+import dog from '../../images/defaultPic.png'
 
 function Chatbox(props){
+    var photo = props.photo ? props.photo : dog
     const messagesRef = firestore.collection('chats').doc(props.id).collection('messages')
     const query = messagesRef.orderBy('createdAt').limit(25)
     const [messages] = useCollectionData(query, { idField: 'id'})
@@ -36,7 +38,7 @@ function Chatbox(props){
         <div id = 'chatbox'>
             <div id = 'msgTextHeader' style = {{ paddingTop: '5px'}}>
                 {isTabletOrMobileDevice && <img onClick = {props.backClick} id = "backMsgBtn" src={back} alt = "backMsgBtn"/> }
-                <img className = "chatBox-Pic" src={props.photo} alt = "profile pic"/> 
+                <img className = "chatBox-Pic" src={photo} alt = "profile pic"/> 
                 {props.name}
             </div>
             <div id = 'msgArea'>

@@ -6,13 +6,11 @@ function OnlineSidebar(props){
     var usersQuery =  firestore.collection('users')
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
 
-    async function showChat(otherUser){
-        if(otherUser.uid === props.uid){
-            return
-        }
+    function showChat(otherUser){
         props.displayMsgs() 
         var docid
         var users = [props.uid, otherUser.uid]
+
         if(props.uid < otherUser){
             docid = props.uid + '+' + otherUser.uid
         }else{
