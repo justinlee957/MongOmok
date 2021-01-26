@@ -7,7 +7,7 @@ import { useEffect, useState} from 'react'
 
 function ChallengeBox(props){
     const challengeRef = firestore.collection('users').doc(props.uid).collection('challenges')
-    const [initalChallenges, loading, error] = useCollectionData(challengeRef, { idField: 'id'})
+    const [initalChallenges] = useCollectionData(challengeRef, { idField: 'id'})
     var [challenges, setChallenges] = useState()
 
     useEffect(() => {

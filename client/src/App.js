@@ -19,8 +19,6 @@ function App() {
 
 
   if(user){
-    //console.log(user)
-    //auth.currentUser.delete()
     postsQuery = firestore.collection('posts').orderBy('createdAt', 'desc').limit(25)
     chatsQuery = firestore.collection('chats').where('users', 'array-contains-any', [user.uid]).limit(25)
   }
@@ -94,9 +92,9 @@ function App() {
       setPosts(initalPosts)
     }
     if(user && initalPosts && initalPosts.length > 0){
-      setPostsData()
+      setPostsData(initalPosts)
     }
-  }, [initalPosts, username, photoLink, user])
+  }, [username, photoLink, user, initalPosts])
 
   async function updateProfile(){
     const image = new Promise(resolve => {

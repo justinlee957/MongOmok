@@ -8,28 +8,24 @@ function GameLogic(props){
     const [moves] = useCollectionData(query, { idField: 'id' })
 
     useEffect(()=>{
-        if(moves && moves.length === 0){
-            props.setIsNewGame(false)
-        }
         if(props.isNewGame){
+            console.log(moves, 'returned')
             return
         }
-        
         if(moves && moves.length > 0){
-            props.drawPiece(moves[0].x, moves[0].y, moves[0].color)
-            
             if(moves[0].uid === props.uid){
-             props.setTurn(false) 
+                return
             }else{
                 props.setTurn(true)
             }
+            props.drawPiece(moves[0].x, moves[0].y, moves[0].color)
+        //last two if statements handle if board is rerendered
         }else if((!moves || moves.length === 0) && props.gameData.turn === 'first'){
             props.setTurn(true)
         }else{
             props.setTurn(false) 
         }
-
-    }, [moves, props])
+    }, [moves]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return(
         <>

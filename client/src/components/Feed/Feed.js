@@ -1,18 +1,17 @@
 import Post from './Post'
-import { firestore, FieldValue, storage } from '../../firebase'
+import { firestore, storage } from '../../firebase'
 import picture from '../../images/picture1.png'
 import cancel from '../../images/cancel.png'
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
-
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
             post()
         }
-    }
+    }   
 
     async function post(){
         const msg = document.getElementById('postArea').value
@@ -28,7 +27,7 @@ function Feed(props){
         const data = {
             uid: props.uid,
             text: msg,
-            createdAt: FieldValue.serverTimestamp(),
+            createdAt: Date.now(),
             time: today,
             likes: 0,
             comments: 0

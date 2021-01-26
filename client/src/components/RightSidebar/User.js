@@ -30,7 +30,7 @@ function User(props){
             <img id = "onlinePic" src={photo} alt = "profile pic"/>
             <div className = "onlineUsername">{props.name}</div>
 
-            {isHovering && 
+            {isHovering && userWrapper ==='userInfoWrapper' && 
             <div className = "userOptions">
                 <button className = "userOptionsBtn" onClick = {() => props.showChat(props)}>Message</button>
                 <button className = "userOptionsBtn" onClick = {handleChallengeClick}>Challenge</button>

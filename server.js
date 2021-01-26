@@ -86,13 +86,19 @@ io.on('connection', socket =>{
         }
     })
 
+    socket.on('movesDeleted', () => {
+        if(users.has(opponentUid)){
+            io.to(users.get(opponentUid)).emit('movesClientDeleted')
+        }
+    })
+
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
         db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})
         if(users.has(uid)){
             users.delete(uid)
             if(opponentUid && users.has(opponentUid)){
-                io.to(users.get(otherUid)).emit('opponentDc')
+                io.to(users.get(opponentUid)).emit('opponentDc')
             }
         }
     })

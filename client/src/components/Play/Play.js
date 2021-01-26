@@ -1,19 +1,19 @@
 import ChallengeBox from './ChallengeBox'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Board from './Board'
 import { firestore } from '../../firebase'
 
 function Play(props){
     var [gameData, setGameData] = useState()
     var [playerData, setPlayerData] = useState()
-    var headerStyle = {width: '100%'}
     var content
+    var [headerStyle, setHeaderStyle] = useState({width: '100%'})
 
     //show board
-    if(props.gameData){
+    if(props.gameData && gameData){
         content = <Board {...props} {...gameData}/>
         document.getElementById('onlineSidebar').style.display = 'none'
-        headerStyle = {width: 'calc(100% - 400px)'}
+        setHeaderStyle({width: 'calc(100% - 400px)'})
     //show challenges
     }else{
         content = <div id = 'challengeBoxWrapper'>
@@ -50,7 +50,7 @@ function Play(props){
             <div id = 'playHeaderWrapper'>
                 <div id = 'playHeader' style = {headerStyle}>Play</div>
                 {props.gameData && gameData &&
-                <div>
+                <div style = {{paddingTop: '4px'}}>
                     <img id = "opponentPhoto" src={gameData.opponentPhoto} alt = "opponentPhoto"/> 
                     <div id = 'playOpponentHeader'>{gameData.opponentName}</div>
                 </div>}

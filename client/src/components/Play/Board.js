@@ -128,7 +128,7 @@ function Board(props){
 
   useEffect(()=>{
       drawBoard()
-      console.log('drawing board')
+      console.log(props)
       var movesRef = firestore.collection('games').doc(props.gameData.docID).collection('moves')
 
       //on board render, draw out every move so far
@@ -148,18 +148,31 @@ function Board(props){
         setIsNewGame(true)
       })
 
+      props.socket.on('movesClientDeleted', () => {
+        console.log('setNewGame to false')
+        setIsNewGame(false)
+      })
+
       props.socket.on('startRematch', () => {
         //reinit game
         let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
         setPlaced(newArray)
-        setGameInfo(undefined)
+        setGameInfo()
         reInitBoard()
         setIsNewGame(true)
         setTurn(true)
+        setRequestedRematch(false)
         //remove every document from moves collection
         movesRef.get().then(query => {
-          query.docs.forEach(doc => {
-            movesRef.doc(doc.id).delete()
+          var itemsProcessed = 0
+          query.docs.forEach((doc, index, self) => {
+            movesRef.doc(doc.id).delete().then(() =>{
+              itemsProcessed++
+              if(itemsProcessed === self.length){
+                setIsNewGame(false)
+                props.socket.emit('movesDeleted')
+              }
+            })
           })
         })
       })
@@ -169,7 +182,7 @@ function Board(props){
         setOpponentLeft(true)
       })
 
-  }, [props.opponentName, props.socket, props.gameData.docID, setPlaced, setRequestedRematch])
+  }, [props.opponentName, props.socket, props.gameData.docID]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function checkwin(){
       var numConsecHorizontal = 0;
@@ -267,6 +280,7 @@ function Board(props){
       props.socket.emit('requestRematch', props.gameData.otherUid)
       setGameInfo('Rematch Requested')
       document.getElementById('rematchBtn').style.display = 'none'
+      setRequestedRematch(false)
     }
   }
 
