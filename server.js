@@ -38,21 +38,22 @@ io.on('connection', socket =>{
         users.set(uid, socket.id);
     }
 
-    socket.on('acceptGame', otherUid =>{
-        db.collection('users').doc(otherUid).get().then(doc => {
+    socket.on('acceptGame', data =>{
+        db.collection('users').doc(data.otherUid).get().then(doc => {
             var inGame = doc.data().inGame
-            var players = [uid, otherUid]
-            console.log(otherUid, inGame)
-            if(users.has(otherUid) && (inGame === "no" || inGame === undefined)){
-                opponentUid = otherUid
+            var players = [uid, data.otherUid]
+            if(users.has(data.otherUid) && (inGame === "no" || inGame === undefined)){
+                opponentUid = data.otherUid
                 db.collection('users').doc(uid).update({inGame: 'yes'})
-                db.collection('users').doc(otherUid).update({inGame: 'yes'})
+                db.collection('users').doc(data.otherUid).update({inGame: 'yes'})
                 db.collection('games').add({players}).then(doc =>{
-                    socket.emit('startGame', {otherUid, docID: doc.id, color: 'red', turn: 'first'})
-                    io.to(users.get(otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second' })  
+                    db.collection('users').doc(data.otherUid).get().then(opponent => {
+                        socket.emit('startGame', {otherUid: data.otherUid, docID: doc.id, color: 'red', turn: 'first', opponentName: opponent.data().name, opponentPhoto: opponent.data().photo})
+                    })
+                    io.to(users.get(data.otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second', opponentName: data.name, opponentPhoto: data.photo })  
                 })
             }
-            db.collection('users').doc(uid).collection('challenges').doc(otherUid).delete()
+            db.collection('users').doc(uid).collection('challenges').doc(data.otherUid).delete()
         })
     })
 

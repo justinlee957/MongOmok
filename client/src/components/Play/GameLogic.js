@@ -6,7 +6,7 @@ function GameLogic(props){
     const movesRef = firestore.collection('games').doc(props.gameData.docID).collection('moves')
     const query = movesRef.orderBy('createdAt', 'desc').limit(1)
     const [moves] = useCollectionData(query, { idField: 'id' })
-
+    console.log(moves)
     useEffect(()=>{
         if(props.isNewGame){
             console.log(moves, 'returned')

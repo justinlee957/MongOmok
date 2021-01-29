@@ -4,18 +4,20 @@ import Board from './Board'
 import { firestore } from '../../firebase'
 
 function Play(props){
-    var [gameData, setGameData] = useState()
     var [playerData, setPlayerData] = useState()
     var content
-    var [headerStyle, setHeaderStyle] = useState({width: '100%'})
+    var headerStyle = {width: '100%'}
 
-    //show board
-    if(props.gameData && gameData){
-        content = <Board {...props} {...gameData}/>
+    console.log('render from play')
+    // //show board
+    if(props.gameData){
+        console.log('if')
+        content = <Board {...props}/>
         document.getElementById('onlineSidebar').style.display = 'none'
-        setHeaderStyle({width: 'calc(100% - 400px)'})
+        headerStyle = {width: 'calc(100% - 400px)'}
     //show challenges
     }else{
+        console.log('else')
         content = <div id = 'challengeBoxWrapper'>
                     <ChallengeBox {...props} accept = {accept}/>
                     {playerData && 
@@ -28,31 +30,23 @@ function Play(props){
     }
 
     useEffect(()=>{
-        if(props.gameData){
-            firestore.collection('users').doc(props.gameData.otherUid).get().then(doc => {
-                setGameData({
-                    opponentName: doc.data().name,
-                    opponentPhoto: doc.data().photo,
-                })
-            })
-        }
         firestore.collection('users').doc(props.uid).get().then(doc => {
             var data = {win: doc.data().win, loss: doc.data().loss}
             setPlayerData(data)
         })
-    }, [props.gameData, props.uid])
+    }, [])
 
     function accept(otherUid){
-        props.socket.emit('acceptGame', otherUid)
+        props.socket.emit('acceptGame', {otherUid, name: props.name, photo: props.photo})
     }
     return(
         <div id = 'playWrapper'>
             <div id = 'playHeaderWrapper'>
                 <div id = 'playHeader' style = {headerStyle}>Play</div>
-                {props.gameData && gameData &&
+                {props.gameData  &&
                 <div style = {{paddingTop: '4px'}}>
-                    <img id = "opponentPhoto" src={gameData.opponentPhoto} alt = "opponentPhoto"/> 
-                    <div id = 'playOpponentHeader'>{gameData.opponentName}</div>
+                    <img id = "opponentPhoto" src={props.gameData.opponentPhoto} alt = "opponentPhoto"/> 
+                    <div id = 'playOpponentHeader'>{props.gameData.opponentName}</div>
                 </div>}
             </div>
             <div id = 'playContent'>

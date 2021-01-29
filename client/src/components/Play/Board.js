@@ -139,11 +139,11 @@ function Board(props){
       })
       props.socket.on('lostGame', () =>{
         console.log('lost')
-        setGameInfo(props.opponentName + ' wins!')
+        setGameInfo(props.gameData.opponentName + ' wins!')
         setTurn(false)
       })
       props.socket.on('rematchRequested', () => {
-        setGameInfo(props.opponentName + ' wants to rematch!')
+        setGameInfo(props.gameData.opponentName + ' wants to rematch!')
         setRequestedRematch(true)
         setIsNewGame(true)
       })
@@ -178,11 +178,11 @@ function Board(props){
       })
 
       props.socket.on('opponentDc', () => {
-        setGameInfo(props.opponentName + ' left')
+        setGameInfo(props.gameData.opponentName + ' left')
         setOpponentLeft(true)
       })
 
-  }, [props.opponentName, props.socket, props.gameData.docID]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.gameData.opponentName, props.socket, props.gameData.docID]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function checkwin(){
       var numConsecHorizontal = 0;

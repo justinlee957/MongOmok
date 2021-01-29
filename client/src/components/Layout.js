@@ -96,6 +96,7 @@ class Layout extends Component{
       //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
+            console.log(data)
             this.setState({gameData: data})
             this.playClick()
           }
@@ -104,6 +105,7 @@ class Layout extends Component{
     }
 
     render(){
+        console.log('render')
         const home = this.state.home
         const messages = this.state.messages
         const play = this.state.play
