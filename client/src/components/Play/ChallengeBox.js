@@ -22,6 +22,8 @@ function ChallengeBox(props){
                     }
                 })
             })
+        }else{
+            setChallenges()
         }
 
     }, [initalChallenges])
@@ -29,7 +31,7 @@ function ChallengeBox(props){
     return(
             <div id = "challengeBox">
                 <div id = 'challengeHeader'>Challenges</div>
-                {challenges && challenges.length > 0 ? challenges.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept}/>)
+                {challenges && challenges.length > 0 ? challenges.map(chal => <Challenge key = {chal.id} name = {chal.name} uid = {chal.id} accept = {props.accept} decline = {props.decline}/>)
                 : <p style = {{fontSize: '20px', padding: '5px'}}>None :(</p>}
             </div>
     )
@@ -40,7 +42,7 @@ function Challenge(props){
         <div className = 'challengeWrapper'>
             <p style = {{fontSize: '20px', paddingRight: '5px'}}>{props.name}</p>
             <button className = 'challengeOptionBtn' onClick = {() => props.accept(props.uid)}><img className = 'challengeOptionIcon'src={accept} alt = "accept"/></button>
-            <button className = 'challengeOptionBtn' style = {{marginRight: '10px'}}><img className = 'challengeOptionIcon' src={deny} alt = "deny"/></button>
+            <button className = 'challengeOptionBtn' onClick = {() => props.decline(props.uid)} style = {{marginRight: '10px'}}><img className = 'challengeOptionIcon' src={deny} alt = "deny"/></button>
         </div>
     )
 }

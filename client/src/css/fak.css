@@ -402,7 +402,7 @@ img {
 }
 
 #chatMessages{
-    height: calc(100% - 40px);
+    height: 94%;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
@@ -420,8 +420,6 @@ img {
 
 #boardMsgWrapper{
     border-top: 1px solid #80808057;
-    position: relative;
-    bottom: 10px;
     display: flex;
     justify-content: center;
 }
@@ -863,6 +861,8 @@ input[type="text"], textarea, select {
     border-bottom: 1px solid #80808057;
     border-left: 1px solid #80808057;
     top: 33px;
+    display: flex;
+    flex-direction: column;
 }
 
 .textmessages{
@@ -1035,7 +1035,9 @@ input[type="email"], input[type="password"], textarea, select {
 }
 
 #msgArea{
-    height: 165%;
+    height: 89%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .chatBox-Pic{

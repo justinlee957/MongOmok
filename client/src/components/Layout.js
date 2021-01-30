@@ -41,11 +41,11 @@ class Layout extends Component{
         this.closeModal = this.closeModal.bind(this)
         this.inputChange = this.inputChange.bind(this)
         this.usersClick = this.usersClick.bind(this)
-        this.state = {home: true, users: false, messages: false, play: false, gameData: undefined, modalIsOpen: false, position: 'sticky'}
+        this.state = {home: true, users: false, messages: false, play: false, gameData: false, modalIsOpen: false, position: 'sticky'}
     }
 
     homeClick(){
-        this.setState({home: true})
+        this.setState({home: true, play: false})
         document.getElementById('content').scrollTop = 0
     }
 
@@ -96,7 +96,6 @@ class Layout extends Component{
       //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
-            console.log(data)
             this.setState({gameData: data})
             this.playClick()
           }
@@ -105,7 +104,6 @@ class Layout extends Component{
     }
 
     render(){
-        console.log('render')
         const home = this.state.home
         const messages = this.state.messages
         const play = this.state.play
@@ -153,7 +151,8 @@ class Layout extends Component{
                     </MediaQuery>
                     {content}
                     <MediaQuery minDeviceWidth={1000}>
-                    <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
+                    {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                    {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
                     </MediaQuery>
                 </div>
                 <MediaQuery maxDeviceWidth = {700}>

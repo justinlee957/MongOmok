@@ -8,18 +8,14 @@ function Play(props){
     var content
     var headerStyle = {width: '100%'}
 
-    console.log('render from play')
-    // //show board
+    //show board
     if(props.gameData){
-        console.log('if')
         content = <Board {...props}/>
-        document.getElementById('onlineSidebar').style.display = 'none'
         headerStyle = {width: 'calc(100% - 400px)'}
     //show challenges
     }else{
-        console.log('else')
         content = <div id = 'challengeBoxWrapper'>
-                    <ChallengeBox {...props} accept = {accept}/>
+                    <ChallengeBox {...props} accept = {accept} decline = {decline}/>
                     {playerData && 
                         <div id = 'playerDataBox'>
                             <p style = {{paddingTop: '5px'}}>win: {playerData.win}</p>
@@ -36,9 +32,15 @@ function Play(props){
         })
     }, [])
 
+    
     function accept(otherUid){
         props.socket.emit('acceptGame', {otherUid, name: props.name, photo: props.photo})
     }
+
+    function decline(otherUid){
+        firestore.collection('users').doc(props.uid).collection('challenges').doc(otherUid).delete()
+    }
+
     return(
         <div id = 'playWrapper'>
             <div id = 'playHeaderWrapper'>
