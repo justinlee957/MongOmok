@@ -1,5 +1,6 @@
 import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useEffect} from 'react'
 import Msg from './Msg'
 import { useMediaQuery } from 'react-responsive'
 import back from '../../images/back.png'
@@ -33,6 +34,11 @@ function Chatbox(props){
             uid: props.uid
         })
     }
+
+    useEffect( ()=> {
+        var objDiv = document.getElementById("msgArea")
+        objDiv.scrollTop = objDiv.scrollHeight
+    })
 
     return(
         <div id = 'chatbox'>

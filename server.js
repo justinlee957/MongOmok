@@ -39,6 +39,7 @@ io.on('connection', socket =>{
     }
 
     socket.on('acceptGame', data =>{
+        opponentUid = data.otherUid
         db.collection('users').doc(data.otherUid).get().then(doc => {
             var inGame = doc.data().inGame
             var players = [uid, data.otherUid]
@@ -55,6 +56,13 @@ io.on('connection', socket =>{
             }
             db.collection('users').doc(uid).collection('challenges').doc(data.otherUid).delete()
         })
+    })
+
+    socket.on('placePiece', data => {
+        if(users.has(data.otherUid)){
+            console.log('sentPiece')
+            io.to(users.get(data.otherUid)).emit('opponentPlaced' , data)
+        }
     })
 
     socket.on('wonGame', otherUid =>{
@@ -84,12 +92,6 @@ io.on('connection', socket =>{
     socket.on('leftMatch', otherUid => {
         if(users.has(otherUid)){
             io.to(users.get(otherUid)).emit('opponentDc')
-        }
-    })
-
-    socket.on('movesDeleted', () => {
-        if(users.has(opponentUid)){
-            io.to(users.get(opponentUid)).emit('movesClientDeleted')
         }
     })
 

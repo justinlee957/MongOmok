@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import BoardChat from './BoardChat'
 import { firestore, FieldValue } from '../../firebase'
 import { useGameContext } from '../../GameProvider'
-import GameLogic from './GameLogic'
 
 function Board(props){
   var [gameInfo, setGameInfo] = useState()
-  var [isNewGame, setIsNewGame] = useState(false)
   var [turn, setTurn] = useState()
   var [opponentLeft, setOpponentLeft] = useState(false)
   var canvasRef = useRef()
@@ -67,8 +65,7 @@ function Board(props){
     }
     drawPiece(x, y, props.gameData.color)
     setTurn(false)
-    // console.log(x, y)
-    // console.log((x-26)/35, (y-26)/35)
+    props.socket.emit('placePiece', {x, y, color: props.gameData.color, otherUid: props.gameData.otherUid})
     firestore.collection('games').doc(props.gameData.docID).collection('moves').add({
       x,
       y,
@@ -79,12 +76,10 @@ function Board(props){
       placed[(y-26)/35][(x-26)/35] = 1
       setPlaced(placed) 
       
-      var win = checkwin()
-      if(win){
+      if(checkwin()){
         console.log('won')
         props.socket.emit('wonGame', props.gameData.otherUid)
         setGameInfo(props.name + ' wins!')
-        //firestore.collection('games').doc(props.gameData.docID).update({winner: props.uid})
       }
     })
   }
@@ -128,14 +123,21 @@ function Board(props){
 
   useEffect(()=>{
       drawBoard()
-      console.log(props)
       var movesRef = firestore.collection('games').doc(props.gameData.docID).collection('moves')
 
       //on board render, draw out every move so far
       movesRef.get().then(query=>{
+        if(query.docs.length === 0){
+          props.gameData.turn === 'first' ? setTurn(true) : setTurn(false)
+        }
           query.forEach(doc => {
             drawPiece(doc.data().x, doc.data().y, doc.data().color)
           })
+      })
+
+      props.socket.on('opponentPlaced', data => {
+        drawPiece(data.x, data.y, data.color)
+        setTurn(true)
       })
       props.socket.on('lostGame', () =>{
         console.log('lost')
@@ -145,12 +147,6 @@ function Board(props){
       props.socket.on('rematchRequested', () => {
         setGameInfo(props.gameData.opponentName + ' wants to rematch!')
         setRequestedRematch(true)
-        setIsNewGame(true)
-      })
-
-      props.socket.on('movesClientDeleted', () => {
-        console.log('setNewGame to false')
-        setIsNewGame(false)
       })
 
       props.socket.on('startRematch', () => {
@@ -159,19 +155,12 @@ function Board(props){
         setPlaced(newArray)
         setGameInfo()
         reInitBoard()
-        setIsNewGame(true)
-        setTurn(true)
         setRequestedRematch(false)
+        setTurn(true)
         //remove every document from moves collection
         movesRef.get().then(query => {
-          var itemsProcessed = 0
           query.docs.forEach((doc, index, self) => {
             movesRef.doc(doc.id).delete().then(() =>{
-              itemsProcessed++
-              if(itemsProcessed === self.length){
-                setIsNewGame(false)
-                props.socket.emit('movesDeleted')
-              }
             })
           })
         })
@@ -274,7 +263,7 @@ function Board(props){
       let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
       setPlaced(newArray)
       setTurn(false)
-      setGameInfo(undefined)
+      setGameInfo()
       reInitBoard()
     }else{
       props.socket.emit('requestRematch', props.gameData.otherUid)
@@ -295,7 +284,6 @@ function Board(props){
             </div>
           }
           <canvas ref = {canvasRef} onClick = {handleClick} id = "omokcanvas" width = "700" height="700" />
-          <GameLogic {...props} drawPiece = {drawPiece} setTurn = {setTurn} isNewGame = {isNewGame} setIsNewGame = {setIsNewGame}/> 
         </div>
           <BoardChat {...props}/>
       </div> 

@@ -820,6 +820,7 @@ input[type="text"], textarea, select {
     border-bottom: 1px solid #80808057;
     width: 100%;
     text-align: center;
+    padding: 5px;
 }
 
 .challengeWrapper{
