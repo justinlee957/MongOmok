@@ -37,7 +37,9 @@ function Chatbox(props){
 
     useEffect( ()=> {
         var objDiv = document.getElementById("msgArea")
-        objDiv.scrollTop = objDiv.scrollHeight
+        if(objDiv){
+            objDiv.scrollTop = objDiv.scrollHeight
+        }
     })
 
     return(

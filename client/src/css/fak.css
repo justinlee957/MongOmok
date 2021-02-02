@@ -643,11 +643,12 @@ input[type="text"], textarea, select {
     border: none;
     left: 3%;
     position: relative;
-    top: 12%;
+    top: 7px;
     height: 75%;
     resize: none;
     overflow: hidden;
     font-size: 17px;
+    width: 95%;
 }
 
 #postImageWrapper{

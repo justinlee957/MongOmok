@@ -64,7 +64,8 @@ function Register(props){
           firestore.collection('users').doc(auth.currentUser.uid).set({
             name: username,
             win: 0, 
-            loss: 0
+            loss: 0,
+            status: 'online',
           })
         })
         .catch((error) => {

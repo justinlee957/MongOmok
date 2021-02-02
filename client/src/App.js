@@ -74,7 +74,7 @@ function App() {
       setChatsData(user)
     }
   }, [chats, user])
-  
+    
   //sets the post data from user uid
   useEffect(() => {
     async function setPostsData(){
