@@ -28,6 +28,7 @@ function User(props){
         <>
         <div className = {userWrapper} onMouseEnter = {handleMouseHover} onMouseLeave = {handleMouseHover}>
             <img id = "onlinePic" src={photo} alt = "profile pic"/>
+            {status && <div className = {status}></div>}
             <div className = "onlineUsername">{props.name}</div>
 
             {isHovering && userWrapper ==='userInfoWrapper' && 
@@ -36,7 +37,6 @@ function User(props){
                 <button className = "userOptionsBtn" onClick = {handleChallengeClick}>Challenge</button>
             </div>}
         </div>
-        <div className = {status}></div>
         </>
     )
 }

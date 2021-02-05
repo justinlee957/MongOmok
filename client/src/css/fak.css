@@ -287,7 +287,7 @@ img {
     font-size: 25px;
     border-radius: 25px;
     font-weight: 600;
-    height: 4.5%;
+    height: 44px;
     background-color: white;
     border: none;
     cursor: pointer;
@@ -565,8 +565,8 @@ input[type="text"], textarea, select {
     background-color: rgb(67, 181, 129);
     border-radius: 50%;
     border: 1px solid #a7adb5;
-    position: relative;
-    bottom: 17px;
+    position: absolute;
+    bottom: 10px;
     left: 38px;
     z-index: 10;
 }
@@ -968,22 +968,33 @@ center {
     padding-bottom: 15px;
 }
 
+#googleLogin{
+    position: absolute;
+    height: 40px;
+    left: 26%;
+    top: 78.5%;
+    cursor: pointer;
+}
+
 #emailInputInfo{
     position: relative;
     right: 21%;
     font-size: 15px;
+    font-weight: 600;
 }
 
 #usernameInputInfo{
     position: relative;
     right: 18%;
     font-size: 15px;
+    font-weight: 600;
 }
 
 #passwordInputInfo{
     position: relative;
     right: 18%;
     font-size: 15px;
+    font-weight: 600;
 }
 
 .loginInput{

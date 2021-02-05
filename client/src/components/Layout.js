@@ -92,8 +92,8 @@ class Layout extends Component{
     componentDidMount(){
       let isMounted = true
       //used for server
-      this.socket = openSocket({query: `uid=${this.props.uid}`})
-      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //this.socket = openSocket({query: `uid=${this.props.uid}`})
+      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.setState({gameData: data})
@@ -151,9 +151,9 @@ class Layout extends Component{
                     </MediaQuery>
                     {content}
                     <MediaQuery minDeviceWidth={1000}>
-                    {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
-                    {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
-                    </MediaQuery>
+                        {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                        {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                    </MediaQuery>   
                 </div>
                 <MediaQuery maxDeviceWidth = {700}>
                     <div id = 'bottomSidebar'>
