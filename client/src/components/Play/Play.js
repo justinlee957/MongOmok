@@ -1,5 +1,5 @@
 import ChallengeBox from './ChallengeBox'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Board from './Board'
 import { firestore } from '../../firebase'
 
