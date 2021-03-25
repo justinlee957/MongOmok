@@ -1,1 +1,1 @@
-Twitter + Omok using React and Nodejs
+Twitter + Gomoku using React and Nodejs
