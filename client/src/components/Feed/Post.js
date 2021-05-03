@@ -2,6 +2,7 @@ import '../../css/fak.css'
 import heart from '../../images/heart.png'
 import filledHeart from '../../images/filledHeart.png'
 import comment from '../../images/comment.png'
+import defaultPic from '../../images/defaultPic.png'
 import Comment from './Comment'
 import { useState, useEffect } from 'react'
 import { firestore, storage, auth, FieldValue } from '../../firebase'
@@ -19,6 +20,7 @@ function Post(props){
     var [initalComments] = useCollectionData(postsQuery.collection('comments').orderBy('createdAt', 'asc').limit(10), { idField: 'id' })
     var [comments, setComments] = useState()
 
+    var profilePic = props.profilePhoto ? props.profilePhoto : defaultPic
     var optionsBtn
     if(props.uid === auth.currentUser.uid){
         optionsBtn = <div className = 'postOptionsBtn noselect' onClick = {showOptions}>&#10247;</div>
@@ -113,7 +115,7 @@ function Post(props){
         <div className = "post">
             <div className = "postUserInfoWrapper">
                 <div style = {{display: 'flex', flexDirection: 'row'}}>
-                    <img className = "postProfile-pic" src={props.profilePhoto} alt = "profile pic"/> 
+                    <img className = "postProfile-pic" src={profilePic} alt = "profile pic"/> 
                     <div className = "postTextWrapper">
                         <div style = {{display: "flex", gap: "10px"}}>
                             <b className = "postName">{props.name}</b>

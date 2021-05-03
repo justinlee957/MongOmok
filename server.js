@@ -15,7 +15,7 @@ var admin = require("firebase-admin")
 var serviceAccount = require("./adminKey.json")
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://omok-77b55.firebaseio.com"
+  databaseURL: "https://omok-7511f.firebaseio.com"
 });
 const db = admin.firestore()
 
@@ -59,6 +59,7 @@ io.on('connection', socket =>{
     })
 
     socket.on('placePiece', data => {
+        opponentUid = data.otherUid
         if(users.has(data.otherUid)){
             console.log('sentPiece')
             io.to(users.get(data.otherUid)).emit('opponentPlaced' , data)

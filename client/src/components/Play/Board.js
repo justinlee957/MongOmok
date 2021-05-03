@@ -85,7 +85,7 @@ function Board(props){
   }
 
   function drawPiece(x, y, color){
-    var context = canvasRef.current.getContext('2d')
+    var context = document.getElementById('omokcanvas').getContext('2d')
     context.fillStyle = color
     context.beginPath();
     context.arc(x+7.5, y+7.5, 12, 0, 2 * Math.PI);
@@ -94,13 +94,13 @@ function Board(props){
   }
 
   function reInitBoard(){
-    var context = canvasRef.current.getContext('2d')
+    var context = document.getElementById('omokcanvas').getContext('2d')
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
     drawBoard()
   }
 
   function drawBoard(){
-    var context = canvasRef.current.getContext('2d')
+    var context = document.getElementById('omokcanvas').getContext('2d')
     // Box width
     var bw = 630;
     // Box height
