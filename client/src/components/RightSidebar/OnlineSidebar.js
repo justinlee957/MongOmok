@@ -3,7 +3,7 @@ import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function OnlineSidebar(props){
-    var usersQuery =  firestore.collection('users')
+    var usersQuery =  firestore.collection('users').limit(10)
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
 
     function showChat(otherUser){

@@ -942,11 +942,11 @@ center {
 }
 
 #loginSection{
-    height: 450px;
+    height: 645px;
     width: 450px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
-    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    border-radius: 3px;
 }
 
 #loginWrapper{
@@ -962,16 +962,27 @@ center {
 #loginHeader{
     font-weight: 600;
     font-size: 30px;
-    color: #5791f3;   
-    padding-bottom: 15px;
+    color: black;
+    padding-bottom: 10%;
+    padding-top: 10%;
 }
 
 #googleLogin{
-    position: absolute;
     height: 40px;
-    left: 26%;
-    top: 78.5%;
     cursor: pointer;
+}
+
+#googleBtn{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 10px;
+    gap: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid;
+    top: 12%;
 }
 
 #emailInputInfo{
@@ -996,11 +1007,11 @@ center {
 }
 
 .loginInput{
-    border-radius: 10px;
+    border-radius: 3px;
+    background: #e6e6e6;
+    height: 50px;
+    width: 300px;
     border: none;
-    height: 37px;
-    width: 240px;
-    border: 1px solid black;
     padding-left: 10px;
     font-size: 17px;
     outline: none;
@@ -1011,12 +1022,12 @@ input[type="email"], input[type="password"], textarea, select {
 }
 
 .loginBtn{
-    border-radius: 25px;
+    border-radius: 3px;
     border: 1px pink;
     background-color: #91b2e8;
     cursor: pointer;
     box-shadow: none;
-    width: 240px;
+    width: 300px;
     height: 50px;
     color: white;
     font-weight: 600;
