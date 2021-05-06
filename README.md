@@ -1,2 +1,2 @@
-Twitter + Gomoku using React, Firebase, and Nodejs
-https://mongomok.xyz/
+Twitter + Gomoku using React, Firebase, and Nodejs <br />
+Live Link: https://mongomok.xyz/
