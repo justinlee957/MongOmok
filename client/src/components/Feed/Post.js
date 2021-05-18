@@ -129,12 +129,12 @@ function Post(props){
             {options}
             {props.photo && <img className = "postPic" src={props.photo} alt = "post pic"/> }
             <div className = "postIconWrapper">
-                <div className = "likeAndCommentWrapper">
-                    <img className = "likeBtn" onClick = {likePost} src={liked} alt = "heartIcon"/> 
+                <div className = "likeAndCommentWrapper" onClick = {likePost}>
+                    <img className = "likeBtn"  src={liked} alt = "heartIcon"/> 
                     <p className = 'numLikesAndPosts'>{numLikes}</p>
                 </div>
-                <div className = 'likeAndCommentWrapper'>
-                    <img className = "commentBtn" onClick = {() => setDisplayComment(!displayComment)} src={comment} alt = "commentIcon"/> 
+                <div className = 'likeAndCommentWrapper' onClick = {() => setDisplayComment(!displayComment)}>
+                    <img className = "commentBtn" src={comment} alt = "commentIcon"/> 
                     <p className = 'numLikesAndPosts'>{numComments}</p>
                 </div>
             </div>

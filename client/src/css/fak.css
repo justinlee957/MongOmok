@@ -84,9 +84,9 @@ img {
     border: none;
     right: -4%;
     position: relative;
-    top: 3%;
-    height: 75%;
-    resize: none;
+    height: 60%;
+    top: -2%;
+    resize: vertical;
     overflow: hidden;
     line-height: 26px;
     width: calc(100% - 70px);
@@ -241,23 +241,22 @@ img {
 
 .likeAndCommentWrapper{
     display: flex;
-    width: 22px;
+    width: 38px;
+    cursor: pointer;
 }
 
 .numLikesAndPosts{
     color: rgb(91, 112, 131);
     font-size: 15px;
     position: relative;
-    left: 20%;
+    left: 15%;
 }
 .likeBtn{
     height: 22px;
-    cursor: pointer;
 }
 
 .commentBtn{
     height: 22px;
-    cursor: pointer;
 }
 
 
@@ -623,6 +622,7 @@ input[type="text"], textarea, select {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: 81%;
 }
 
 #homeHeader{

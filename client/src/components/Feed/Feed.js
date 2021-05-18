@@ -87,7 +87,7 @@ function Feed(props){
             </div>
             <div id = "feed">
                 <div id = "postInput">
-                    <div style = {{display: 'flex', alignItems: 'center', width: '100%', height: '43px'}}>
+                    <div style = {{display: 'flex', alignItems: 'center', width: '100%'}}>
                         <form>
                             <label>
                                 <img id = "uploadPic" src={picture} alt = "uploadPic"/> 
