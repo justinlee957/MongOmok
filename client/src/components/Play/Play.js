@@ -2,7 +2,7 @@ import ChallengeBox from './ChallengeBox'
 import { useState, useEffect } from 'react'
 import Board from './Board'
 import { firestore } from '../../firebase'
-
+import defaultPic from '../../images/defaultPic.png'
 function Play(props){
     var [playerData, setPlayerData] = useState()
     var content
@@ -24,6 +24,8 @@ function Play(props){
                     <div id = 'challengeHelper'>Challenge players on the right!</div>
                   </div>
     }
+
+    var opponentPhoto =  props.gameData && props.gameData.opponentPhoto ? props.gameData.opponentPhoto : defaultPic
 
     useEffect(()=>{
         firestore.collection('users').doc(props.uid).get().then(doc => {
@@ -47,7 +49,7 @@ function Play(props){
                 <div id = 'playHeader' style = {headerStyle}>Play</div>
                 {props.gameData  &&
                 <div style = {{paddingTop: '4px'}}>
-                    <img id = "opponentPhoto" src={props.gameData.opponentPhoto} alt = "opponentPhoto"/> 
+                    <img id = "opponentPhoto" src={opponentPhoto} alt = "opponentPhoto"/> 
                     <div id = 'playOpponentHeader'>{props.gameData.opponentName}</div>
                 </div>}
             </div>

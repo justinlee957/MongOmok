@@ -93,9 +93,11 @@ class Layout extends Component{
       let isMounted = true
       //used for server
       this.socket = openSocket({query: `uid=${this.props.uid}`})
+      //used for local
       //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
+            this.socket.emit('setOpponnentUid', data.otherUid)
             this.setState({gameData: data})
             this.playClick()
           }
@@ -146,7 +148,7 @@ class Layout extends Component{
                             <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
                             <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
                             <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
-                            <SignOut/>
+                            <SignOut socket = {this.socket}/>
                         </div>
                     </MediaQuery>
                     {content}

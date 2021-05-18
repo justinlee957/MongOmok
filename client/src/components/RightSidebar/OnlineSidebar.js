@@ -3,7 +3,7 @@ import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 function OnlineSidebar(props){
-    var usersQuery =  firestore.collection('users').limit(10)
+    var usersQuery =  firestore.collection('users').orderBy("status", "desc").limit(10)
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
 
     function showChat(otherUser){
@@ -30,7 +30,7 @@ function OnlineSidebar(props){
     }
 
     function challenge(otherUid){
-        usersQuery.doc(otherUid).collection('challenges').doc(props.uid).set({played: 'no', name: props.name})
+        firestore.collection('users').doc(otherUid).collection('challenges').doc(props.uid).set({played: 'no', name: props.name})
     }
 
     return(

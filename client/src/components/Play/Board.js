@@ -80,6 +80,9 @@ function Board(props){
         console.log('won')
         props.socket.emit('wonGame', props.gameData.otherUid)
         setGameInfo(props.name + ' wins!')
+        let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
+        setPlaced(newArray)
+        setTurn(false)
       }
     })
   }
@@ -143,6 +146,9 @@ function Board(props){
         console.log('lost')
         setGameInfo(props.gameData.opponentName + ' wins!')
         setTurn(false)
+        let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
+        setPlaced(newArray)
+        setTurn(false)
       })
       props.socket.on('rematchRequested', () => {
         setGameInfo(props.gameData.opponentName + ' wants to rematch!')
@@ -151,8 +157,6 @@ function Board(props){
 
       props.socket.on('startRematch', () => {
         //reinit game
-        let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
-        setPlaced(newArray)
         setGameInfo()
         reInitBoard()
         setRequestedRematch(false)
@@ -167,6 +171,7 @@ function Board(props){
       })
 
       props.socket.on('opponentDc', () => {
+        console.log('opponent left')
         setGameInfo(props.gameData.opponentName + ' left')
         setOpponentLeft(true)
       })
@@ -260,9 +265,6 @@ function Board(props){
     if(requestedRematch){
       props.socket.emit('acceptRematch', props.gameData.otherUid)
       //reinit game
-      let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
-      setPlaced(newArray)
-      setTurn(false)
       setGameInfo()
       reInitBoard()
     }else{

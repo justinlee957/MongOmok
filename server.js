@@ -58,6 +58,10 @@ io.on('connection', socket =>{
         })
     })
 
+    socket.on('setOpponnentUid', otherUid =>{
+        opponentUid = otherUid
+    })
+
     socket.on('placePiece', data => {
         opponentUid = data.otherUid
         if(users.has(data.otherUid)){
@@ -101,6 +105,8 @@ io.on('connection', socket =>{
         db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})
         if(users.has(uid)){
             users.delete(uid)
+            console.log(opponentUid)
+            console.log(users)
             if(opponentUid && users.has(opponentUid)){
                 io.to(users.get(opponentUid)).emit('opponentDc')
             }
