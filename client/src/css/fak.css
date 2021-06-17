@@ -56,7 +56,7 @@ img {
 
 #profile-icon{
     position: relative;
-    right: 21%;
+    right: 22%;
     bottom: 8%;
     font-size: 40px;
 }
@@ -80,16 +80,21 @@ img {
     align-items: center;
 }
 
+#postInputResp{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 52px;
+}
+
 #postArea{
     border: none;
-    right: -4%;
-    position: relative;
-    height: 60%;
-    top: -2%;
-    resize: vertical;
+    height: 30px;
+    min-height: 30px;
+    resize: none;
     overflow: hidden;
-    line-height: 26px;
     width: calc(100% - 70px);
+    padding-left: 10px;
 }
 
 #uploadedPic{
@@ -375,7 +380,7 @@ img {
 #profile-submit{
     top: 89%;
     left: 91%;
-    border-radius: 25px;
+    border-radius: 15px;
     border: 1px pink;
     background-color: #e891a0;
     cursor: pointer;

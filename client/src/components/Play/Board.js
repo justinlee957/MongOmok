@@ -62,29 +62,30 @@ function Board(props){
     
     if(placed[(y-26)/35][(x-26)/35] !== 0){
         return
+    }else{
+      drawPiece(x, y, props.gameData.color)
+      setTurn(false)
+      props.socket.emit('placePiece', {x, y, color: props.gameData.color, otherUid: props.gameData.otherUid})
+      firestore.collection('games').doc(props.gameData.docID).collection('moves').add({
+        x,
+        y,
+        color: props.gameData.color,
+        createdAt: FieldValue.serverTimestamp(),
+        uid: props.uid
+      }).then(() => {
+        placed[(y-26)/35][(x-26)/35] = 1
+        setPlaced(placed) 
+        
+        if(checkwin()){
+          console.log('won')
+          props.socket.emit('wonGame', props.gameData.otherUid)
+          setGameInfo(props.name + ' wins!')
+          let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
+          setPlaced(newArray)
+          setTurn(false)
+        }
+      })
     }
-    drawPiece(x, y, props.gameData.color)
-    setTurn(false)
-    props.socket.emit('placePiece', {x, y, color: props.gameData.color, otherUid: props.gameData.otherUid})
-    firestore.collection('games').doc(props.gameData.docID).collection('moves').add({
-      x,
-      y,
-      color: props.gameData.color,
-      createdAt: FieldValue.serverTimestamp(),
-      uid: props.uid
-    }).then(() => {
-      placed[(y-26)/35][(x-26)/35] = 1
-      setPlaced(placed) 
-      
-      if(checkwin()){
-        console.log('won')
-        props.socket.emit('wonGame', props.gameData.otherUid)
-        setGameInfo(props.name + ' wins!')
-        let newArray = Array.from({length: 10},()=> Array.from({length: 10}, () => 0))
-        setPlaced(newArray)
-        setTurn(false)
-      }
-    })
   }
 
   function drawPiece(x, y, color){

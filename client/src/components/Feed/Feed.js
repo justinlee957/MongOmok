@@ -6,6 +6,11 @@ import { useState } from 'react'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
+    function autoGrow() {
+        let element = document.getElementById('postArea')
+        element.style.height = "5px";   
+        element.style.height = (element.scrollHeight)+"px";
+    }
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
@@ -87,14 +92,14 @@ function Feed(props){
             </div>
             <div id = "feed">
                 <div id = "postInput">
-                    <div style = {{display: 'flex', alignItems: 'center', width: '100%'}}>
+                    <div id = "postInputResp">
                         <form>
                             <label>
                                 <img id = "uploadPic" src={picture} alt = "uploadPic"/> 
                                 <input id = "postImage" onChange={showUploadedImage} type="file" style = {{display:"none"}}/>
                             </label>
                         </form>
-                        <textarea id='postArea' placeholder='post something!' onKeyDown = {sendPost} type="text" autoComplete="off"></textarea>
+                        <textarea id='postArea' placeholder='post something!' onInput={autoGrow} onKeyDown = {sendPost} type="text" autoComplete="off" maxLength="162"></textarea>
                     </div>  
                     {postImage}
                 </div>

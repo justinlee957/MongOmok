@@ -19,10 +19,11 @@ admin.initializeApp({
 });
 const db = admin.firestore()
 
-app.use(express.static(path.join(__dirname, 'client/build')))
+//app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/client/build/index.html'))
+    //res.sendFile(path.join(__dirname+'/client/build/index.html'))
+    res.sendFile('client/build/index.html' , { root : __dirname})
 })
 
 var users = new Map()
@@ -117,3 +118,5 @@ io.on('connection', socket =>{
 http.listen(app.get('port'), () => {
     console.log('server running on ' + app.get('port'))
 })
+
+//app.listen(process.env.PORT || 3000, () => console.log(`App running on port 3000`))
