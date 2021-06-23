@@ -6,7 +6,6 @@ import { firestore, auth, storage } from './firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { GameProvider } from './GameProvider'
 import dog from './images/defaultPic.png'
 
 function App() {
@@ -133,9 +132,7 @@ function App() {
   }
   return (
     <div className="App">
-      <GameProvider>
         {user ? <Layout posts = {posts} messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
-      </GameProvider>
     </div>
   );
 }

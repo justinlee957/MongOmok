@@ -29,7 +29,7 @@ const customStyles = {
         backgroundColor: "rgba(0, 0, 0, 0.5)"
     }
 }
-
+const SERVER = "http://localhost:5000";
 class Layout extends Component{
     constructor(props){
         super(props)
@@ -92,9 +92,10 @@ class Layout extends Component{
     componentDidMount(){
       let isMounted = true
       //used for server
-      this.socket = openSocket({query: `uid=${this.props.uid}`})
+      //this.socket = openSocket({query: `uid=${this.props.uid}`})
+      this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
       //used for local
-      this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
       this.socket.on('startGame', (data) =>{
           if(isMounted){
             this.socket.emit('setOpponnentUid', data.otherUid)

@@ -57,7 +57,7 @@ img {
 #profile-icon{
     position: relative;
     right: 22%;
-    bottom: 8%;
+    bottom: 9vh;
     font-size: 40px;
 }
 
@@ -301,7 +301,7 @@ img {
     border: none;
     cursor: pointer;
     position: relative;
-    bottom: 5%;
+    bottom: 5vh;
     padding-right: 12%;
     padding-left: 12%;
 }
@@ -453,7 +453,7 @@ input[type="text"], textarea, select {
     justify-content: center;
     /* align-items: center; */
     flex-direction: row;
-    height: 100vh;
+    min-height: 100vh;
     position: absolute;
     width: 100%;
     right: 0;
@@ -476,7 +476,7 @@ input[type="text"], textarea, select {
 
 #signOutBtn{
     position: relative;
-    top: 55%;
+    top: 54vh;
     right: 5%;
     border-radius: 25px;
     border: 1px white;
@@ -621,7 +621,7 @@ input[type="text"], textarea, select {
 }
 
 #feedWrapper{
-    height: 100%;
+    min-height: 100vh;
     width: 600px;
     border-right: 0.5px solid #80808057;
     border-left: 0.5px solid #80808057;
