@@ -150,6 +150,11 @@ img {
     border-radius: 10px;
 }
 
+.postText{
+    width: 490px;
+    word-break: break-all;
+}
+
 .postTextWrapper{
     margin-top: 15px;
 }

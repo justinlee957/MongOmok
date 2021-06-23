@@ -19,11 +19,11 @@ admin.initializeApp({
 });
 const db = admin.firestore()
 
-//app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('*', (req, res) => {
-    //res.sendFile(path.join(__dirname+'/client/build/index.html'))
-    res.sendFile('client/build/index.html' , { root : __dirname})
+    res.sendFile(path.join(__dirname, '/client/build/index.html'))
+    //res.sendFile('client/build/index.html' , { root : __dirname})
 })
 
 var users = new Map()
@@ -44,11 +44,12 @@ io.on('connection', socket =>{
         db.collection('users').doc(data.otherUid).get().then(doc => {
             var inGame = doc.data().inGame
             var players = [uid, data.otherUid]
+            // if the user is online and currently isn't in a game
             if(users.has(data.otherUid) && (inGame === "no" || inGame === undefined)){
                 opponentUid = data.otherUid
                 db.collection('users').doc(uid).update({inGame: 'yes'})
                 db.collection('users').doc(data.otherUid).update({inGame: 'yes'})
-                db.collection('games').add({players}).then(doc =>{
+                db.collection('games').add({players}).then(doc => {
                     db.collection('users').doc(data.otherUid).get().then(opponent => {
                         socket.emit('startGame', {otherUid: data.otherUid, docID: doc.id, color: 'red', turn: 'first', opponentName: opponent.data().name, opponentPhoto: opponent.data().photo})
                     })
@@ -66,7 +67,6 @@ io.on('connection', socket =>{
     socket.on('placePiece', data => {
         opponentUid = data.otherUid
         if(users.has(data.otherUid)){
-            console.log('sentPiece')
             io.to(users.get(data.otherUid)).emit('opponentPlaced' , data)
         }
     })
@@ -106,8 +106,6 @@ io.on('connection', socket =>{
         db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})
         if(users.has(uid)){
             users.delete(uid)
-            console.log(opponentUid)
-            console.log(users)
             if(opponentUid && users.has(opponentUid)){
                 io.to(users.get(opponentUid)).emit('opponentDc')
             }

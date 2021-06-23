@@ -1,16 +1,20 @@
 import ChallengeBox from './ChallengeBox'
 import { useState, useEffect } from 'react'
 import Board from './Board'
+import TestBoard from './TestBoard'
 import { firestore } from '../../firebase'
 import defaultPic from '../../images/defaultPic.png'
+import { turnAtom } from '../../utils/atoms'
+import { useSetRecoilState } from 'recoil'
 function Play(props){
     var [playerData, setPlayerData] = useState()
     var content
     var headerStyle = {width: '100%'}
-
+    const setTurn = useSetRecoilState(turnAtom)
     //show board
     if(props.gameData){
-        content = <Board {...props}/>
+        content = <TestBoard {...props}/>
+        props.gameData.turn === 'first' ? setTurn(true) : setTurn(false)
         headerStyle = {width: 'calc(100% - 400px)'}
     //show challenges
     }else{
