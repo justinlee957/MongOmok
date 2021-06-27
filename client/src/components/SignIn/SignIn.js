@@ -22,7 +22,10 @@ function LogIn(props){
 
   function signInWithGoogle(){
     const provider = googleAuthProvider;
-    auth.signInWithPopup(provider);
+    auth.signInWithPopup(provider).then(res => {
+    }).catch(err => {
+      console.log(err.message)
+    })
   }
 
   function tryLogIn(){
@@ -31,19 +34,24 @@ function LogIn(props){
       console.log('signedIn')
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
+      alert("Invalid Login")
     });
+  }
+
+  function enterLogin(e){
+    if(e.key === "Enter"){
+      e.preventDefault()
+      tryLogIn()
+    }
   }
   
   return(
     <div id = 'loginSection'>
       <div id = 'loginWrapper'>
         <p id = 'loginHeader'>LOGIN</p>
-        <input className = 'loginInput' onInput={e => setEmail(e.target.value)} 
+        <input className = 'loginInput' onInput={e => setEmail(e.target.value)} onKeyPress = {enterLogin}
                type="email" style = {{marginBottom: '10px'}} placeholder = "Email"/>
-        <input className = 'loginInput' onInput={e => setPassword(e.target.value)} 
+        <input className = 'loginInput' onInput={e => setPassword(e.target.value)} onKeyPress = {enterLogin} 
                type="password" name="password" placeholder = "Password"/>
         <button className = 'loginBtn' onClick = {tryLogIn} style = {{top: '7%'}}>LOGIN</button>
         {/* <img id = 'googleLogin' src={google} alt = "google icon"/> */}
@@ -61,8 +69,17 @@ function Register(props){
   var [password, setPassword] = useState()
   var [username, setUsername] = useState()
 
-  function tryRegister(){
-    if(EmailValidator.validate(email) && password && password.length > 3){
+  async function tryRegister(){
+    if(!EmailValidator.validate(email)){
+      alert("Invalid Email")
+      return
+    }
+    const snap = await firestore.collection('users').where('name', '==', username).get()
+    if(snap.docs.length > 0){
+      alert('Username taken!')
+      return
+    }
+    if(password && password.length > 3){
       auth.createUserWithEmailAndPassword(email, password)
         .then(() => {
           firestore.collection('users').doc(auth.currentUser.uid).set({
@@ -77,6 +94,14 @@ function Register(props){
           var errorMessage = error.message;
           console.log(errorCode, errorMessage)
         });
+    }else{
+      alert('Password has to be at least 4 characters!')
+    }
+  }
+
+  function enterRegister(e){
+    if(e.key === "Enter"){
+      tryRegister()
     }
   }
 
@@ -84,9 +109,9 @@ function Register(props){
     <div id = 'loginSection' style = {{height: '528px'}}>
       <div id = 'loginWrapper'>
         <p id = 'loginHeader'>REGISTER</p>
-        <input className = 'loginInput' onInput={e => setEmail(e.target.value)} type="email" style = {{marginBottom: '10px'}} placeholder = "Email"/>
-        <input className = 'loginInput' onInput={e => setUsername(e.target.value)} type = "name" style = {{marginBottom: '10px'}} placeholder = "Username"/>
-        <input className = 'loginInput' onInput={e => setPassword(e.target.value)} type="password" placeholder = "Password"/>
+        <input className = 'loginInput' onInput={e => setEmail(e.target.value)} onKeyPress = {enterRegister} type="email" style = {{marginBottom: '10px'}} placeholder = "Email"/>
+        <input className = 'loginInput' onInput={e => setUsername(e.target.value)} onKeyPress = {enterRegister} type = "name" style = {{marginBottom: '10px'}} placeholder = "Username"/>
+        <input className = 'loginInput' onInput={e => setPassword(e.target.value)} onKeyPress = {enterRegister} type="password" placeholder = "Password"/>
         <button className = 'loginBtn' onClick = {tryRegister} style = {{top: '7%'}}>Register</button>
         <p onClick = {()=> props.setContent(<SignIn/>)} style = {{position: 'relative', top: '14%', cursor: 'pointer'}}>Log In</p>
       </div>

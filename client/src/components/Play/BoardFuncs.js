@@ -1,3 +1,5 @@
+import { firestore, FieldValue } from '../../firebase'
+
 var xcoord = []
 var ycoord = []
 var placed = []
@@ -61,7 +63,7 @@ export function drawBoard(canvas){
   context.stroke();
 }
 
-export function handleClick(e, canvas, turn, color){
+export function handleClick(e, canvas, turn, color, canvasImage){
   if(turn){
     const rect = canvas.getBoundingClientRect()
     var oldX = e.clientX - rect.left
@@ -69,10 +71,13 @@ export function handleClick(e, canvas, turn, color){
     oldX-=7.5
     oldY-=7.5
     const {x, y} = plotclosestpoint(oldX,oldY)
-    drawPiece(x,y, color, canvas, false)
     if(placed[(y-26)/35][(x-26)/35] === 1 || placed[(y-26)/35][(x-26)/35] === -1){
       return {x, y, win: false, alreadyPlaced: true}
     }
+    if(canvasImage){
+      canvas.getContext('2d').putImageData(canvasImage, 0, 0)
+    }
+    drawPiece(x,y, color, canvas, false)
     placed[(y-26)/35][(x-26)/35] = 1
     return {x,y, win: checkwin(), alreadyPlaced: false}
   }
@@ -205,4 +210,16 @@ export function setColor(win, defaultColor){
   if(win === -1) return defaultColor
   if(win) return 'black'
   return 'red'
+}
+
+export function updateWinLoss(win, uid){
+  if(win){
+    firestore.collection('users').doc(uid).update({
+      win: FieldValue.increment(1)
+    })
+  }else{
+    firestore.collection('users').doc(uid).update({
+      loss: FieldValue.increment(1)
+    })
+  }
 }

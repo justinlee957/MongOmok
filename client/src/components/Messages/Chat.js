@@ -2,7 +2,7 @@ import dog from '../../images/defaultPic.png'
 
 function Chat(props){
     var photo = props.photo ? props.photo : dog
-    var date = dateToYMD(props.lastSent.toDate())
+    var date = props.lastSent ? dateToYMD(props.lastSent.toDate()) : ''
     return(
         <div className = 'msg' onClick = {() => props.displayChatBox(props)}>
             <img className = "msgProfile-pic" src={photo} alt = "profile pic"/> 

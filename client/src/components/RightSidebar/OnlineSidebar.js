@@ -19,14 +19,14 @@ function OnlineSidebar(props){
 
         var chatRef = firestore.collection('chats')
         chatRef.doc(docid).get()
-            .then(doc =>{
-                if(!doc.exists){
-                    chatRef.doc(docid).set({
-                        users,
-                        lastSent: FieldValue.serverTimestamp(),
-                    })
-                }
-            })
+        .then(doc =>{
+            if(!doc.exists){
+                chatRef.doc(docid).set({
+                    users,
+                    lastSent: FieldValue.serverTimestamp(),
+                })
+            }
+        })
     }
 
     function challenge(otherUid){

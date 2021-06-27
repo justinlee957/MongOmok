@@ -57,7 +57,7 @@ img {
 #profile-icon{
     position: relative;
     right: 22%;
-    bottom: 9vh;
+    bottom: 8.5vh;
     font-size: 40px;
 }
 
@@ -78,6 +78,8 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
 }
 
 #postInputResp{
@@ -124,6 +126,8 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
 }
 .postUserInfoWrapper{
     display: flex;
@@ -145,9 +149,12 @@ img {
 
 .postPic{
     margin-top: 10px;
-    max-width: 90%;
-    object-fit: scale-down;
+    width: 90%;
+    height: 350px;
     border-radius: 10px;
+    background-position: top;
+    background-size: cover;
+    cursor: pointer;
 }
 
 .postText{
@@ -163,6 +170,9 @@ img {
     font-size: 25px;
     padding-top: 20px;
     cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .postOptions{
@@ -184,6 +194,16 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
+}
+
+.fullPostPhoto{
+    height: auto;
+    width: auto;
+    max-width: 700px;
+    max-height: 700px;
+    border-radius: 15px;
 }
 
 .commentWrapper{
@@ -453,7 +473,7 @@ input[type="text"], textarea, select {
     justify-content: center;
     /* align-items: center; */
     flex-direction: row;
-    min-height: 100vh;
+    height: 100vh;
     position: absolute;
     width: 100%;
     right: 0;
@@ -475,9 +495,6 @@ input[type="text"], textarea, select {
 }
 
 #signOutBtn{
-    position: relative;
-    top: 54vh;
-    right: 5%;
     border-radius: 25px;
     border: 1px white;
     background-color: white;
@@ -487,6 +504,8 @@ input[type="text"], textarea, select {
     color: black;
     font-weight: 600;
     font-size: 17px;
+    position: absolute;
+    bottom: 5%;
 }
 
 #signOutBtn:hover{
@@ -512,7 +531,7 @@ input[type="text"], textarea, select {
     bottom: 0;
     background-color: white;
     border-top: 1px solid #80808057;
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
@@ -623,8 +642,6 @@ input[type="text"], textarea, select {
 #feedWrapper{
     min-height: 100vh;
     width: 600px;
-    border-right: 0.5px solid #80808057;
-    border-left: 0.5px solid #80808057;
 }
 
 #feed{
@@ -643,6 +660,8 @@ input[type="text"], textarea, select {
     font-weight: 550;
     top: 0;
     background-color: white;
+    border-right: 0.5px solid #80808057;
+    border-left: 0.5px solid #80808057;
     border-bottom: 0.5px solid #80808057;
     z-index: 1;
 }
@@ -742,7 +761,7 @@ input[type="text"], textarea, select {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    min-height: 100vh;
     border-right: 1px solid #80808057;
     border-left: 1px solid #80808057;
     min-width: 20%;
@@ -895,6 +914,7 @@ input[type="text"], textarea, select {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    align-self: center;
 }
 
 #gameResult{
@@ -931,7 +951,22 @@ input[type="text"], textarea, select {
     padding-bottom: 3px;
 }
 
-#rematchBtn:hover, #postBtn:hover, #leaveBtn:hover{
+#resignBtn{
+    border-radius: 20px;
+    border: 1px pink;
+    background-color: #e891a0;
+    cursor: pointer;
+    box-shadow: none;
+    width: 95px;
+    height: 40px;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding-bottom: 3px;
+    margin-right: 35px;
+}
+
+#rematchBtn:hover, #postBtn:hover, #leaveBtn:hover, #resignBtn:hover{
     background-color: #f5afbb
 }
 
@@ -1052,14 +1087,14 @@ input[type="email"], input[type="password"], textarea, select {
 
 #messages{
     width: 400px;
-    height: 100%;
+    min-height: 100vh;
     border-right: 1px solid #80808057;
     border-left: 1px solid #80808057;
 }
 
 #chatbox{
     width: 600px;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -1223,10 +1258,28 @@ input[type="email"], input[type="password"], textarea, select {
     #challengeBoxWrapper{
         grid-template-columns: 1fr 1fr;
     }
+    #sidebar{
+        display: none;
+    }
+    #bottomSidebar{
+        display: flex
+    }
 }
 
 @media (max-width: 360px){
     #challengeBoxWrapper{
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width:1000px){
+    #onlineSidebar{
+        display: none;
+    }
+}
+
+@media (max-width:1250px){
+    #boardChatField{
+        display: none;
     }
 }

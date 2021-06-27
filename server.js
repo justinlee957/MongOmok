@@ -101,6 +101,12 @@ io.on('connection', socket =>{
         }
     })
 
+    socket.on('resign', otherUid => {
+        if(users.has(otherUid)){
+            io.to(users.get(otherUid)).emit('resign')
+        }
+    })
+
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
         db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})

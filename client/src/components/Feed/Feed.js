@@ -14,16 +14,16 @@ function Feed(props){
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
-            post()
+            post(e)
         }
     }   
 
-    async function post(){
-        const msg = document.getElementById('postArea').value
-        if(msg === ''){
+    async function post(e){
+        var msg = e.target.value
+        if(msg === '' && document.querySelector("#postImage").files[0] === undefined){
             return
         }
-        document.getElementById('postArea').value = ''
+        e.target.value = ''
 
         const postsRef = firestore.collection('posts')
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -88,7 +88,7 @@ function Feed(props){
     return(
         <div id = "feedWrapper">
             <div id = "homeHeader" style = {{position: props.position}}>
-                <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}}onClick = {homeClick}>Home</p>
+                <p style = {{cursor: 'pointer', width: '60px', fontSize: '22px'}} onClick = {homeClick}>Home</p>
             </div>
             <div id = "feed">
                 <div id = "postInput">

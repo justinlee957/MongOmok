@@ -29,7 +29,6 @@ const customStyles = {
         backgroundColor: "rgba(0, 0, 0, 0.5)"
     }
 }
-const SERVER = "http://localhost:5000";
 class Layout extends Component{
     constructor(props){
         super(props)
@@ -90,20 +89,23 @@ class Layout extends Component{
     }
 
     componentDidMount(){
-      let isMounted = true
-      //used for server
-      //this.socket = openSocket({query: `uid=${this.props.uid}`})
-      this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
-      //used for local
-      //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
-      this.socket.on('startGame', (data) =>{
-          if(isMounted){
+        let isMounted = true
+        //used for server
+        //this.socket = openSocket({query: `uid=${this.props.uid}`})
+        this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
+        //used for local
+        //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+        this.socket.on('startGame', (data) =>{
+            if(isMounted){
             this.socket.emit('setOpponnentUid', data.otherUid)
             this.setState({gameData: data})
             this.playClick()
-          }
-      })
-      return () => { isMounted = false }
+            }
+        })
+        return () => { 
+            isMounted = false
+            this.socket.off('startGame')
+        }
     }
 
     render(){
@@ -119,9 +121,7 @@ class Layout extends Component{
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
         }else if(users){
-            content = <MediaQuery maxDeviceWidth = {700} onChange={this.homeClick}>
-                        <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
-                    </MediaQuery>
+            content = <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
         }
 
         return(
@@ -141,31 +141,25 @@ class Layout extends Component{
                     <button id = "profile-submit"  onClick={this.props.updateProfile}>Apply</button>
                 </Modal>
                 <div id = "content">
-                    <MediaQuery minDeviceWidth={700}>
-                        <div id = "sidebar">
-                            <img id = "profile-pic" onClick={this.openModal} src={this.props.photo} alt = "profile pic"/>                   
-                            <i id = "profile-icon" className = "material-icons">person</i>
-                            <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
-                            <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
-                            <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
-                            <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
-                            <SignOut socket = {this.socket}/>
-                        </div>
-                    </MediaQuery>
-                    {content}
-                    <MediaQuery minDeviceWidth={1000}>
-                        {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
-                        {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
-                    </MediaQuery>   
-                </div>
-                <MediaQuery maxDeviceWidth = {700}>
-                    <div id = 'bottomSidebar'>
-                        <img onClick = {this.homeClick} className = "bottomSidebarBtn" src={homeIcon} alt = "homeIcon"/>
-                        <img onClick = {this.playClick} className = "bottomSidebarBtn" src={playIcon} alt = "playIcon"/>
-                        <img onClick = {this.messagesClick} className = "bottomSidebarBtn" src={envelopeIcon} alt = "envelopeIcon"/>
-                        <img onClick = {this.usersClick} className = "bottomSidebarBtn" src={userIcon} alt = "userIcon"/>
+                    <div id = "sidebar">
+                        <img id = "profile-pic" onClick={this.openModal} src={this.props.photo} alt = "profile pic"/>                   
+                        <i id = "profile-icon" className = "material-icons">person</i>
+                        <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
+                        <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
+                        <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
+                        <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
+                        <SignOut socket = {this.socket}/>
                     </div>
-                </MediaQuery>  
+                    {content}
+                    {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                    {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                </div>
+                <div id = 'bottomSidebar'>
+                    <img onClick = {this.homeClick} className = "bottomSidebarBtn" src={homeIcon} alt = "homeIcon"/>
+                    <img onClick = {this.playClick} className = "bottomSidebarBtn" src={playIcon} alt = "playIcon"/>
+                    <img onClick = {this.messagesClick} className = "bottomSidebarBtn" src={envelopeIcon} alt = "envelopeIcon"/>
+                    <img onClick = {this.usersClick} className = "bottomSidebarBtn" src={userIcon} alt = "userIcon"/>
+                </div>
             </div>
         )
     }

@@ -14,3 +14,8 @@ export const winAtom = atom({
     key: 'win', // unique ID (with respect to other atoms/selectors)
     default: -1, // default value (aka initial value)
 })
+
+export const canvasImageAtom = atom({
+    key: 'canvas',
+    default: ''
+})
