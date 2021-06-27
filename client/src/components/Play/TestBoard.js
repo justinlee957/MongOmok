@@ -43,12 +43,13 @@ export default function TestBoard(props){
             setRematch(true)
         })
         props.socket.on('startRematch', () => {
+            setCoords([])
+            setCanvasImage()
             setGameResult()
             reInitBoard(canvas.current)
             win ? setTurn(false) : setTurn(true)
             setRematch(false)
             setShowRematch(true)
-            setCoords([])
         })
         props.socket.on('opponentDc', () => {
             if(gameResult){
@@ -96,12 +97,13 @@ export default function TestBoard(props){
 
     function requestRematch(){
         if(rematch){
+            setCoords([])
+            setCanvasImage()
             reInitBoard(canvas.current)
             win ? setTurn(false) : setTurn(true)
             setGameResult()
             setRematch(false)
             setShowRematch(true)
-            setCoords([])
             props.socket.emit('acceptRematch', props.gameData.otherUid)
         }else{
             props.socket.emit('requestRematch', props.gameData.otherUid)
