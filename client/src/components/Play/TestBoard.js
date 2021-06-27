@@ -72,7 +72,7 @@ export default function TestBoard(props){
             props.socket.off('opponentDc') 
             props.socket.on('resign')
         }
-    }, [canvasImage])
+    }, [canvasImage, win])
 
     function click(e){
         const ctx = canvas.current.getContext('2d')

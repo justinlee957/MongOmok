@@ -22,7 +22,7 @@ function Play(props){
                     <ChallengeBox {...props} accept = {accept} decline = {decline}/>
                     {playerData && 
                         <div id = 'playerDataBox'>
-                            <p style = {{paddingTop: '5px'}}>win: {playerData.win}</p>
+                            <p style = {{paddingTop: '5px', whiteSpace: 'nowrap'}}>win: {playerData.win}</p>
                             <p>lose: {playerData.loss}</p>
                         </div>}
                     <div id = 'challengeHelper'>Challenge players on the right!</div>
