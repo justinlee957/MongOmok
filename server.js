@@ -18,6 +18,7 @@ admin.initializeApp({
   databaseURL: "https://omok-7511f.firebaseio.com"
 });
 const db = admin.firestore()
+const FieldValue = require('firebase-admin').firestore.FieldValue
 
 app.use(express.static(path.join(__dirname, 'client/build')))
 
@@ -36,28 +37,25 @@ io.on('connection', socket =>{
     db.collection('users').doc(uid).update({status: 'online'})
 
     if(uid && !users.has(uid)){
-        users.set(uid, socket.id);
+        users.set(uid, {socket: socket.id, inGame: false});
     }
 
     socket.on('acceptGame', data =>{
-        opponentUid = data.otherUid
-        db.collection('users').doc(data.otherUid).get().then(doc => {
-            var inGame = doc.data().inGame
-            var players = [uid, data.otherUid]
-            // if the user is online and currently isn't in a game
-            if(users.has(data.otherUid) && (inGame === "no" || inGame === undefined)){
-                opponentUid = data.otherUid
-                db.collection('users').doc(uid).update({inGame: 'yes'})
-                db.collection('users').doc(data.otherUid).update({inGame: 'yes'})
-                db.collection('games').add({players}).then(doc => {
-                    db.collection('users').doc(data.otherUid).get().then(opponent => {
-                        socket.emit('startGame', {otherUid: data.otherUid, docID: doc.id, color: 'red', turn: 'first', opponentName: opponent.data().name, opponentPhoto: opponent.data().photo})
-                    })
-                    io.to(users.get(data.otherUid)).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second', opponentName: data.name, opponentPhoto: data.photo })  
+        var inGame = users.get(data.otherUid).inGame
+        // if the user is online and currently isn't in a game
+        if(users.has(data.otherUid) && !inGame){
+            opponentUid = data.otherUid
+            var players = [uid, opponentUid]
+            users.get(uid).inGame = true
+            users.get(opponentUid).inGame = true
+            db.collection('games').add({players}).then(doc => {
+                db.collection('users').doc(data.otherUid).get().then(opponent => {
+                    socket.emit('startGame', {otherUid: data.otherUid, docID: doc.id, color: 'red', turn: 'first', opponentName: opponent.data().name, opponentPhoto: opponent.data().photo})
                 })
-            }
-            db.collection('users').doc(uid).collection('challenges').doc(data.otherUid).delete()
-        })
+                io.to(users.get(data.otherUid).socket).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second', opponentName: data.name, opponentPhoto: data.photo })  
+            })
+        }
+        db.collection('users').doc(uid).collection('challenges').doc(data.otherUid).delete()
     })
 
     socket.on('setOpponnentUid', otherUid =>{
@@ -67,13 +65,13 @@ io.on('connection', socket =>{
     socket.on('placePiece', data => {
         opponentUid = data.otherUid
         if(users.has(data.otherUid)){
-            io.to(users.get(data.otherUid)).emit('opponentPlaced' , data)
+            io.to(users.get(data.otherUid).socket).emit('opponentPlaced' , data)
         }
     })
 
     socket.on('wonGame', otherUid =>{
         if(users.has(otherUid)){
-            io.to(users.get(otherUid)).emit('lostGame')
+            io.to(users.get(otherUid).socket).emit('lostGame')
         }else{
             socket.emit('opponentDc')
         }
@@ -81,7 +79,7 @@ io.on('connection', socket =>{
 
     socket.on('requestRematch', otherUid => {
         if(users.has(otherUid)){
-            io.to(users.get(otherUid)).emit('rematchRequested')
+            io.to(users.get(otherUid).socket).emit('rematchRequested')
         }else{
             socket.emit('opponentDc')
         }
@@ -89,7 +87,7 @@ io.on('connection', socket =>{
 
     socket.on('acceptRematch', otherUid =>{
         if(users.has(otherUid)){
-            io.to(users.get(otherUid)).emit('startRematch')
+            io.to(users.get(otherUid).socket).emit('startRematch')
         }else{
             socket.emit('opponentDc')
         }
@@ -97,23 +95,23 @@ io.on('connection', socket =>{
 
     socket.on('leftMatch', otherUid => {
         if(users.has(otherUid)){
-            io.to(users.get(otherUid)).emit('opponentDc')
+            io.to(users.get(otherUid).socket).emit('opponentDc')
         }
     })
 
     socket.on('resign', otherUid => {
         if(users.has(otherUid)){
-            io.to(users.get(otherUid)).emit('resign')
+            io.to(users.get(otherUid).socket).emit('resign')
         }
     })
 
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
-        db.collection('users').doc(uid).update({inGame: 'no', status: 'offline'})
+        db.collection('users').doc(uid).update({inGame: 'no', status: 'offline', lastOnline: FieldValue.serverTimestamp()})
         if(users.has(uid)){
             users.delete(uid)
             if(opponentUid && users.has(opponentUid)){
-                io.to(users.get(opponentUid)).emit('opponentDc')
+                io.to(users.get(opponentUid).socket).emit('opponentDc')
             }
         }
     })

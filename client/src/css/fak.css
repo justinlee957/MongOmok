@@ -503,9 +503,9 @@ input[type="text"], textarea, select {
     height: 43px;
     color: black;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 18px;
     position: absolute;
-    bottom: 5%;
+    bottom: 2%;
 }
 
 #signOutBtn:hover{

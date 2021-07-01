@@ -1,6 +1,5 @@
 import ChallengeBox from './ChallengeBox'
 import { useState, useEffect } from 'react'
-import Board from './Board'
 import TestBoard from './TestBoard'
 import { firestore } from '../../firebase'
 import defaultPic from '../../images/defaultPic.png'
@@ -23,7 +22,7 @@ function Play(props){
                     {playerData && 
                         <div id = 'playerDataBox'>
                             <p style = {{paddingTop: '5px', whiteSpace: 'nowrap'}}>win: {playerData.win}</p>
-                            <p>lose: {playerData.loss}</p>
+                            <p style = {{whiteSpace: 'nowrap'}}>lose: {playerData.loss}</p>
                         </div>}
                     <div id = 'challengeHelper'>Challenge players on the right!</div>
                   </div>

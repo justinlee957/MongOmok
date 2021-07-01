@@ -6,12 +6,11 @@ import Feed from './Feed/Feed'
 import Modal from 'react-modal'
 import openSocket from 'socket.io-client'
 import { firestore } from '../firebase'
-import SignOut from './SignIn/SignOut'
-import MediaQuery from 'react-responsive'
 import homeIcon from '../images/home.png'
 import playIcon from '../images/play.png'
 import envelopeIcon from '../images/envelope.png'
 import userIcon from '../images/user.png'
+import Sidebar from './Sidebar'
 
 Modal.setAppElement('#root')
 
@@ -41,11 +40,12 @@ class Layout extends Component{
         this.inputChange = this.inputChange.bind(this)
         this.usersClick = this.usersClick.bind(this)
         this.state = {home: true, users: false, messages: false, play: false, gameData: false, modalIsOpen: false, position: 'sticky'}
+        this.contentRef = React.createRef()
     }
 
     homeClick(){
         this.setState({home: true, play: false})
-        document.getElementById('content').scrollTop = 0
+        this.contentRef.current.scrollTop = 0
     }
 
     playClick(){
@@ -91,7 +91,6 @@ class Layout extends Component{
     componentDidMount(){
         let isMounted = true
         //used for server
-        //this.socket = openSocket({query: `uid=${this.props.uid}`})
         this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
         //used for local
         //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
@@ -140,16 +139,9 @@ class Layout extends Component{
                     </div>
                     <button id = "profile-submit"  onClick={this.props.updateProfile}>Apply</button>
                 </Modal>
-                <div id = "content">
-                    <div id = "sidebar">
-                        <img id = "profile-pic" onClick={this.openModal} src={this.props.photo} alt = "profile pic"/>                   
-                        <i id = "profile-icon" className = "material-icons">person</i>
-                        <button onClick = {this.homeClick} className = "sidebar-btn">Home</button>
-                        <button onClick = {this.playClick} className = "sidebar-btn">Play</button>
-                        <button onClick = {this.messagesClick} className = "sidebar-btn">Messages</button>
-                        <button onClick = {this.openModal} className = "sidebar-btn">Profile</button>
-                        <SignOut socket = {this.socket}/>
-                    </div>
+                <div id = "content" ref = {this.contentRef}>
+                    <Sidebar openModal = {this.openModal} playClick = {this.playClick} photo = {this.props.photo} homeClick = {this.homeClick} 
+                        messagesClick = {this.messagesClick} openModal = {this.openModal} socket = {this.socket}/>
                     {content}
                     {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
                     {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
