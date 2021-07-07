@@ -20,10 +20,10 @@ function Feed(props){
 
     async function post(e){
         var msg = e.target.value
-        if(msg === '' && document.querySelector("#postImage").files[0] === undefined){
+        if(msg.replace(/ /g,'') === '' && !postImage){
             return
         }
-        e.target.value = ''
+        document.getElementById('postArea').value = ''
 
         const postsRef = firestore.collection('posts')
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -37,47 +37,22 @@ function Feed(props){
             likes: 0,
             comments: 0
         }
-        const res = await postsRef.add(data)
-
-        const image = new Promise(resolve => {
-            if(document.querySelector("#postImage").files[0] !== undefined){
-                resolve()
-            }
-        })
-
-        image.then(()=>{
-            const file = document.querySelector("#postImage").files[0]
-            const ref = storage.ref()
-            const task = ref.child(res.id).put(file)
-            task.then(() => {
-                firestore.collection('posts').doc(res.id)
-                .update({                    
-                    photo: 'yes'
-                }) 
-            })
+        var res = await postsRef.add(data)
+        if(postImage){
+            await storage.ref().child(res.id).put(postImage)
+            firestore.collection('posts').doc(res.id).update({photo: 'yes'}) 
             removeImage()
-        })
+        }
     }   
 
-    function showUploadedImage(){
-        const reader = new FileReader()
-        const file = document.querySelector('#postImage').files[0]
-        //if file is image
-        if(file && file['type'].split('/')[0] === 'image'){
-            reader.readAsDataURL(file)
+    function showUploadedImage(e){
+        const f = e.target.files[0]
+        if(f && f['type'].split('/')[0] === 'image'){
+            setPostImage(f)
         }
-        reader.addEventListener("load", function () {
-            // convert image file to base64 string
-            setPostImage(<div id = 'postImageWrapper'>
-                            <img id = "removeImageBtn" src = {cancel} onClick = {removeImage} alt = 'removeImage'/>
-                            <img id = "uploadedPic" src = {reader.result}alt = "uploadPic"/>
-                            <button id = 'postBtn' onClick = {post}>Post</button>
-                        </div>)
-        }, false)
     }
 
     function removeImage(){
-        document.getElementById('postImage').value = "";
         setPostImage()
     }
 
@@ -101,7 +76,12 @@ function Feed(props){
                         </form>
                         <textarea id='postArea' placeholder='post something!' onInput={autoGrow} onKeyDown = {sendPost} type="text" autoComplete="off" maxLength="162"></textarea>
                     </div>  
-                    {postImage}
+                    {postImage && 
+                        <div id = 'postImageWrapper'>
+                            <img id = "removeImageBtn" src = {cancel} onClick = {removeImage} alt = 'removeImage'/>
+                            <img id = "uploadedPic" src = {URL.createObjectURL(postImage)} alt = "uploadPic"/>
+                            <button id = 'postBtn' onClick = {post}>Post</button>
+                        </div>}
                 </div>
                 {!props.posts ? <div id = "loader"></div> : props.posts.map( (post, index, self) => {
                     return <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>
