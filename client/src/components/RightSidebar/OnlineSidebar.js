@@ -7,7 +7,7 @@ function OnlineSidebar(props){
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
 
     function showChat(otherUser){
-        props.displayMsgs() 
+        props.displayMsgs(otherUser.uid) 
         var docid
         var users = [props.uid, otherUser.uid]
 

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 function MessageLayout(props){
+
     var [msgClicked, setMsgClicked] = useState(false)
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-device-width: 700px)'
@@ -30,7 +31,7 @@ function MessageLayout(props){
         <>
             {!msgClicked && <div id = 'messages'>
                 <div id = 'msgTextHeader'>Messages</div>
-                {props.messages && props.messages.map(msg => <Chat key = {msg.id} uid = {props.uid} {...msg} displayChatBox = {displayChatBox}/>)}
+                {props.messages && props.messages.map(msg => <Chat key = {msg.id} clicked = {props.messageClicked} uid = {props.uid} {...msg} displayChatBox = {displayChatBox}/>)}
             </div>}
             {isDesktopOrLaptop && <div id = 'chatbox'></div>}
 

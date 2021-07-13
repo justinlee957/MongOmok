@@ -6,8 +6,10 @@ import defaultPic from '../../images/defaultPic.png'
 import Comment from './Comment'
 import { useState, useEffect } from 'react'
 import { firestore, storage, auth, FieldValue } from '../../firebase'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useCollectionData, useDocumentData  } from 'react-firebase-hooks/firestore'
 import Modal from 'react-modal'
+import { useRecoilState } from 'recoil'
+import { postsAtom } from '../../utils/atoms'
 
 const customStyles = {
     content: {
@@ -31,65 +33,50 @@ const customStyles = {
   };
 
 function Post(props){
-    var [options, setOptions] = useState()
-    var [numLikes, setNumLikes] = useState()
+    var [options, setOptions] = useState(false)
+    var [numLikes, setNumLikes] = useState(props.likes)
     var [numComments, setNumComments] = useState()
     var [liked, setLiked] = useState(heart)
     var [displayComment, setDisplayComment] = useState(false)
+    const [posts, setPosts] = useRecoilState(postsAtom)
 
     var postsQuery = firestore.collection('posts').doc(props.docId)
-    var [likes] = useCollectionData(postsQuery.collection('likes'), { idField: 'id' })
     var [initalComments] = useCollectionData(postsQuery.collection('comments').orderBy('createdAt', 'asc').limit(10))
     var [comments, setComments] = useState()
     const photoStyle = props.photo ? {
         backgroundImage: `url(${props.photo})`
-    }: ''
-
-    var profilePic = props.profilePhoto ? props.profilePhoto : defaultPic
+    }: false
+    var profilePic = props.profilePic ? props.profilePic : defaultPic
     var optionsBtn
     if(props.uid === auth.currentUser.uid){
         optionsBtn = <div className = 'postOptionsBtn noselect' onClick = {showOptions}>&#10247;</div>
     }
 
     function showOptions(){
-        if(options === undefined){
-            setOptions(<div className = 'postOptions'>
-                            <button className = 'deletePostBtn' onClick = {deletePost}>Delete</button>
-                        </div>)
-        }else{
-            setOptions(undefined)
-        }
+        setOptions(!options)
     }
 
     function closeOptions(){
         setOptions()
     }
 
-    async function deletePost(){
-        await firestore.collection('posts').doc(props.docId).delete()
-        if(props.photo){
-            await storage.ref().child(props.docId).delete();
-        }
+    function deletePost(){
+        setPosts(posts.filter(post => post.id !== props.docId))
+        if(photoStyle){
+            storage.ref().child(props.docId).delete()
+        }   
+        firestore.collection('posts').doc(props.docId).delete()
     }
 
     function likePost(){
         postsQuery.collection('likes').doc(auth.currentUser.uid).get().then(doc => {
             if(!doc.exists){
                 postsQuery.collection('likes').doc(auth.currentUser.uid).set({liked: 'yes'})
-                postsQuery.get().then(doc => {
-                    setNumLikes(doc.data().likes + 1)
-                    postsQuery.update({likes: doc.data().likes+1})
-                })
+                postsQuery.update({likes: numLikes+1})
+                setLiked(filledHeart)
             }else{
                 postsQuery.collection('likes').doc(auth.currentUser.uid).delete()
-                postsQuery.get().then(doc => {
-                    if(doc.data().likes > 1){
-                        setNumLikes(doc.data().likes - 1)
-                    }else{
-                        setNumLikes()
-                    }
-                    postsQuery.update({likes: doc.data().likes -1})
-                })
+                postsQuery.update({likes: numLikes-1})
                 setLiked(heart)
             }
         })
@@ -108,19 +95,14 @@ function Post(props){
         }
     }
 
-
     useEffect(() => {
-        if(likes && likes.length > 0){
-            setNumLikes(likes.length)
-        }
-        if(liked !== filledHeart){
-            firestore.collection('posts').doc(props.docId).collection('likes').doc(auth.currentUser.uid).get().then(doc => {
-                if(doc.exists){
-                    setLiked(filledHeart)
-                }
-            })
-        }
-    }, [likes, liked, props.docId])
+        const unsubscribe = firestore.collection('posts').doc(props.docId).onSnapshot(doc => {
+            if(doc.exists){
+                setNumLikes(doc.data().likes)
+            }
+        })
+        return () => unsubscribe()
+    }, [props.docId])
 
     useEffect(() => {
         if(initalComments && initalComments.length > 0){
@@ -138,6 +120,16 @@ function Post(props){
             })
         }
     }, [initalComments])
+
+    useEffect(() => {
+        if(props.docId){
+            postsQuery.collection('likes').doc(auth.currentUser.uid).get().then(doc =>{
+                if(doc.exists){
+                    setLiked(filledHeart)
+                }
+            })
+        }
+    }, [props.docId])
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -166,12 +158,14 @@ function Post(props){
                         </div>
                     </div>
                 </div>  
-                {options}
+                {options && <div className = 'postOptions'>
+                                <button className = 'deletePostBtn' onClick = {deletePost}>Delete</button>
+                            </div>}
                 {props.photo && <div className = "postPic" onClick = {openModal} style = {photoStyle}></div> }
                 <div className = "postIconWrapper">
                     <div className = "likeAndCommentWrapper" onClick = {likePost}>
                         <img className = "likeBtn"  src={liked} alt = "heartIcon"/> 
-                        <p className = 'numLikesAndPosts'>{numLikes}</p>
+                        <p className = 'numLikesAndPosts'>{numLikes <= 0 ? undefined : numLikes}</p>
                     </div>
                     <div className = 'likeAndCommentWrapper' onClick = {() => setDisplayComment(!displayComment)}>
                         <img className = "commentBtn" src={comment} alt = "commentIcon"/> 

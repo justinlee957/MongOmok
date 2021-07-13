@@ -105,6 +105,10 @@ io.on('connection', socket =>{
         }
     })
 
+    socket.on('newPost', postData => {
+        socket.broadcast.emit('newPost', postData)
+    })
+
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
         db.collection('users').doc(uid).update({inGame: 'no', status: 'offline', lastOnline: FieldValue.serverTimestamp()})

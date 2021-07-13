@@ -7,25 +7,27 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import dog from './images/defaultPic.png'
+import { getPosts } from './utils/firestoreFunctions'
+import { useRecoilState } from 'recoil'
+import { postsAtom } from './utils/atoms'
 
 function App() {
   const [user] = useAuthState(auth)
   var [username, setUsername] = useState()
   var [photoLink, setPhoto] = useState()
   var [privateChats, setChats] = useState()
-  var [posts, setPosts] = useState(false)
+  var [posts, setPosts] = useRecoilState(postsAtom)
   var chatsQuery, postsQuery
 
 
   if(user){
-    postsQuery = firestore.collection('posts').orderBy('createdAt', 'desc').limit(25)
+    //postsQuery = firestore.collection('posts').orderBy('createdAt', 'desc').limit(25)
     chatsQuery = firestore.collection('chats').where('users', 'array-contains-any', [user.uid]).limit(25)
   }
 
   //listens for any updates in these queries and updates in useEffects
   const [chats] = useCollectionData(chatsQuery, { idField: 'id' })
-  const [initalPosts] = useCollectionData(postsQuery, { idField: 'id' })
-
+  //const [initalPosts] = useCollectionData(postsQuery, { idField: 'id' })
   //sets username and photo
   useEffect(()=>{
     if(user){
@@ -74,26 +76,10 @@ function App() {
     }
   }, [chats, user])
     
-  //sets the post data from user uid
+  //sets the post data
   useEffect(() => {
-    async function setPostsData(){
-      var usersRef = firestore.collection('users')
-      for(var i = 0; i < initalPosts.length; i++){
-        var user = await usersRef.doc(initalPosts[i].uid).get()  
-        initalPosts[i].name = user.data().name
-        initalPosts[i].profilePic = user.data().photo
-  
-        if(initalPosts[i].photo){
-          var url = await storage.ref().child(initalPosts[i].id).getDownloadURL()
-          initalPosts[i].photo = url
-        }
-      }
-      setPosts(initalPosts)
-    }
-    if(user && initalPosts && initalPosts.length > 0){
-      setPostsData(initalPosts)
-    }
-  }, [username, photoLink, user, initalPosts])
+    getPosts().then(postsArr => setPosts(postsArr))
+  }, [])
 
   async function updateProfile(){
     const image = new Promise(resolve => {
@@ -132,7 +118,7 @@ function App() {
   }
   return (
     <div className="App">
-        {user ? <Layout posts = {posts} messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
+        {user ? <Layout messages = {privateChats} updateProfile = {updateProfile} name = {username} photo = {photoLink} uid = {user.uid}/> : <SignIn/>}
     </div>
   );
 }

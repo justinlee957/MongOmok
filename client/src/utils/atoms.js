@@ -19,3 +19,8 @@ export const canvasImageAtom = atom({
     key: 'canvas',
     default: ''
 })
+
+export const postsAtom = atom({
+    key: 'posts',
+    default: false
+})

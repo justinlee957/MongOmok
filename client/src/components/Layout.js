@@ -39,7 +39,7 @@ class Layout extends Component{
         this.closeModal = this.closeModal.bind(this)
         this.inputChange = this.inputChange.bind(this)
         this.usersClick = this.usersClick.bind(this)
-        this.state = {home: true, users: false, messages: false, play: false, gameData: false, modalIsOpen: false, position: 'sticky'}
+        this.state = {home: true, users: false, messages: false, messageClicked: false, play: false, gameData: false, modalIsOpen: false, position: 'sticky'}
         this.contentRef = React.createRef()
     }
 
@@ -52,8 +52,8 @@ class Layout extends Component{
         this.setState({play: true, home: false, messages: false})
     }
 
-    messagesClick(){
-        this.setState({messages: true, home: false, play: false})
+    messagesClick(uid){
+        this.setState({messages: true, messageClicked: uid, home: false, play: false})
     }
 
 
@@ -114,9 +114,9 @@ class Layout extends Component{
         const users = this.state.users
         let content
         if(home){
-            content = <Feed posts = {this.props.posts} time = {this.props.time} position = {this.state.position} uid = {this.props.uid}/>
+            content = <Feed name = {this.props.name} photo = {this.props.photo} socket = {this.socket} time = {this.props.time} position = {this.state.position} uid = {this.props.uid}/>
         }else if(messages){
-            content = <MessageLayout messages = {this.props.messages} uid = {this.props.uid}/>
+            content = <MessageLayout messages = {this.props.messages} messageClicked = {this.state.messageClicked} uid = {this.props.uid}/>
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
         }else if(users){

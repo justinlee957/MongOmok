@@ -1,8 +1,14 @@
 import dog from '../../images/defaultPic.png'
+import { useEffect } from 'react'
 
 function Chat(props){
     var photo = props.photo ? props.photo : dog
     var date = props.lastSent ? dateToYMD(props.lastSent.toDate()) : ''
+    useEffect(() => {
+        if(props.clicked === props.otherUid){
+            props.displayChatBox(props)
+        }
+    }, [])
     return(
         <div className = 'msg' onClick = {() => props.displayChatBox(props)}>
             <img className = "msgProfile-pic" src={photo} alt = "profile pic"/> 

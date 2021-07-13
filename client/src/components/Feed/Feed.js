@@ -2,10 +2,14 @@ import Post from './Post'
 import { firestore, storage } from '../../firebase'
 import picture from '../../images/picture1.png'
 import cancel from '../../images/cancel.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { postsAtom } from '../../utils/atoms'
 
 function Feed(props){
     var [postImage, setPostImage] = useState()
+    const [posts, setPosts] = useRecoilState(postsAtom)
+
     function autoGrow() {
         let element = document.getElementById('postArea')
         element.style.height = "5px";   
@@ -38,11 +42,19 @@ function Feed(props){
             comments: 0
         }
         var res = await postsRef.add(data)
+        data.id = res.id
+        data.name = props.name
+        data.profilePic = props.photo
+        if(postImage){
+            data.photo = URL.createObjectURL(postImage)
+        }
+        setPosts([data, ...posts])
         if(postImage){
             await storage.ref().child(res.id).put(postImage)
             firestore.collection('posts').doc(res.id).update({photo: 'yes'}) 
             removeImage()
         }
+        props.socket.emit('newPost', data)
     }   
 
     function showUploadedImage(e){
@@ -59,6 +71,17 @@ function Feed(props){
     function homeClick(){
         document.getElementById('content').scrollTop = 0
     }
+
+    useEffect(() => {
+        if(props.socket){
+            props.socket.on('newPost', data => {
+                setPosts([data, ...posts])
+            })
+            return () => {
+                props.socket.off('newPost')
+            }
+        }
+    }, [props.socket])
     
     return(
         <div id = "feedWrapper">
@@ -83,9 +106,10 @@ function Feed(props){
                             <button id = 'postBtn' onClick = {post}>Post</button>
                         </div>}
                 </div>
-                {!props.posts ? <div id = "loader"></div> : props.posts.map( (post, index, self) => {
-                    return <Post key = {post.id} name = {post.name} profilePhoto = {post.profilePic} text = {post.text} time = {post.time} photo = {post.photo ? post.photo: undefined} uid = {post.uid} docId = {post.id}/>
-                })}
+                {posts ?  posts.map(post => {
+                    return <Post key = {post.id} {...post} docId = {post.id}/>
+                }): <div id = "loader"></div>}
+                
             </div>
         </div>
     )

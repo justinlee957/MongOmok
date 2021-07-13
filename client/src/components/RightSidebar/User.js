@@ -16,7 +16,7 @@ function User(props){
         if(isDesktopOrLaptop){
             setHovering(!isHovering)
         }
-    }
+    } 
 
     function handleChallengeClick(){
         setHovering(false)
