@@ -1,12 +1,10 @@
 import User from './User'
 import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { useMediaQuery } from 'react-responsive'
 
-function OnlineSidebar(props){
+export function RespOnlineBar(){
     var usersQuery =  firestore.collection('users').orderBy("status", "desc").limit(10)
     var [users] = useCollectionData(usersQuery, { idField: 'id' })
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' })
 
     function showChat(otherUser){
         props.displayMsgs(otherUser.uid) 
@@ -36,13 +34,9 @@ function OnlineSidebar(props){
     }
 
     return(
-        <>
-        {(!isTabletOrMobile || props.users) && <div id = "onlineSidebar">
+        <div id = "onlineSidebar">
             <div id = "usersTitle">Users</div>
              {users && users.map(user => <User key = {user.id} uid = {user.id} photo = {user.photo} name = {user.name} status = {user.status} showChat = {showChat} challenge = {challenge}/>)} 
-        </div>}
-        </>
+        </div>
     )
 }
-
-export default OnlineSidebar

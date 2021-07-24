@@ -27,6 +27,7 @@ function Feed(props){
         if(msg.replace(/ /g,'') === '' && !postImage){
             return
         }
+        document.getElementById('postArea').style.height = '30px'
         document.getElementById('postArea').value = ''
 
         const postsRef = firestore.collection('posts')

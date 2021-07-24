@@ -1,6 +1,6 @@
 import { firestore, FieldValue } from '../../firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import Msg from './Msg'
 import { useMediaQuery } from 'react-responsive'
 import back from '../../images/back.png'
@@ -11,10 +11,10 @@ function Chatbox(props){
     const messagesRef = firestore.collection('chats').doc(props.id).collection('messages')
     const query = messagesRef.orderBy('createdAt').limit(25)
     const [messages] = useCollectionData(query, { idField: 'id'})
+    const [msgAreaHeight, setMsgHeight] = useState({height: '89%'})
 
-    const isTabletOrMobileDevice = useMediaQuery({
-        query: '(max-device-width: 700px)'
-    })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' })
+    console.log(isTabletOrMobile)
 
     function sendMsg(e){
         if(e.key === 'Enter'){
@@ -40,16 +40,20 @@ function Chatbox(props){
         if(objDiv){
             objDiv.scrollTop = objDiv.scrollHeight
         }
-    })
+    }, [])
+
+    useEffect(()=> {
+        isTabletOrMobile ? setMsgHeight({height: '81%'}) : setMsgHeight({height: '89%'})
+    }, [isTabletOrMobile])
 
     return(
         <div id = 'chatbox'>
             <div id = 'msgTextHeader' style = {{ paddingTop: '5px'}}>
-                {isTabletOrMobileDevice && <img onClick = {props.backClick} id = "backMsgBtn" src={back} alt = "backMsgBtn"/> }
+                {isTabletOrMobile && <img onClick = {props.backClick} id = "backMsgBtn" src={back} alt = "backMsgBtn"/> }
                 <img className = "chatBox-Pic" src={photo} alt = "profile pic"/> 
                 {props.name}
             </div>
-            <div id = 'msgArea'>
+            <div id = 'msgArea' style = {msgAreaHeight}>
                 {messages && messages.map(message => <Msg key = {message.id} text = {message.text} uid = {message.uid}/>)}
             </div>
             <div className = 'msgInputWrapper'>

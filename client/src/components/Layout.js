@@ -44,7 +44,7 @@ class Layout extends Component{
     }
 
     homeClick(){
-        this.setState({home: true, play: false})
+        this.setState({home: true, play: false, users: false})
         this.contentRef.current.scrollTop = 0
     }
 
@@ -58,8 +58,6 @@ class Layout extends Component{
 
 
     leaveMatch(){
-        firestore.collection('users').doc(this.props.uid).update({inGame: 'no'})
-        firestore.collection('users').doc(this.state.gameData.otherUid).update({inGame: 'no'})
         this.socket.emit('leftMatch', this.state.gameData.otherUid)
         this.setState({gameData: undefined, play: true})
     }
@@ -120,7 +118,7 @@ class Layout extends Component{
         }else if(play){
             content = <Play name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} socket = {this.socket} gameData = {this.state.gameData} leaveMatch = {this.leaveMatch}/>
         }else if(users){
-            content = <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>
+            content = <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick} users = {true}/>
         }
 
         return(
@@ -143,8 +141,8 @@ class Layout extends Component{
                     <Sidebar openModal = {this.openModal} playClick = {this.playClick} photo = {this.props.photo} homeClick = {this.homeClick} 
                         messagesClick = {this.messagesClick} openModal = {this.openModal} socket = {this.socket}/>
                     {content}
-                    {!this.state.play && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
-                    {this.state.play && !this.state.gameData && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                    {!play && !users && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
+                    {play && !this.state.gameData && !users && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
                 </div>
                 <div id = 'bottomSidebar'>
                     <img onClick = {this.homeClick} className = "bottomSidebarBtn" src={homeIcon} alt = "homeIcon"/>

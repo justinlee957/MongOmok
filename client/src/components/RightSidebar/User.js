@@ -4,16 +4,14 @@ import dog from '../../images/defaultPic.png'
 import { useMediaQuery } from 'react-responsive'
 
 function User(props){
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-device-width: 700px)'
-    })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' })
     var [isHovering, setHovering] = useState(false)
     var photo = props.photo ? props.photo : dog
     var status = props.status === 'online' ? 'onlineDot' : null
     var userWrapper = props.uid === auth.currentUser.uid ? 'myUserWrapper' : 'userInfoWrapper'
 
     function handleMouseHover(){
-        if(isDesktopOrLaptop){
+        if(!isTabletOrMobile){
             setHovering(!isHovering)
         }
     } 

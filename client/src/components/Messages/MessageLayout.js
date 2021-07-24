@@ -7,20 +7,11 @@ import { useMediaQuery } from 'react-responsive'
 function MessageLayout(props){
 
     var [msgClicked, setMsgClicked] = useState(false)
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-device-width: 700px)'
-    })
-    const isTabletOrMobileDevice = useMediaQuery({
-        query: '(max-device-width: 700px)'
-    })
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' })
 
     function displayChatBox(data){
         const element = <Chatbox {...data} backClick = {backClick}/>
-        if(isTabletOrMobileDevice){
-            setMsgClicked(element)
-        }else{
-            ReactDOM.render(element, document.getElementById('chatbox')) 
-        }
+        setMsgClicked(element)
     }
 
     function backClick(){
@@ -29,13 +20,11 @@ function MessageLayout(props){
 
     return(
         <>
-            {!msgClicked && <div id = 'messages'>
+            {(!isTabletOrMobile || !msgClicked) && <div id = 'messages'>
                 <div id = 'msgTextHeader'>Messages</div>
                 {props.messages && props.messages.map(msg => <Chat key = {msg.id} clicked = {props.messageClicked} uid = {props.uid} {...msg} displayChatBox = {displayChatBox}/>)}
             </div>}
-            {isDesktopOrLaptop && <div id = 'chatbox'></div>}
-
-            {msgClicked}
+            {(!isTabletOrMobile || msgClicked) && (msgClicked ? msgClicked : <div id = 'chatbox'></div>)}
         </>
     )
 }

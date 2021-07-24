@@ -158,7 +158,7 @@ img {
 }
 
 .postText{
-    width: 490px;
+    width: 100%;
     word-break: break-all;
 }
 
@@ -539,6 +539,7 @@ input[type="text"], textarea, select {
 
 .bottomSidebarBtn{
     height: 83%;
+    cursor: pointer;
 }
 
 #usersTitle{
@@ -1203,7 +1204,7 @@ input[type="email"], input[type="password"], textarea, select {
     margin-top: 10px;
 }
 
-@media (max-width:700px){
+@media (max-width:850px){
     #feedWrapper{
         width: 100%;
     }
@@ -1272,11 +1273,11 @@ input[type="email"], input[type="password"], textarea, select {
     }
 }
 
-@media (max-width:1000px){
+/* @media (max-width:1000px){
     #onlineSidebar{
         display: none;
     }
-}
+} */
 
 @media (max-width:1250px){
     #boardChatField{
