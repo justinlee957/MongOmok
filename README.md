@@ -1,1 +1,3 @@
-Twitter + Gomoku using React, Firebase, and Nodejs <br />
+Social Media Web Application + Multiplayer Game Gomoku
+
+React, Firebase, and Nodejs
