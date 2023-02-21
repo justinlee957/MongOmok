@@ -24,8 +24,9 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'))
-    //res.sendFile('client/build/index.html' , { root : __dirname})
 })
+
+const usersRef = db.collection('users')
 
 var users = new Map()
 
@@ -33,7 +34,7 @@ io.on('connection', socket => {
     var uid = socket.handshake.query['uid']
     var opponentUid
     console.log(uid, 'connected')
-    db.collection('users').doc(uid).set({status: 'online'}, {merge: true})
+    usersRef.doc(uid).set({status: 'online'}, {merge: true})
 
     if(uid && !users.has(uid)){
         users.set(uid, {socket: socket.id, inGame: false});
@@ -48,13 +49,13 @@ io.on('connection', socket => {
             users.get(uid).inGame = true
             users.get(opponentUid).inGame = true
             db.collection('games').add({players}).then(doc => {
-                db.collection('users').doc(data.otherUid).get().then(opponent => {
+                usersRef.doc(data.otherUid).get().then(opponent => {
                     socket.emit('startGame', {otherUid: data.otherUid, docID: doc.id, color: 'red', turn: 'first', opponentName: opponent.data().name, opponentPhoto: opponent.data().photo})
                 })
                 io.to(users.get(data.otherUid).socket).emit('startGame', {otherUid: uid, docID: doc.id, color: 'black', turn: 'second', opponentName: data.name, opponentPhoto: data.photo })  
             })
         }
-        db.collection('users').doc(uid).collection('challenges').doc(data.otherUid).delete()
+        usersRef.doc(uid).collection('challenges').doc(data.otherUid).delete()
     })
 
     socket.on('setOpponnentUid', otherUid =>{
@@ -110,7 +111,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         console.log(uid, 'dced')
-        db.collection('users').doc(uid).update({inGame: 'no', status: 'offline', lastOnline: FieldValue.serverTimestamp()})
+        usersRef.doc(uid).update({inGame: 'no', status: 'offline', lastOnline: FieldValue.serverTimestamp()})
         if(users.has(uid)){
             users.delete(uid)
             if(opponentUid && users.has(opponentUid)){

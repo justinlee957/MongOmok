@@ -13,10 +13,6 @@ export async function getPosts() {
         postObj.name = user.data().name;
         postObj.profilePic = user.data().photo;
         postObj.id = doc.id;
-        if (postObj.photo) {
-            let url = await storage.ref().child(doc.id).getDownloadURL();
-            postObj.photo = url;
-        }
         posts.push(postObj);
     });
     await Promise.all(promises);
@@ -37,7 +33,7 @@ export async function setUserProfile(user, setUsername, setPhoto) {
             status: "online",
             win: 0,
             loss: 0,
-        });
+        }, {merge: true});
     }
 }
 

@@ -32,7 +32,7 @@ function App() {
 
   //sets the messages data with the other user's name and photo
   useEffect(() => {
-    if(user && chats && chats.length > 0){
+    if(user && chats && chats.length){
       setChatsData(setChats, chats, user.uid)
     }
   }, [chats, user])

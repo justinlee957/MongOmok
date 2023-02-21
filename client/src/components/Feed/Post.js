@@ -10,27 +10,6 @@ import Modal from 'react-modal'
 import { useRecoilState } from 'recoil'
 import { postsAtom } from '../../utils/atoms'
 
-const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      border: 'none',
-      background: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: '0',
-      padding: '0'
-    },
-    overlay: {
-        backgroundColor: "rgba(0, 0, 0, 0.5)"
-    }
-  };
-
 function Post(props){
     var [options, setOptions] = useState(false)
     var [numLikes, setNumLikes] = useState(props.likes)
@@ -195,3 +174,24 @@ function Post(props){
 }
 
 export default Post
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      border: 'none',
+      background: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: '0',
+      padding: '0'
+    },
+    overlay: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)"
+    }
+};

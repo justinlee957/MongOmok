@@ -12,9 +12,10 @@ function Feed(props){
 
     function autoGrow() {
         let element = document.getElementById('postArea')
-        element.style.height = "5px";   
-        element.style.height = (element.scrollHeight)+"px";
+        element.style.height = "5px"
+        element.style.height = (element.scrollHeight)+"px"
     }
+
     function sendPost(e){
         if(e.key === 'Enter'){
             e.preventDefault();
@@ -22,8 +23,8 @@ function Feed(props){
         }
     }   
 
-    async function post(e){
-        var msg = e.target.value
+    async function post(){
+        var msg = document.getElementById('postArea').value
         if(msg.replace(/ /g,'') === '' && !postImage){
             return
         }
@@ -33,8 +34,8 @@ function Feed(props){
         const postsRef = firestore.collection('posts')
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         const current = new Date()
-        const today = months[current.getMonth()] + ' ' + current.getDate()
-        const data = {
+        const today = months[current.getMonth()] + ' ' + current.getDate() + ' ' + current.getFullYear()
+        let data = {
             uid: props.uid,
             text: msg,
             createdAt: Date.now(),
@@ -48,13 +49,12 @@ function Feed(props){
         data.profilePic = props.photo
         if(postImage){
             data.photo = URL.createObjectURL(postImage)
+            removeImage()
+            let snap = await storage.ref().child(res.id).put(postImage)
+            let photoURL = await snap.ref.getDownloadURL()
+            await postsRef.doc(res.id).update({photo: photoURL}) 
         }
         setPosts([data, ...posts])
-        if(postImage){
-            await storage.ref().child(res.id).put(postImage)
-            firestore.collection('posts').doc(res.id).update({photo: 'yes'}) 
-            removeImage()
-        }
         props.socket.emit('newPost', data)
     }   
 
@@ -62,6 +62,7 @@ function Feed(props){
         const f = e.target.files[0]
         if(f && f['type'].split('/')[0] === 'image'){
             setPostImage(f)
+            document.getElementById('postArea').focus()
         }
     }
 
@@ -82,7 +83,7 @@ function Feed(props){
                 props.socket.off('newPost')
             }
         }
-    }, [props.socket])
+    }, [props.socket, posts, setPosts])
     
     return(
         <div id = "feedWrapper">
@@ -107,7 +108,7 @@ function Feed(props){
                             <button id = 'postBtn' onClick = {post}>Post</button>
                         </div>}
                 </div>
-                {posts ?  posts.map(post => {
+                {posts ? posts.map(post => {
                     return <Post key = {post.id} {...post} docId = {post.id}/>
                 }): <div id = "loader"></div>}
                 
