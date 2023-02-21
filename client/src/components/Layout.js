@@ -71,10 +71,8 @@ class Layout extends Component{
 
     componentDidMount(){
         let isMounted = true
-        //used for server
-        // this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
-        //used for local
-        this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+        let url = window.location.origin.includes("localhost") ? "http://localhost:5000" : "https://mongomok.com"
+        this.socket = openSocket(url, {query: `uid=${this.props.uid}`})
         this.socket.on('startGame', (data) =>{
             if(isMounted){
             this.socket.emit('setOpponnentUid', data.otherUid)
