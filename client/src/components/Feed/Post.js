@@ -1,4 +1,3 @@
-import '../../css/fak.css'
 import heart from '../../images/heart.png'
 import filledHeart from '../../images/filledHeart.png'
 import comment from '../../images/comment.png'

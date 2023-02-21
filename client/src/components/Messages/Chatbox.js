@@ -14,7 +14,6 @@ function Chatbox(props){
     const [msgAreaHeight, setMsgHeight] = useState({height: '89%'})
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' })
-    console.log(isTabletOrMobile)
 
     function sendMsg(e){
         if(e.key === 'Enter'){
@@ -40,7 +39,7 @@ function Chatbox(props){
         if(objDiv){
             objDiv.scrollTop = objDiv.scrollHeight
         }
-    }, [])
+    },)
 
     useEffect(()=> {
         isTabletOrMobile ? setMsgHeight({height: '81%'}) : setMsgHeight({height: '89%'})

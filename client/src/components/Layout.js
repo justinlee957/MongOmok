@@ -5,29 +5,12 @@ import MessageLayout from './Messages/MessageLayout'
 import Feed from './Feed/Feed'
 import Modal from 'react-modal'
 import openSocket from 'socket.io-client'
-import { firestore } from '../firebase'
 import homeIcon from '../images/home.png'
 import playIcon from '../images/play.png'
 import envelopeIcon from '../images/envelope.png'
 import userIcon from '../images/user.png'
 import Sidebar from './Sidebar'
 
-Modal.setAppElement('#root')
-
-const customStyles = {
-    content : {
-      top                   : '30%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)',
-      borderRadius          : '15px'
-    },
-    overlay: {
-        backgroundColor: "rgba(0, 0, 0, 0.5)"
-    }
-}
 class Layout extends Component{
     constructor(props){
         super(props)
@@ -89,9 +72,9 @@ class Layout extends Component{
     componentDidMount(){
         let isMounted = true
         //used for server
-        this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
+        // this.socket = openSocket("https://mongomok.xyz/", {query: `uid=${this.props.uid}`})
         //used for local
-        //this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
+        this.socket = openSocket("http://localhost:5000",{query: `uid=${this.props.uid}`})
         this.socket.on('startGame', (data) =>{
             if(isMounted){
             this.socket.emit('setOpponnentUid', data.otherUid)
@@ -155,3 +138,20 @@ class Layout extends Component{
     }
 }
 export default Layout
+
+Modal.setAppElement('#root')
+
+const customStyles = {
+    content : {
+      top                   : '30%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      borderRadius          : '15px'
+    },
+    overlay: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)"
+    }
+}

@@ -1,23 +1,25 @@
-html,body {
+html,
+body {
     height: 100%;
     scroll-behavior: smooth;
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
     line-height: 1.4;
     overflow-x: none;
 }
 
-button, textarea{
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+button,
+textarea {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-button{
+button {
     outline: none;
 }
 
-
-.btn-flat{
-    text-Transform: none !important;
+.btn-flat {
+    text-transform: none !important;
 }
 
 img {
@@ -28,20 +30,20 @@ img {
     user-select: none;
 }
 
-#login-page{
-    overflow:hidden;
-    top:15%;
+#login-page {
+    overflow: hidden;
+    top: 15%;
 }
-#sidenav{
+#sidenav {
     width: 230px;
     text-align: center;
 }
 
-#menu{
+#menu {
     position: relative;
     top: 4.5%;
 }
-#profile-pic{
+#profile-pic {
     border-radius: 50%;
     width: 95px;
     height: 95px;
@@ -54,42 +56,40 @@ img {
     margin-right: 15px;
 }
 
-#profile-icon{
+#profile-icon {
     position: relative;
     right: 22%;
     bottom: 8.5vh;
     font-size: 40px;
 }
 
-#profile-pic:hover{
+#profile-pic:hover {
     opacity: 0.4;
 }
 
-#uploadPic{
+#uploadPic {
     margin-left: 10px;
     height: 28px;
     cursor: pointer;
     margin-top: 3px;
 }
-#postInput{
+#postInput {
     border-bottom: 1px solid #80808057;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-right: 0.5px solid #80808057;
-    border-left: 0.5px solid #80808057;
 }
 
-#postInputResp{
+#postInputResp {
     display: flex;
     align-items: center;
     width: 100%;
     min-height: 52px;
 }
 
-#postArea{
+#postArea {
     border: none;
     height: 30px;
     min-height: 30px;
@@ -99,7 +99,7 @@ img {
     padding-left: 10px;
 }
 
-#uploadedPic{
+#uploadedPic {
     max-width: 71%;
     max-height: 420px;
     margin-bottom: 15px;
@@ -107,7 +107,7 @@ img {
     object-fit: scale-down;
 }
 
-#removeImageBtn{
+#removeImageBtn {
     height: 30px;
     cursor: pointer;
     margin-right: 1%;
@@ -118,18 +118,15 @@ img {
     font-size: 19px;
 }
 
-
-.post{
+.post {
     border-bottom: 1px solid #80808057;
     width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 0.5px solid #80808057;
-    border-left: 0.5px solid #80808057;
 }
-.postUserInfoWrapper{
+.postUserInfoWrapper {
     display: flex;
     grid-gap: 10px;
     gap: 10px;
@@ -137,7 +134,7 @@ img {
     width: 100%;
 }
 
-.postProfile-pic{
+.postProfile-pic {
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
@@ -147,8 +144,9 @@ img {
     object-fit: cover;
 }
 
-.postPic{
+.postPic {
     margin-top: 10px;
+    margin-bottom: 10px;
     width: 90%;
     height: 350px;
     border-radius: 10px;
@@ -157,16 +155,16 @@ img {
     cursor: pointer;
 }
 
-.postText{
+.postText {
     width: 100%;
     word-break: break-all;
 }
 
-.postTextWrapper{
+.postTextWrapper {
     margin-top: 15px;
 }
 
-.postOptionsBtn{
+.postOptionsBtn {
     font-size: 25px;
     padding-top: 20px;
     cursor: pointer;
@@ -175,7 +173,7 @@ img {
     top: 0;
 }
 
-.postOptions{
+.postOptions {
     width: 100px;
     position: absolute;
     right: 3%;
@@ -188,7 +186,7 @@ img {
     flex-direction: column;
 }
 
-.postComments{
+.postComments {
     width: 100%;
     border-bottom: 1px solid #80808057;
     display: flex;
@@ -198,7 +196,7 @@ img {
     border-left: 0.5px solid #80808057;
 }
 
-.fullPostPhoto{
+.fullPostPhoto {
     height: auto;
     width: auto;
     max-width: 700px;
@@ -206,14 +204,14 @@ img {
     border-radius: 15px;
 }
 
-.commentWrapper{
+.commentWrapper {
     display: flex;
     gap: 10px;
     padding-top: 10px;
     width: 100%;
 }
 
-.commentTextWrapper{
+.commentTextWrapper {
     border-radius: 25px;
     padding: 12px;
     background-color: rgba(0, 0, 0, 0.05);
@@ -221,11 +219,11 @@ img {
     bottom: 2px;
 }
 
-.commentName{
+.commentName {
     font-weight: 600;
 }
 
-.postCommentPhoto{
+.postCommentPhoto {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -233,7 +231,7 @@ img {
     margin-left: 10px;
 }
 
-.postCommentInput{
+.postCommentInput {
     border: none;
     border: 1px solid #80808057;
     /* background-color: rgba(0, 0, 0, 0.05); */
@@ -246,13 +244,13 @@ img {
     font-size: 16px;
 }
 
-.commentInputLine{
+.commentInputLine {
     padding-top: 10px;
     width: 100%;
     border-bottom: 1px solid #80808057;
 }
 
-.deletePostBtn{
+.deletePostBtn {
     background-color: white;
     border: none;
     border-radius: 5px;
@@ -260,49 +258,47 @@ img {
     height: 30px;
 }
 
-.postIconWrapper{
+.postIconWrapper {
     display: flex;
     gap: 10px;
     justify-content: space-around;
     margin-bottom: 5px;
-    margin-top: 10px;
     width: 100%;
 }
 
-.likeAndCommentWrapper{
+.likeAndCommentWrapper {
     display: flex;
     width: 38px;
     cursor: pointer;
 }
 
-.numLikesAndPosts{
+.numLikesAndPosts {
     color: rgb(91, 112, 131);
     font-size: 15px;
     position: relative;
     left: 15%;
 }
-.likeBtn{
+.likeBtn {
     height: 22px;
 }
 
-.commentBtn{
+.commentBtn {
     height: 22px;
 }
 
-
-#game-pic{
+#game-pic {
     border-radius: 50%;
     position: relative;
     width: 110px;
     height: 110px;
     object-fit: cover;
 }
-#searching{
+#searching {
     position: absolute;
     right: 42%;
     top: 10%;
 }
-#turninfo{
+#turninfo {
     display: grid;
     padding-top: 10px;
     grid-template-columns: 50% 50%;
@@ -311,7 +307,7 @@ img {
     height: 26%;
 }
 
-.sidebar-btn{
+.sidebar-btn {
     text-align: end;
     font-size: 25px;
     border-radius: 25px;
@@ -326,27 +322,30 @@ img {
     padding-left: 12%;
 }
 
-.sidebar-btn:hover, .deletePostBtn:hover, .userInfoWrapper:hover{
-    background-color: #F2F2F2;
+.sidebar-btn:hover,
+.deletePostBtn:hover,
+.userInfoWrapper:hover {
+    background-color: #f2f2f2;
 }
-.sidebar-btn:focus, .deletePostBtn:focus{
-    background-color:#F2F2F2;
+.sidebar-btn:focus,
+.deletePostBtn:focus {
+    background-color: #f2f2f2;
 }
 
-#editProfile{
-    position: absolute; 
-    height:30vh;
-    width:30%;
+#editProfile {
+    position: absolute;
+    height: 30vh;
+    width: 30%;
     background-color: #ffcf001a;
 }
 
-#profile-modal{
-    height:30vh;
-    width:30%;
+#profile-modal {
+    height: 30vh;
+    width: 30%;
     min-width: 570px;
     border-radius: 15px;
 }
-#change-name{
+#change-name {
     position: absolute;
     right: 3%;
     top: 21%;
@@ -355,12 +354,12 @@ img {
     flex-direction: column;
 }
 
-#changeNameHeader{
-    font-size: .8rem;
+#changeNameHeader {
+    font-size: 0.8rem;
     color: #9e9e9e;
 }
 
-#changeNameInput{
+#changeNameInput {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #9e9e9e;
@@ -369,23 +368,23 @@ img {
     font-size: 17px;
 }
 
-#changeNameInput:focus{
+#changeNameInput:focus {
     border-color: #10c5dc;
 }
 
-#change-pic{
+#change-pic {
     border-radius: 50%;
     position: absolute;
     width: 120px;
     height: 120px;
     object-fit: cover;
     left: 16%;
-    top: 19%;  
-    cursor: pointer;  
+    top: 19%;
+    cursor: pointer;
     z-index: 10;
 }
 
-#upload-icon{
+#upload-icon {
     position: absolute;
     left: 22.5%;
     top: 31%;
@@ -394,17 +393,17 @@ img {
     opacity: 0;
 }
 
-#change-pic:hover{
+#change-pic:hover {
     opacity: 0.4;
 }
 
-#change-pic:hover + #upload-icon{
+#change-pic:hover + #upload-icon {
     opacity: 1;
 }
 
-#profile-submit{
-    top: 89%;
-    left: 91%;
+#profile-submit {
+    top: 85%;
+    left: 90%;
     border-radius: 15px;
     border: 1px pink;
     background-color: #e891a0;
@@ -418,19 +417,19 @@ img {
     padding-bottom: 3px;
 }
 
-#profile-submit:hover{
+#profile-submit:hover {
     opacity: 0.6;
 }
 
-#game-section{
+#game-section {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding-left:200px;
+    padding-left: 200px;
 }
 
-#chatMessages{
+#chatMessages {
     height: 94%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -438,7 +437,7 @@ img {
     flex-direction: column;
 }
 
-#boardMsgInput{
+#boardMsgInput {
     height: 35px;
     border: 1px #808080 solid;
     border-radius: 33px;
@@ -447,13 +446,13 @@ img {
     width: 97%;
 }
 
-#boardMsgWrapper{
+#boardMsgWrapper {
     border-top: 1px solid #80808057;
     display: flex;
     justify-content: center;
 }
 
-#boardChatArea{
+#boardChatArea {
     border: none;
     left: 5%;
     position: relative;
@@ -464,11 +463,13 @@ img {
     width: 91%;
 }
 
-input[type="text"], textarea, select { 
+input[type="text"],
+textarea,
+select {
     outline: none;
 }
 
-#content{
+#content {
     display: flex;
     justify-content: center;
     /* align-items: center; */
@@ -480,7 +481,7 @@ input[type="text"], textarea, select {
     overflow: auto;
 }
 
-#sidebar{
+#sidebar {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -492,9 +493,10 @@ input[type="text"], textarea, select {
     align-self: flex-start;
     top: 0;
     padding-right: 20px;
+    border-right: 1px solid #80808057;
 }
 
-#signOutBtn{
+#signOutBtn {
     border-radius: 25px;
     border: 1px white;
     background-color: white;
@@ -508,11 +510,11 @@ input[type="text"], textarea, select {
     bottom: 2%;
 }
 
-#signOutBtn:hover{
+#signOutBtn:hover {
     background-color: #f3ecec;
 }
 
-#onlineSidebar{
+#onlineSidebar {
     height: 100%;
     width: 205px;
     display: flex;
@@ -522,9 +524,10 @@ input[type="text"], textarea, select {
     top: 0;
     padding-left: 20px;
     padding-top: 4px;
+    border-left: 1px solid #80808057;
 }
 
-#bottomSidebar{
+#bottomSidebar {
     width: 100%;
     height: 40px;
     position: absolute;
@@ -537,23 +540,23 @@ input[type="text"], textarea, select {
     justify-content: space-evenly;
 }
 
-.bottomSidebarBtn{
+.bottomSidebarBtn {
     height: 83%;
     cursor: pointer;
 }
 
-#usersTitle{
+#usersTitle {
     margin-top: 10px;
     margin-left: 9px;
     margin-bottom: 10px;
     font-size: 20px;
 }
 
-.userWrapper{
+.userWrapper {
     position: relative;
 }
 
-.userInfoWrapper{
+.userInfoWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -564,8 +567,7 @@ input[type="text"], textarea, select {
     position: relative;
 }
 
-
-.myUserWrapper{
+.myUserWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -576,7 +578,7 @@ input[type="text"], textarea, select {
     cursor: default;
 }
 
-.userOptions{
+.userOptions {
     background-color: white;
     width: 134px;
     z-index: 9999;
@@ -584,11 +586,11 @@ input[type="text"], textarea, select {
     right: 97%;
     top: -20%;
     border-radius: 10px;
-    box-shadow: 2px 4px 25px -9px rgba(0,0,0,0.75);
+    box-shadow: 2px 4px 25px -9px rgba(0, 0, 0, 0.75);
     z-index: 10;
 }
 
-.onlineDot{
+.onlineDot {
     height: 13px;
     width: 13px;
     background-color: rgb(67, 181, 129);
@@ -600,7 +602,7 @@ input[type="text"], textarea, select {
     z-index: 10;
 }
 
-.userOptionsBtn{
+.userOptionsBtn {
     background-color: white;
     border: none;
     border-radius: 10px;
@@ -610,7 +612,7 @@ input[type="text"], textarea, select {
     font-size: 20px;
 }
 
-#onlinePic{
+#onlinePic {
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -619,7 +621,7 @@ input[type="text"], textarea, select {
     margin-left: 10px;
 }
 
-.onlineUsername{
+.onlineUsername {
     display: flex;
     align-items: center;
     font-weight: 600;
@@ -631,21 +633,25 @@ input[type="text"], textarea, select {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    animation: spin 2s linear infinite;
+    animation: spin 0.5s linear infinite;
     margin-top: 10px;
 }
-  
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-#feedWrapper{
+#feedWrapper {
     min-height: 100vh;
     width: 600px;
 }
 
-#feed{
+#feed {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -653,7 +659,7 @@ input[type="text"], textarea, select {
     height: 81%;
 }
 
-#homeHeader{
+#homeHeader {
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -661,13 +667,11 @@ input[type="text"], textarea, select {
     font-weight: 550;
     top: 0;
     background-color: white;
-    border-right: 0.5px solid #80808057;
-    border-left: 0.5px solid #80808057;
     border-bottom: 0.5px solid #80808057;
     z-index: 1;
 }
 
-#chatInputArea{
+#chatInputArea {
     border: none;
     left: 3%;
     position: relative;
@@ -679,7 +683,7 @@ input[type="text"], textarea, select {
     width: 95%;
 }
 
-#postImageWrapper{
+#postImageWrapper {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -687,7 +691,7 @@ input[type="text"], textarea, select {
     position: relative;
 }
 
-#postBtn{
+#postBtn {
     border-radius: 25px;
     border: 1px pink;
     background-color: #e891a0;
@@ -706,31 +710,31 @@ input[type="text"], textarea, select {
     margin-bottom: 15px;
 }
 
-#bubble{
+#bubble {
     position: relative;
     top: 2%;
     display: flex;
     flex-direction: column;
 }
 
-#msgTxt{
+#msgTxt {
     font-size: 19px;
     border-radius: 25px;
     padding: 5px 12px;
     margin-bottom: 5px;
 }
 
-.sent{
+.sent {
     align-items: flex-end;
     right: 2%;
 }
 
-.received{
+.received {
     align-items: flex-start;
     left: 2%;
 }
 
-.sentText{
+.sentText {
     /* border-bottom-right-radius: 0px !important; */
     /*#00D0EA*/
     background-color: #10c5dc;
@@ -738,50 +742,48 @@ input[type="text"], textarea, select {
     color: white;
 }
 
-.receivedText{
+.receivedText {
     /* border-bottom-left-radius: 0px !important; */
     background-color: #eee;
     border: 1px solid #eee;
     color: black;
 }
 
-.dropdown-item{
-    text-align:center;
+.dropdown-item {
+    text-align: center;
 }
 
 .noselect {
-	-webkit-touch-callout: none; /* iOS Safari */
-	  -webkit-user-select: none; /* Safari */
-	   -khtml-user-select: none; /* Konqueror HTML */
-		 -moz-user-select: none; /* Old versions of Firefox */
-		  -ms-user-select: none; /* Internet Explorer/Edge */
-			  user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
 									supported by Chrome, Edge, Opera and Firefox */
 }
-#playWrapper{
+#playWrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     min-height: 100vh;
-    border-right: 1px solid #80808057;
-    border-left: 1px solid #80808057;
     min-width: 20%;
 }
 
-#playContent{
+#playContent {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: calc(100% - 46px);
 }
 
-#playHeaderWrapper{
+#playHeaderWrapper {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-#playHeader{
+#playHeader {
     font-size: 25px;
     border-bottom: 1px solid #80808057;
     font-weight: 600;
@@ -791,7 +793,7 @@ input[type="text"], textarea, select {
     align-items: center;
 }
 
-#opponentPhoto{
+#opponentPhoto {
     float: left;
     border-radius: 50px;
     height: 40px;
@@ -802,7 +804,7 @@ input[type="text"], textarea, select {
     object-fit: cover;
 }
 
-#playOpponentHeader{
+#playOpponentHeader {
     font-size: 25px;
     border-bottom: 1px solid #80808057;
     border-left: 1px solid #80808057;
@@ -811,7 +813,7 @@ input[type="text"], textarea, select {
     height: 46px;
     width: 400px;
 }
-#playerDataBox{
+#playerDataBox {
     height: 80px;
     border: 1px solid #80808057;
     border-radius: 10px;
@@ -820,13 +822,13 @@ input[type="text"], textarea, select {
     padding-right: 15px;
 }
 
-#challengeBox{
+#challengeBox {
     border: 1px solid #80808057;
     border-radius: 10px;
     align-self: start;
 }
 
-#challengeBoxWrapper{
+#challengeBoxWrapper {
     display: grid;
     width: 100%;
     padding: 10px;
@@ -835,7 +837,7 @@ input[type="text"], textarea, select {
     text-align: center;
 }
 
-#challengeHelper{
+#challengeHelper {
     border: 1px solid #80808057;
     border-radius: 10px;
     width: 124px;
@@ -844,7 +846,7 @@ input[type="text"], textarea, select {
     padding: 10px;
 }
 
-#challengeHeader{
+#challengeHeader {
     font-size: 25px;
     border-bottom: 1px solid #80808057;
     width: 100%;
@@ -852,7 +854,7 @@ input[type="text"], textarea, select {
     padding: 5px;
 }
 
-.challengeWrapper{
+.challengeWrapper {
     display: flex;
     flex-direction: row;
     grid-gap: 5px;
@@ -862,7 +864,7 @@ input[type="text"], textarea, select {
     justify-content: flex-end;
 }
 
-.challengeOptionBtn{
+.challengeOptionBtn {
     background-color: lightblue;
     border: none;
     width: 39px;
@@ -871,21 +873,21 @@ input[type="text"], textarea, select {
     cursor: pointer;
 }
 
-.challengeOptionIcon{
+.challengeOptionIcon {
     height: 20px;
 }
 
-#gameWrapper{
+#gameWrapper {
     display: flex;
     align-items: center;
     height: 100%;
 }
 
-#omokcanvas{
+#omokcanvas {
     height: 700px;
 }
 
-#boardChatField{
+#boardChatField {
     height: 100%;
     width: 400px;
     border-bottom: 1px solid #80808057;
@@ -895,21 +897,21 @@ input[type="text"], textarea, select {
     flex-direction: column;
 }
 
-.textmessages{
+.textmessages {
     position: relative;
     bottom: 5%;
     left: 4%;
     font-size: 16px;
 }
 
-#gameinfo{
-    border:1px solid black;
+#gameinfo {
+    border: 1px solid black;
     height: 630px;
-    width:10%;
-    min-width:180px;
+    width: 10%;
+    min-width: 180px;
 }
 
-#gameResultWrapper{
+#gameResultWrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -918,13 +920,13 @@ input[type="text"], textarea, select {
     align-self: center;
 }
 
-#gameResult{
+#gameResult {
     text-align: center;
     font-weight: 600;
     font-size: 24px;
 }
 
-#rematchBtn{
+#rematchBtn {
     border-radius: 25px;
     border: 1px pink;
     background-color: #e891a0;
@@ -938,7 +940,7 @@ input[type="text"], textarea, select {
     padding-bottom: 3px;
 }
 
-#leaveBtn{
+#leaveBtn {
     border-radius: 25px;
     border: 1px pink;
     background-color: #e891a0;
@@ -952,10 +954,10 @@ input[type="text"], textarea, select {
     padding-bottom: 3px;
 }
 
-#resignBtn{
+#resignBtn {
     border-radius: 20px;
     border: 1px pink;
-    background-color: #e891a0;
+    background-color: #ef7e91;
     cursor: pointer;
     box-shadow: none;
     width: 95px;
@@ -967,16 +969,19 @@ input[type="text"], textarea, select {
     margin-right: 35px;
 }
 
-#rematchBtn:hover, #postBtn:hover, #leaveBtn:hover, #resignBtn:hover{
-    background-color: #f5afbb
+#rematchBtn:hover,
+#postBtn:hover,
+#leaveBtn:hover,
+#resignBtn:hover {
+    background-color: #f5afbb;
 }
 
 center {
-	flex: 1 0 auto;
-	position:relative;
+    flex: 1 0 auto;
+    position: relative;
 }
 
-#loginPage{
+#loginPage {
     display: flex;
     height: 100vh;
     width: 100%;
@@ -987,7 +992,7 @@ center {
     background-size: cover;
 }
 
-#loginSection{
+#loginSection {
     height: 645px;
     width: 450px;
     background-color: white;
@@ -995,7 +1000,7 @@ center {
     border-radius: 3px;
 }
 
-#loginWrapper{
+#loginWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1005,7 +1010,7 @@ center {
     top: 7%;
 }
 
-#loginHeader{
+#loginHeader {
     font-weight: 600;
     font-size: 30px;
     color: black;
@@ -1013,12 +1018,12 @@ center {
     padding-top: 10%;
 }
 
-#googleLogin{
+#googleLogin {
     height: 40px;
     cursor: pointer;
 }
 
-#googleBtn{
+#googleBtn {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1031,28 +1036,28 @@ center {
     top: 12%;
 }
 
-#emailInputInfo{
+#emailInputInfo {
     position: relative;
     right: 21%;
     font-size: 15px;
     font-weight: 600;
 }
 
-#usernameInputInfo{
+#usernameInputInfo {
     position: relative;
     right: 18%;
     font-size: 15px;
     font-weight: 600;
 }
 
-#passwordInputInfo{
+#passwordInputInfo {
     position: relative;
     right: 18%;
     font-size: 15px;
     font-weight: 600;
 }
 
-.loginInput{
+.loginInput {
     border-radius: 3px;
     background: #e6e6e6;
     height: 50px;
@@ -1063,11 +1068,14 @@ center {
     outline: none;
 }
 
-input[type="email"], input[type="password"], textarea, select { 
+input[type="email"],
+input[type="password"],
+textarea,
+select {
     outline: none;
 }
 
-.loginBtn{
+.loginBtn {
     border-radius: 3px;
     border: 1px pink;
     background-color: #91b2e8;
@@ -1081,34 +1089,31 @@ input[type="email"], input[type="password"], textarea, select {
     position: relative;
 }
 
-.loginBtn:hover{
+.loginBtn:hover {
     background-color: #a2beea;
 }
 
-
-#messages{
+#messages {
     width: 400px;
     min-height: 100vh;
     border-right: 1px solid #80808057;
-    border-left: 1px solid #80808057;
 }
 
-#chatbox{
+#chatbox {
     width: 600px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
-    border-right: 1px solid #80808057;
 }
 
-#msgArea{
+#msgArea {
     height: 89%;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.chatBox-Pic{
+.chatBox-Pic {
     margin-right: 10px;
     height: 40px;
     width: 40px;
@@ -1117,7 +1122,7 @@ input[type="email"], input[type="password"], textarea, select {
     margin-bottom: 4.5px;
 }
 
-#msgTextHeader{
+#msgTextHeader {
     width: 100%;
     font-size: 25px;
     border-bottom: 1px solid #80808057;
@@ -1128,12 +1133,12 @@ input[type="email"], input[type="password"], textarea, select {
     font-weight: 600;
 }
 
-#backMsgBtn{
+#backMsgBtn {
     height: 30px;
     padding-right: 15px;
 }
 
-.msg{
+.msg {
     height: 80px;
     width: 100%;
     border-bottom: 1px solid #80808057;
@@ -1142,14 +1147,20 @@ input[type="email"], input[type="password"], textarea, select {
     cursor: pointer;
 }
 
-.msg:hover, .userWrapper:hover, .userOptionsBtn:hover, .challengeOptionBtn:hover{
-    background-color: #F2F2F2;
+.msg:hover,
+.userWrapper:hover,
+.userOptionsBtn:hover,
+.challengeOptionBtn:hover {
+    background-color: #f2f2f2;
 }
-.msg:focus, .userWrapper:focus, .userOptionsBtn:focus, .challengeOptionBtn:focus{
-    background-color:#F2F2F2;
+.msg:focus,
+.userWrapper:focus,
+.userOptionsBtn:focus,
+.challengeOptionBtn:focus {
+    background-color: #f2f2f2;
 }
 
-.msgProfile-pic{
+.msgProfile-pic {
     margin-left: 10px;
     height: 55px;
     width: 55px;
@@ -1157,7 +1168,7 @@ input[type="email"], input[type="password"], textarea, select {
     object-fit: cover;
 }
 
-.msgUserInfo{
+.msgUserInfo {
     padding-left: 7px;
     height: 55px;
     padding-top: 6px;
@@ -1165,7 +1176,7 @@ input[type="email"], input[type="password"], textarea, select {
     gap: 10px;
 }
 
-.msgInput{
+.msgInput {
     position: relative;
     width: 95%;
     height: 80%;
@@ -1175,26 +1186,26 @@ input[type="email"], input[type="password"], textarea, select {
     top: 3%;
 }
 
-.msgInputWrapper{
+.msgInputWrapper {
     position: relative;
     padding-top: 7.5px;
     border-top: 1px solid #80808057;
     height: 60px;
 }
 
-#profile{
+#profile {
     width: 650px;
     height: 100%;
 }
 
-#profileHeader{
+#profileHeader {
     border-bottom: 1px solid #80808057;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#profilePagePic{
+#profilePagePic {
     margin-right: 10px;
     height: 142px;
     width: 142px;
@@ -1204,37 +1215,37 @@ input[type="email"], input[type="password"], textarea, select {
     margin-top: 10px;
 }
 
-@media (max-width:850px){
-    #feedWrapper{
+@media (max-width: 850px) {
+    #feedWrapper {
         width: 100%;
     }
-    #playWrapper{
+    #playWrapper {
         width: 100%;
     }
-    #messages{
+    #messages {
         width: 100%;
     }
-    #chatbox{
+    #chatbox {
         width: 100%;
         height: calc(100% - 40px);
     }
-    .userInfoWrapper{
+    .userInfoWrapper {
         height: 12%;
         width: 100%;
         border-bottom: 1px solid #80808057;
         font-size: 18px;
     }
-    .myUserWrapper{
+    .myUserWrapper {
         height: 12%;
         width: 100%;
         border-bottom: 1px solid #80808057;
         font-size: 18px;
     }
-    .onlineDot{
+    .onlineDot {
         left: 46px;
         bottom: 4.5%;
     }
-    #usersTitle{
+    #usersTitle {
         font-size: 25px;
         font-weight: 600;
         padding-left: 15px;
@@ -1245,30 +1256,30 @@ input[type="email"], input[type="password"], textarea, select {
         margin: 0;
         height: 50px;
     }
-    #onlineSidebar{
+    #onlineSidebar {
         width: 100%;
         padding: 0;
     }
-    #onlinePic{
+    #onlinePic {
         width: 50px;
         height: 50px;
     }
-    #challengeHelper{
+    #challengeHelper {
         display: none;
     }
-    #challengeBoxWrapper{
+    #challengeBoxWrapper {
         grid-template-columns: 1fr 1fr;
     }
-    #sidebar{
+    #sidebar {
         display: none;
     }
-    #bottomSidebar{
-        display: flex
+    #bottomSidebar {
+        display: flex;
     }
 }
 
-@media (max-width: 360px){
-    #challengeBoxWrapper{
+@media (max-width: 360px) {
+    #challengeBoxWrapper {
         grid-template-columns: 1fr;
     }
 }
@@ -1279,8 +1290,8 @@ input[type="email"], input[type="password"], textarea, select {
     }
 } */
 
-@media (max-width:1250px){
-    #boardChatField{
+@media (max-width: 1250px) {
+    #boardChatField {
         display: none;
     }
 }

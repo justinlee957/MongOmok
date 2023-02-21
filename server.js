@@ -29,12 +29,11 @@ app.get('*', (req, res) => {
 
 var users = new Map()
 
-
-io.on('connection', socket =>{
+io.on('connection', socket => {
     var uid = socket.handshake.query['uid']
     var opponentUid
     console.log(uid, 'connected')
-    db.collection('users').doc(uid).update({status: 'online'})
+    db.collection('users').doc(uid).set({status: 'online'}, {merge: true})
 
     if(uid && !users.has(uid)){
         users.set(uid, {socket: socket.id, inGame: false});
