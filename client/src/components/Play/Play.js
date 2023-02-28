@@ -9,12 +9,14 @@ function Play(props){
     var [playerData, setPlayerData] = useState()
     var content
     var headerStyle = {width: '100%'}
+    var borderStyle = "none";
     const setTurn = useSetRecoilState(turnAtom)
     //show board
     if(props.gameData){
         content = <TestBoard {...props}/>
         props.gameData.turn === 'first' ? setTurn(true) : setTurn(false)
         headerStyle = {width: 'calc(100% - 400px)'}
+        borderStyle = "1px solid #80808057"
     //show challenges
     }else{
         content = <div id = 'challengeBoxWrapper'>
@@ -35,7 +37,7 @@ function Play(props){
             var data = {win: doc.data().win, loss: doc.data().loss}
             setPlayerData(data)
         })
-    }, [])
+    }, [props.uid])
 
     
     function accept(otherUid){
@@ -47,7 +49,7 @@ function Play(props){
     }
 
     return(
-        <div id = 'playWrapper'>
+        <div id = 'playWrapper' style={{borderRight: borderStyle}}>
             <div id = 'playHeaderWrapper'>
                 <div id = 'playHeader' style = {headerStyle}>Play</div>
                 {props.gameData  &&

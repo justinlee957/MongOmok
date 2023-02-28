@@ -7,7 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import React, { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { getPosts, setUserProfile, setChatsData, updateProfile } from './utils/firestoreFunctions'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { postsAtom } from './utils/atoms'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
   let [username, setUsername] = useState()
   let [photoLink, setPhoto] = useState()
   let [privateChats, setChats] = useState()
-  let [posts, setPosts] = useRecoilState(postsAtom)
+  let setPosts = useSetRecoilState(postsAtom)
   let chatsQuery
 
   if(user){
@@ -28,7 +28,7 @@ function App() {
       setUserProfile(user, setUsername, setPhoto)
       getPosts().then(postsArr => setPosts(postsArr))
     }
-  }, [user]) 
+  }, [user, setPosts]) 
 
   //sets the messages data with the other user's name and photo
   useEffect(() => {

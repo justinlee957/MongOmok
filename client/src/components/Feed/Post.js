@@ -5,7 +5,7 @@ import defaultPic from '../../images/defaultPic.png'
 import Comment from './Comment'
 import { useState, useEffect } from 'react'
 import { firestore, storage, auth, FieldValue } from '../../firebase'
-import { useCollectionData, useDocumentData  } from 'react-firebase-hooks/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Modal from 'react-modal'
 import { useRecoilState } from 'recoil'
 import { postsAtom } from '../../utils/atoms'
@@ -107,7 +107,7 @@ function Post(props){
                 }
             })
         }
-    }, [props.docId])
+    }, [props.docId, postsQuery])
 
     const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -166,7 +166,7 @@ function Post(props){
                 style={customStyles}
                 contentLabel="Example Modal"
                 >
-                <img class = "fullPostPhoto" src = {props.photo}/>
+                <img class = "fullPostPhoto" src = {props.photo} alt="postPhoto"/>
             </Modal>
             </div>
         </div>

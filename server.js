@@ -44,6 +44,7 @@ io.on('connection', socket => {
         var inGame = users.get(data.otherUid).inGame
         // if the user is online and currently isn't in a game
         if(users.has(data.otherUid) && !inGame){
+            console.log("setting up game")
             opponentUid = data.otherUid
             var players = [uid, opponentUid]
             users.get(uid).inGame = true
@@ -94,13 +95,16 @@ io.on('connection', socket => {
     })
 
     socket.on('leftMatch', otherUid => {
+        users.get(uid).inGame = false
         if(users.has(otherUid)){
             io.to(users.get(otherUid).socket).emit('opponentDc')
         }
     })
 
     socket.on('resign', otherUid => {
+        console.log("resigned", otherUid)
         if(users.has(otherUid)){
+            console.log("sent IO update to: ", users.get(otherUid).socket)
             io.to(users.get(otherUid).socket).emit('resign')
         }
     })

@@ -1,6 +1,5 @@
 import Chat from './Chat'
 import Chatbox from './Chatbox'
-import ReactDOM from 'react-dom'
 import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 

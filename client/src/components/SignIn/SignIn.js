@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { auth, googleAuthProvider, firestore } from '../../firebase'
 import pikachu from '../../images/pikachu.jpg'
-import google from '../../images/googleicon.png'
 import * as EmailValidator from 'email-validator'
 
 function SignIn(){

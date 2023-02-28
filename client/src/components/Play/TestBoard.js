@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import BoardChat from './BoardChat'
 import { initBoard, reInitBoard, drawPiece, handleClick, setColor, updateWinLoss } from './BoardFuncs'
-import { coordinates, turnAtom, winAtom, canvasImageAtom } from '../../utils/atoms'
+import { coordinates, turnAtom, winAtom } from '../../utils/atoms'
 import { useRecoilState } from 'recoil'
 
 export default function TestBoard(props){
@@ -17,6 +17,7 @@ export default function TestBoard(props){
 
     useEffect(() => {
         initBoard(canvas.current, coords, color)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -70,9 +71,10 @@ export default function TestBoard(props){
             props.socket.off('rematchRequested')  
             props.socket.off('startRematch') 
             props.socket.off('opponentDc') 
-            props.socket.on('resign')
+            props.socket.off('resign')
         }
-    }, [canvasImage, win])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     function click(e){
         const ctx = canvas.current.getContext('2d')

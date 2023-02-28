@@ -20,7 +20,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "host": "npm install && cd client && npm install && npm run build"
+    "host": "npm install && cd client && npm install --save --legacy-peer-deps && npm run build"
   },
   "author": "",
   "license": "ISC",

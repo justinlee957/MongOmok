@@ -120,7 +120,7 @@ class Layout extends Component{
                 </Modal>
                 <div id = "content" ref = {this.contentRef}>
                     <Sidebar openModal = {this.openModal} playClick = {this.playClick} photo = {this.props.photo} homeClick = {this.homeClick} 
-                        messagesClick = {this.messagesClick} openModal = {this.openModal} socket = {this.socket}/>
+                        messagesClick = {this.messagesClick} socket = {this.socket}/>
                     {content}
                     {!play && !users && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
                     {play && !this.state.gameData && !users && <OnlineSidebar name = {this.props.name} uid = {this.props.uid} photo = {this.props.photo} displayMsgs = {this.messagesClick}/>}
