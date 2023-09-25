@@ -28,6 +28,9 @@ function LogIn(props){
   }
 
   function tryLogIn(){
+    if(!email || !password){
+      return
+    }
     auth.signInWithEmailAndPassword(email, password)
     .then((user) => {
       console.log('signedIn')
@@ -54,10 +57,10 @@ function LogIn(props){
                type="password" name="password" placeholder = "Password"/>
         <button className = 'loginBtn' onClick = {tryLogIn} style = {{top: '7%'}}>LOGIN</button>
         {/* <img id = 'googleLogin' src={google} alt = "google icon"/> */}
-        <button className = 'loginBtn' style = {{top: '9.5%'}} 
-          onClick = {()=> props.setContent(<LogInAnonymous setContent = {props.setContent}/>)}>ENTER AS GUEST</button>
+        {/* <button className = 'loginBtn' style = {{top: '9.5%'}} 
+          onClick = {()=> props.setContent(<LogInAnonymous setContent = {props.setContent}/>)}>ENTER AS GUEST</button> */}
         <button id = "googleBtn" className = 'loginBtn' onClick={signInWithGoogle}>LOGIN WITH GOOGLE</button>
-        <p onClick = {()=> props.setContent(<Register setContent = {props.setContent}/>)} style = {{position: 'relative', top: '21%', cursor: 'pointer'}}>Or Sign Up Here</p>
+        <p onClick = {()=> props.setContent(<Register setContent = {props.setContent}/>)} style = {{position: 'relative', top: '16%', cursor: 'pointer'}}>Or Sign Up Here</p>
       </div>
     </div>
   )
@@ -69,6 +72,9 @@ function Register(props){
   var [username, setUsername] = useState()
 
   async function tryRegister(){
+    if(!email || !password || !username){
+      return
+    }
     if(!EmailValidator.validate(email)){
       alert("Invalid Email")
       return
@@ -121,21 +127,23 @@ function Register(props){
 function LogInAnonymous(props){
   var [username, setUsername] = useState()
   function tryLogInAnon(){
-    auth.signInAnonymously()
-    .then(() => {console.log(username)
-      firestore.collection('users').doc(auth.currentUser.uid).set({
-        name: username,
-        win: 0, 
-        loss: 0,
-        status: 'online',
-        anonymous: 'true'
+    if(username){
+      auth.signInAnonymously()
+      .then(() => {console.log(username)
+        firestore.collection('users').doc(auth.currentUser.uid).set({
+          name: username,
+          win: 0, 
+          loss: 0,
+          status: 'online',
+          anonymous: 'true'
+        })
       })
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-    });
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+      });
+    }
   }
   return(
     <div id = 'loginSection' style = {{height: '360px'}}>
